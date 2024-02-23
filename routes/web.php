@@ -30,5 +30,5 @@ Route::middleware([
 
     Route::get('member/admin/{id}', [MemberController::class,'makeAdmin'])->name('member.makeAdmin');
     Route::get('member/activate/{id}', [MemberController::class,'activate'])->name('member.activate');
-    Route::resource('member', MemberController::class)->only(['index','show','edit']);
+    Route::resource('member', MemberController::class)->only(['index','show','edit','destroy']);
 });

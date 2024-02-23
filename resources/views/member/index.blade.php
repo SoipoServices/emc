@@ -5,5 +5,5 @@
         </h2>
     </x-slot>
 
-    @livewire('search',['showOnlyActive'=>$showOnlyActive])
+    @livewire('search',['showOnlyActive'=>isset($showOnlyActive)?? false])
 </x-app-layout>

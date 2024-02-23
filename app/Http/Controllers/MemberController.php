@@ -63,9 +63,11 @@ class MemberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($userId)
     {
-        //
+        $user = User::findOrFail($userId);
+        $user->delete();
+        return view('member.index');
     }
 
 

@@ -68,6 +68,18 @@
                                 <td class="px-2 py-2"> <a class="text-xs italic font-medium" href="{{ route('member.makeAdmin',['id'=>$member->id,'is_admin'=>true]) }}" ><x-bi-arrow-up-circle-fill /> </a></td>
                             </tr>
                         @endif
+                        <tr>
+                            <td class="px-2 py-2 font-semibold text-red-500">{{ __('Delete') }} </td>
+                            <td class="px-2 py-2">
+                                <form id="delete-form" method="POST" action="{{ route('member.destroy',$member) }}">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+
+                                    <button type="submit" title="{{ __('Delete') }}" >
+                                        <x-mdi-delete class="w-4 h-4" />
+                                    </button>
+                                </form>
+                        </tr>
                     @endif
                     {{ $slot }}
                 </tbody></table>
