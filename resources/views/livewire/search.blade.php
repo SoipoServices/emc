@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="mx-auto mt-4 mb-4 max-w-7xl sm:px-6 lg:px-8">
-        <div class="grid grid-cols-4 gap-1 place-items-center">
+        <div class="grid grid-cols-4 gap-1 place-items-start">
                 @foreach ($members as $member)
                         <x-user-card :member=$member>
                             {{-- <tr>
