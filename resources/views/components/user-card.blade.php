@@ -10,7 +10,7 @@
             <div class="p-2 photo-wrapper">
                 <img src="{{ $member->profile_photo_url }}"
                         alt="{{ $member->first_name . ' ' . $member->last_name }}"
-                        class="object-cover mx-auto w-30 h-30 rounded-ful" />
+                        class="object-cover w-20 h-20 mx-auto rounded-ful" />
                     </div>
             @endif
 
