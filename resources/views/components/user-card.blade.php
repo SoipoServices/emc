@@ -1,7 +1,7 @@
 @props(['member'])
 
 <!-- component -->
-<div class="items-center justify-center">
+<div class="justify-center items-top">
 
     <div class="w-64 pb-6">
         <div class="py-3 bg-white rounded-lg shadow-xl">
@@ -33,14 +33,18 @@
                         <td class="px-2 py-2 font-semibold text-gray-500">{{ __('Bio') }} </td>
                         <td class="px-2 py-2">{{ $member->bio }}</td>
                     </tr>
+                    @if($member->linkedin_profile)
                     <tr>
                         <td class="px-2 py-2 font-semibold text-gray-500">{{ __('LinkedIn') }} </td>
                         <td class="px-2 py-2"> <a class="text-xs italic font-medium" href="{{ $member->linkedin_profile }}" target="_blank"><x-bi-linkedin /> </a></td>
                     </tr>
+                    @endif
+                    @if($member->site)
                     <tr>
                         <td class="px-2 py-2 font-semibold text-gray-500">{{ __('Site') }} </td>
                         <td class="px-2 py-2"> <a class="text-xs italic font-medium" href="{{ $member->site }}" target="_blank"><x-bi-link /> </a></td>
                     </tr>
+                    @endif
                     @if(auth()->user()?->is_admin)
                         @if($member->is_active )
                             <tr>
