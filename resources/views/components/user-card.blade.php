@@ -46,17 +46,6 @@
                     </tr>
                     @endif
                     @if(auth()->user()?->is_admin)
-                        @if($member->is_active )
-                            <tr>
-                                <td class="px-2 py-2 font-semibold text-gray-500">{{ __('Lock') }} </td>
-                                <td class="px-2 py-2"> <a class="text-xs italic font-medium" href="{{ route('member.activate',['id'=>$member->id,'is_active'=>false]) }}" ><x-bi-lock /> </a></td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td class="px-2 py-2 font-semibold text-gray-500">{{ __('Unlock') }} </td>
-                                <td class="px-2 py-2"> <a class="text-xs italic font-medium" href="{{ route('member.activate',['id'=>$member->id,'is_active'=>true]) }}" ><x-bi-unlock /> </a></td>
-                            </tr>
-                        @endif
                         @if($member->is_admin)
                             <tr>
                                 <td class="px-2 py-2 font-semibold text-gray-500">{{ __('Remove admin') }} </td>
@@ -66,6 +55,17 @@
                             <tr>
                                 <td class="px-2 py-2 font-semibold text-gray-500">{{ __('Make admin') }} </td>
                                 <td class="px-2 py-2"> <a class="text-xs italic font-medium" href="{{ route('member.makeAdmin',['id'=>$member->id,'is_admin'=>true]) }}" ><x-bi-arrow-up-circle-fill /> </a></td>
+                            </tr>
+                        @endif
+                        @if($member->is_active )
+                            <tr>
+                                <td class="px-2 py-2 font-semibold text-red-500">{{ __('Block') }} </td>
+                                <td class="px-2 py-2"> <a class="text-xs italic font-medium" href="{{ route('member.activate',['id'=>$member->id,'is_active'=>false]) }}" ><x-bi-unlock /> </a></td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td class="px-2 py-2 font-semibold text-gray-500">{{ __('Active') }} </td>
+                                <td class="px-2 py-2"> <a class="text-xs italic font-medium" href="{{ route('member.activate',['id'=>$member->id,'is_active'=>true]) }}" > <x-bi-lock /></a></td>
                             </tr>
                         @endif
                         <tr>
