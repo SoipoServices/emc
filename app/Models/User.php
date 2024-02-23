@@ -9,7 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,8 +26,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        'mobile',
+        'active',
+        'linkedin_profile',
+        'bio',
+        'site',
         'password',
     ];
 
@@ -48,6 +56,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'active' => 'boolean'
     ];
 
     /**
@@ -57,5 +66,24 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'name'
     ];
-}
+
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn () =>$this->first_name." ".$this->last_name,
+        );
+    }
+    public function toSearchableArray()
+    {
+        return [
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'mobile' => $this->mobile,
+            'email' => $this->email,
+            'bio' => $this->bio,
+        ];
+    }
+    }
