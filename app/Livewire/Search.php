@@ -26,7 +26,9 @@ class Search extends Component
             $members = User::query();
         }
 
-        if($this->showOnlyActive){
+        if(auth()->user()?->is_admin){
+
+        }else if($this->showOnlyActive){
             $members = $members->where('is_active',true);
         }
 
