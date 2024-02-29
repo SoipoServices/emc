@@ -3,7 +3,7 @@
 <!-- component -->
 <div class="justify-center items-top">
 
-    <div class="w-64 pb-6">
+    <div class="w-full pb-6">
         <div class="py-3 bg-white rounded-lg shadow-xl">
 
             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
