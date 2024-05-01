@@ -13,7 +13,7 @@ import AppLayout from '@/Layouts/PublicLayout.vue';
                     <img
                         src="../../images/event_pic.jpg"
                         alt="Laravel documentation screenshot"
-                        class="aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden"
+                        class="aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)]"
                         @error="handleImageError"
                     />
                     <div
