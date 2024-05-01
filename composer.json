@@ -6,11 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "filament/filament": "^3.2",
+        "filament/spatie-laravel-tags-plugin": "^3.2",
+        "filament/spatie-laravel-translatable-plugin": "^3.2",
         "inertiajs/inertia-laravel": "^1.0",
+        "jerome/filterable": "^1.1",
         "laravel/framework": "^11.0",
         "laravel/jetstream": "^5.0",
         "laravel/sanctum": "^4.0",
+        "laravel/scout": "^10.8",
         "laravel/tinker": "^2.9",
+        "outerweb/filament-translatable-fields": "^1.1",
+        "spatie/laravel-tags": "^4.6",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
@@ -38,7 +45,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

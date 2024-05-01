@@ -1,0 +1,20 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+
+defineProps({
+    items: {
+        type: Object,
+        required: true
+    },
+})
+</script>
+
+<template>
+    <div class="join">
+        <div v-for="item in items" >
+            <Link v-if="item.url"  class="join-item btn text-white" :href="item.url" :class="{'btn-active' : item.active }" :key="item.id" v-html="item.label"/>
+            <PrimaryButton v-else class="join-item btn" :key="item.id" v-html="item.label" disabled/>
+        </div>
+    </div>
+</template>

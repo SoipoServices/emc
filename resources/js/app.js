@@ -8,6 +8,11 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
+import { OhVueIcon, addIcons } from "oh-vue-icons";
+import * as FaIcons from "oh-vue-icons/icons/fa";
+const Fa = Object.values({ ...FaIcons });
+addIcons(...Fa);
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
@@ -15,6 +20,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .component('v-icon',OhVueIcon)
             .mount(el);
     },
     progress: {
