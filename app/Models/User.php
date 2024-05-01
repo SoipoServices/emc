@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
  use Laravel\Scout\Searchable;
  use Spatie\Tags\HasTags;
 
- class User extends Authenticatable implements FilamentUser
+ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
