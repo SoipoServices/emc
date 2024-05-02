@@ -60,7 +60,7 @@ defineProps({
                             </div>
                         </a>
 
-                        <a :href="user.twitter_url" class="mx-5 w-full" v-if="user.twitter_url">
+                        <a :href="user.twitter_url" class="mx-5" v-if="user.twitter_url">
                             <div aria-label="Twitter">
                                 <v-icon name="fa-twitter" class="w-8 h-8" animation="wrench" hover/>
                             </div>
