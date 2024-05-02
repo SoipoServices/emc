@@ -43,7 +43,8 @@ use Laravel\Sanctum\HasApiTokens;
         'linkedin_profile_url',
         'facebook_url',
         'twitter_url',
-        'youtube_url'
+        'youtube_url',
+        'email_verified_at'
     ];
 
     /**
