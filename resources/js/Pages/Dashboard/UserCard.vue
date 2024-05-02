@@ -34,7 +34,7 @@ defineProps({
                     <p class="text-center text-gray-600 text-base pt-3 font-normal dark:text-white" v-if="user.bio">
                         {{user.bio}}
                     </p>
-                    <div class="w-full flex justify-center pt-5 pb-5 ">
+                    <div class="mx-auto flex justify-center pt-5 pb-5 text-gray-600 dark:text-white">
 
                         <a :href="user.site_url" class="mx-5" v-if="user.site_url">
                             <div aria-label="Site">
@@ -66,7 +66,7 @@ defineProps({
                             </div>
                         </a>
 
-                        <a :href="'mailto:'+user.email" class="mx-5 w-full" v-if="user.email">
+                        <a :href="'mailto:'+user.email" class="mx-5" v-if="user.email">
                             <div aria-label="Email">
                                 <v-icon name="fa-mail-bulk" class="w-8 h-8" animation="wrench" hover/>
                             </div>
