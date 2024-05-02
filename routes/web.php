@@ -18,6 +18,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class);
     Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
     Route::put('user/profile/bio',\App\Http\Controllers\UpdateUserBioInformationController::class)->name('user-bio-information.update');
 });
