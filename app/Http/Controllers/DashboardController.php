@@ -29,7 +29,7 @@ class DashboardController extends Controller
         }else if(!empty($category)){
             $query = User::verified()->hasBio()->with('tags')->withAnyTags([$category],'categories');
         }else{
-            $query = User::verified()->hasBio()->with('tags')->query();
+            $query = User::verified()->hasBio()->with('tags');
         }
 
         $users = $query->paginate(self::PAGINATION);

@@ -15,6 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
  use Laravel\Scout\Attributes\SearchUsingPrefix;
  use Laravel\Scout\Searchable;
  use Spatie\Tags\HasTags;
+ use Illuminate\Database\Eloquent\Casts\Attribute;
 
  class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
@@ -113,4 +114,20 @@ use Laravel\Sanctum\HasApiTokens;
      {
          return $query->whereNotNull('bio');
      }
+
+
+     protected function hasBio(): Attribute
+     {
+         return Attribute::make(
+             get: fn () => !empty($this->bio),
+         );
+     }
+
+     protected function isVerified(): Attribute
+     {
+         return Attribute::make(
+             get: fn () => !empty($this->email_verified_at),
+         );
+     }
+
 }

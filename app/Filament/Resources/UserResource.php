@@ -67,7 +67,25 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')->searchable(),
                 Tables\Columns\TextColumn::make('telephone')->searchable(),
                 Tables\Columns\ToggleColumn::make('is_admin'),
-                Tables\Columns\SpatieTagsColumn::make('tags')
+                Tables\Columns\SpatieTagsColumn::make('tags'),
+                Tables\Columns\IconColumn::make('is_verified')
+                    ->icon(fn (string $state): string => match ($state) {
+                        default => 'heroicon-o-exclamation-triangle',
+                        "1" => 'heroicon-o-check',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        "1" => 'success',
+                        default => 'warning',
+                    }),
+                Tables\Columns\IconColumn::make('has_bio')
+                    ->icon(fn (string $state): string => match ($state) {
+                        default => 'heroicon-o-exclamation-triangle',
+                        "1" => 'heroicon-o-check',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        "1" => 'success',
+                        default => 'warning',
+                    }),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('is_admin')
