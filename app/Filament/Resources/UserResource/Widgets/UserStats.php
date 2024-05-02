@@ -11,7 +11,7 @@ class UserStats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Products', User::count()),
+            Stat::make('Total Users', User::count()),
         ];
     }
 }
