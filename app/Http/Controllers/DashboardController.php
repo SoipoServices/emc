@@ -23,16 +23,16 @@ class DashboardController extends Controller
         $category = $request->get('category');
 
         if(!empty($category) && !empty($search)){
-           $query = User::search($search)->query(fn ($q) => $q->withAnyTags([$category],'categories'));
+           $query = User::search($search)->query(fn ($q) => $q->verified()->hasBio()->withAnyTags([$category],'categories')->with('tags'));
         }else if(!empty($search)){
-            $query = User::search($search);
+            $query = User::search($search)->query(fn ($q) => $q->verified()->hasBio()->with('tags'));
         }else if(!empty($category)){
-            $query = User::withAnyTags([$category],'categories');
+            $query = User::verified()->hasBio()->with('tags')->withAnyTags([$category],'categories');
         }else{
-            $query = User::query();
+            $query = User::verified()->hasBio()->with('tags')->query();
         }
 
-        $users = $query->verified()->hasBio()->with('tags')->paginate(self::PAGINATION);
+        $users = $query->paginate(self::PAGINATION);
 
         return Inertia::render('Dashboard',compact(['users','tags','search']));
     }
