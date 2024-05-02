@@ -32,7 +32,7 @@ class DashboardController extends Controller
             $query = User::query();
         }
 
-        $users = $query->with('tags')->paginate(self::PAGINATION);
+        $users = $query->verified()->hasBio()->with('tags')->paginate(self::PAGINATION);
 
         return Inertia::render('Dashboard',compact(['users','tags','search']));
     }

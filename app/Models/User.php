@@ -102,4 +102,14 @@ use Laravel\Sanctum\HasApiTokens;
              'bio' => $this->bio,
          ];
      }
+
+     public function scopeVerified($query)
+     {
+         return $query->whereNotNull('email_verified_at');
+     }
+
+     public function scopeHasBio($query)
+     {
+         return $query->whereNotNull('bio');
+     }
 }
