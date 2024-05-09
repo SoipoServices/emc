@@ -22,7 +22,7 @@ defineProps({
                         <ApplicationMark v-else class="object-cover w-full h-full rounded-full shadow-md"/>
                     </div>
                 </div>
-                <div class="px-6 mt-16">
+                <div class="px-6 mt-16 h-96">
                     <h1 class="mb-1 text-3xl font-bold text-center text-gray-800 dark:text-white">{{ user.name }}</h1>
                     <p class="text-sm text-center text-gray-800 dark:text-white" v-if="user.position">{{ user.position }}</p>
                     <p class="pt-3 text-sm text-center text-gray-800 dark:text-white" v-if="user.telephone">
@@ -47,6 +47,7 @@ defineProps({
                         <div class="h-32 overflow-y-auto" >
                          {{user.bio}}
                         </div>
+                        <hr/>
                     </p>
                     <div class="flex justify-center pt-5 pb-5 mx-auto text-gray-600 dark:text-white">
 
@@ -90,9 +91,6 @@ defineProps({
                     <div class="flex flex-col justify-center w-full pt-5 pb-5 ">
                         <div v-if="user.tags" class="items-center justify-center mx-auto">
                             <div class="m-1 badge badge-primary" v-for="tag in user.tags" :key="tag.id">{{ tag.name[locale]}}</div>
-                        </div>
-                        <div v-else class="items-center justify-center mx-auto">
-                            <br/>
                         </div>
                     </div>
                 </div>
