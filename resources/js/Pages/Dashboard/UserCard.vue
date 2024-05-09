@@ -43,7 +43,10 @@ defineProps({
 
 
                     <p class="pt-3 text-base font-normal text-center text-gray-600 dark:text-white" v-if="user.bio">
-                        {{user.bio}}
+
+                        <div class="h-32 overflow-y-auto" >
+                         {{user.bio}}
+                        </div>
                     </p>
                     <div class="flex justify-center pt-5 pb-5 mx-auto text-gray-600 dark:text-white">
 

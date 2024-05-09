@@ -42,7 +42,7 @@ const users = ref(props.users);
                     <Search class="pt-10" :tags="tags" :locale="locale" :search="search" />
 
                     <div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-3 lg:gap-8 lg:p-8">
-                        <div v-for="user in props.users.data">
+                        <div v-for="user in props.users.data" :key="user.id">
                             <UserCard :user="user" />
                         </div>
                     </div>
