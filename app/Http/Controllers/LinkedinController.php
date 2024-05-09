@@ -25,15 +25,13 @@ class LinkedinController extends Controller
             $linkedinUser = Socialite::driver('linkedin-openid')->user();
 
             $user = User::where('oauth_id', $linkedinUser->id)->first();
-            if($user->profile_photo_path){
 
-                $url = $linkedinUser->avatar;
-                $name = "profile-photos/".basename($url);
-                Storage::disk('public')->put($name, file_get_contents($url));
-
-                $user->profile_photo_path = $name;
-            }
             if($user){
+
+                if(is_null($user->profile_photo_path)){
+                    $url = $linkedinUser->avatar;
+                    $user->profile_photo_path = $this->downloadAvatar($url);
+                }
 
                 Auth::login($user);
 
@@ -46,7 +44,7 @@ class LinkedinController extends Controller
                     'name' => $linkedinUser->name,
                     'email' => $linkedinUser->email,
                     'oauth_id' => $linkedinUser->id,
-                    'profile_photo_path' => $linkedinUser->avatar,
+                    'profile_photo_path' =>  $this->downloadAvatar($linkedinUser->avatar),
                     'oauth_type' => 'linkedin',
                     'password' =>  Hash::make($password)
                 ]);
@@ -59,5 +57,11 @@ class LinkedinController extends Controller
         } catch (Exception $e) {
             return abort(403,$e->getMessage());
         }
+    }
+
+    protected function downloadAvatar(string $url):string{
+        $fileName = "profile-photos/".basename($url);
+        Storage::disk('public')->put($fileName, file_get_contents($url));
+        return $fileName;
     }
 }
