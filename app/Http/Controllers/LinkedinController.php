@@ -5,6 +5,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
@@ -28,9 +29,10 @@ class LinkedinController extends Controller
 
             if($user){
 
-                if(is_null($user->profile_photo_path)){
+                if(empty($user->profile_photo_path)){
                     $url = $linkedinUser->avatar;
                     $user->profile_photo_path = $this->downloadAvatar($url);
+                    Log::debug("Linkedin avatar update",['profile'=>$user->profile_photo_path, 'url'=>$url]);
                 }
 
                 $user->oauth_id = $linkedinUser->id;
