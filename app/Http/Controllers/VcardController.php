@@ -35,18 +35,25 @@ class VcardController extends Controller
 
         // add work data
         // $vcard->addCompany('Siesqo');
-        $vcard->addJobtitle($user->position);
+        if($user->position){
+            $vcard->addJobtitle($user->position);
+        }
         // $vcard->addRole('Data Protection Officer');
-        $vcard->addEmail('info@jeroendesloovere.be');
+        $vcard->addEmail($user->email);
         // $vcard->addPhoneNumber(1234121212, 'PREF;WORK');
-        $vcard->addPhoneNumber($user->telephone, 'WORK');
+        if($user->telephone){
+            $vcard->addPhoneNumber($user->telephone, 'WORK');
+        }
         // $vcard->addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium');
         // $vcard->addLabel('street, worktown, workpostcode Belgium');
-        $vcard->addURL($user->site_url);
+        if($user->site_url){
+            $vcard->addURL($user->site_url);
+        }
 
-        $photo = Storage::disk('public')->url($user->profile_photo_path);
-
-        $vcard->addPhoto($photo);
+        if($user->profile_photo_path){
+            $photo = Storage::disk('public')->url($user->profile_photo_path);
+            $vcard->addPhoto($photo);
+        }
 
             // return vcard as a string
             //return $vcard->getOutput();

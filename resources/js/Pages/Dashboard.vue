@@ -31,22 +31,22 @@ const users = ref(props.users);
 <template>
     <AppLayout title="Dashboard">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                 Dashboard
             </h2>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-gray-200 dark:bg-gray-800 bg-opacity-25 overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden bg-gray-200 bg-opacity-25 shadow-xs dark:bg-gray-800 sm:rounded-lg">
                     <Search class="pt-10" :tags="tags" :locale="locale" :search="search" />
 
-                    <div class=" grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 p-6 lg:p-8">
+                    <div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-3 lg:gap-8 lg:p-8">
                         <div v-for="user in props.users.data">
                             <UserCard :user="user" />
                         </div>
                     </div>
-                    <div class="max-w-lg mx-auto py-10">
+                    <div class="max-w-lg py-10 mx-auto">
                         <div class="flex flex-wrap items-center justify-center">
                             <Pagination :items="props.users.links" />
                         </div>
