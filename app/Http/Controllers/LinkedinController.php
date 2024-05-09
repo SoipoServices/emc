@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Exception;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -51,7 +52,8 @@ class LinkedinController extends Controller
                     'profile_photo_path' =>  $this->downloadAvatar($linkedinUser->avatar,$linkedinUser->name),
                     'oauth_id' => $linkedinUser->id,
                     'oauth_type' => 'linkedin',
-                    'password' =>  Hash::make($password)
+                    'password' =>  Hash::make($password),
+                    'email_verified_at' => Carbon::now()->subMinutes(1)
                 ]);
 
                 Auth::login($user);
