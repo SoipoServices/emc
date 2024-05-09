@@ -22,6 +22,7 @@ class VcardController extends Controller
         $name = explode(" ",$user->name);
         // define variables
         $lastname = $name[0];
+        $firstname = "";
         if(count($name) > 1){
             $firstname = $name[1];
         }

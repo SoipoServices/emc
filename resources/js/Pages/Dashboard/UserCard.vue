@@ -23,7 +23,7 @@ defineProps({
                     </div>
                 </div>
                 <div class="px-6 mt-16">
-                    <h1 class="mb-1 text-3xl font-bold text-center dark:text-white">{{ user.name }}</h1>
+                    <h1 class="mb-1 text-3xl font-bold text-center text-gray-800 dark:text-white">{{ user.name }}</h1>
                     <p class="text-sm text-center text-gray-800 dark:text-white" v-if="user.position">{{ user.position }}</p>
                     <p class="pt-3 text-sm text-center text-gray-800 dark:text-white" v-if="user.telephone">
                         <a :href="'tel:'+user.telephone" >
