@@ -31,7 +31,7 @@ class LinkedinController extends Controller
 
                 if(empty($user->profile_photo_path)){
                     $url = $linkedinUser->avatar;
-                    $user->profile_photo_path = $this->downloadAvatar($url);
+                    $user->profile_photo_path = $this->downloadAvatar($url,$linkedinUser->name);
                     Log::debug("Linkedin avatar update",['profile'=>$user->profile_photo_path, 'url'=>$url]);
                 }
 
@@ -48,7 +48,7 @@ class LinkedinController extends Controller
                 $user = User::create([
                     'name' => $linkedinUser->name,
                     'email' => $linkedinUser->email,
-                    'profile_photo_path' =>  $this->downloadAvatar($linkedinUser->avatar),
+                    'profile_photo_path' =>  $this->downloadAvatar($linkedinUser->avatar,$linkedinUser->name),
                     'oauth_id' => $linkedinUser->id,
                     'oauth_type' => 'linkedin',
                     'password' =>  Hash::make($password)
@@ -64,9 +64,13 @@ class LinkedinController extends Controller
         }
     }
 
-    protected function downloadAvatar(string $url):string{
-        $fileName = "profile-photos/".basename($url);
-        Storage::disk('public')->put($fileName, file_get_contents($url));
+    protected function downloadAvatar(string $url,string $userName):string{
+        $fileName = "profile-photos/".Str::slug($userName);
+        $content = file_get_contents($url);
+        $size = getimagesize($url);
+        $extension = image_type_to_extension($size[2]);
+        $fileName .= $extension;
+        Storage::disk('public')->put($fileName, $content);
         return $fileName;
     }
 }
