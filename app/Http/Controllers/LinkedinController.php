@@ -57,7 +57,7 @@ class LinkedinController extends Controller
             }
 
         } catch (Exception $e) {
-            return error(403,$e->getMessage());
+            return abort(403,$e->getMessage());
         }
     }
 }
