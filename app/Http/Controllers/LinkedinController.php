@@ -19,22 +19,24 @@ class LinkedinController extends Controller
     {
         try {
 
-            $user = Socialite::driver('linkedin-openid')->user();
+            $linkedinUser = Socialite::driver('linkedin-openid')->user();
 
-            dd($user);
-            $linkedinUser = User::where('oauth_id', $user->id)->first();
+            $user = User::where('oauth_id', $linkedinUser->id)->first();
+            if($user->profile_photo_path){
+                $user->profile_photo_path = $linkedinUser->avatar;
+            }
+            if($user){
 
-            if($linkedinUser){
-
-                Auth::login($linkedinUser);
+                Auth::login($user);
 
                 return redirect('/dashboard');
 
             }else{
                 $user = User::create([
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'oauth_id' => $user->id,
+                    'name' => $linkedinUser->name,
+                    'email' => $linkedinUser->email,
+                    'oauth_id' => $linkedinUser->id,
+                    'profile_photo_path' => $linkedinUser->avatar,
                     'oauth_type' => 'linkedin',
                     'password' => encrypt('admin12345')
                 ]);
