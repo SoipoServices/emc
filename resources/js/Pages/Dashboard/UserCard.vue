@@ -91,6 +91,9 @@ defineProps({
                         <div v-if="user.tags" class="items-center justify-center mx-auto">
                             <div class="m-1 badge badge-primary" v-for="tag in user.tags" :key="tag.id">{{ tag.name[locale]}}</div>
                         </div>
+                        <div v-else class="items-center justify-center mx-auto">
+                            <br/>
+                        </div>
                     </div>
                 </div>
             </div>
