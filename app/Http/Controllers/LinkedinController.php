@@ -12,14 +12,14 @@ class LinkedinController extends Controller
 {
     public function linkedinRedirect()
     {
-        return Socialite::driver('linkedin')->redirect();
+        return Socialite::driver('linkedin-openid')->redirect();
     }
 
     public function linkedinCallback()
     {
         try {
 
-            $user = Socialite::driver('linkedin')->user();
+            $user = Socialite::driver('linkedin-openid')->user();
 
             dd($user);
             $linkedinUser = User::where('oauth_id', $user->id)->first();
