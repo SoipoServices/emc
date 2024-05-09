@@ -25,6 +25,7 @@ class LinkedinController extends Controller
 
             $linkedinUser = Socialite::driver('linkedin-openid')->user();
 
+            dd($linkedinUser);
             $user = User::where('email',$linkedinUser->email)->first();
 
             if($user){
