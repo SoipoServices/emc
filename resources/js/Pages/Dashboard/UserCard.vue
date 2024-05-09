@@ -60,7 +60,7 @@ defineProps({
                             </div>
                         </a>
 
-                        <a :href="user.linkedin_url" class="mx-5" v-if="user.linkedin_url">
+                        <a :href="user.linkedin_profile_url" class="mx-5" v-if="user.linkedin_profile_url">
                             <div aria-label="Linkedin">
                                 <v-icon name="fa-linkedin" class="w-4 h-4 " animation="wrench" hover/>
                             </div>
