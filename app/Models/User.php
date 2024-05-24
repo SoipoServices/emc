@@ -47,7 +47,8 @@ use Laravel\Sanctum\HasApiTokens;
         'youtube_url',
         'email_verified_at',
         'oauth_id',
-        'oauth_type'
+        'oauth_type',
+        'feedback_submitted_at'
     ];
 
     /**
