@@ -39,7 +39,7 @@ class UserResource extends Resource
                                     ->required(fn (string $context): bool => $context === 'create'),
                                 Forms\Components\DateTimePicker::make('email_verified_at'),
                                 Forms\Components\Toggle::make('is_admin'),
-                                Forms\Components\SpatieTagsInput::make('tags')->type('categories'),
+                                Forms\Components\SpatieTagsInput::make('tags')->type('tag'),
                                 Forms\Components\DatePicker::make('feedback_submitted_at'),
                             ]),
                         Forms\Components\Tabs\Tab::make('Bio')
