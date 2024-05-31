@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Resource;
+use Filament\SpatieLaravelTagsPlugin\Types\AllTagTypes;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -39,7 +40,7 @@ class UserResource extends Resource
                                     ->required(fn (string $context): bool => $context === 'create'),
                                 Forms\Components\DateTimePicker::make('email_verified_at'),
                                 Forms\Components\Toggle::make('is_admin'),
-                                Forms\Components\SpatieTagsInput::make('tags')->type('tag'),
+                                Forms\Components\SpatieTagsInput::make('tags'),
                                 Forms\Components\DatePicker::make('feedback_submitted_at'),
                             ]),
                         Forms\Components\Tabs\Tab::make('Bio')
