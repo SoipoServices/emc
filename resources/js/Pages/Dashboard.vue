@@ -37,11 +37,11 @@ const users = ref(props.users);
         </template>
 
         <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="max-w-full mx-auto sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-gray-200 bg-opacity-25 shadow-xs dark:bg-gray-800 sm:rounded-lg">
                     <Search class="pt-10" :tags="tags" :locale="locale" :search="search" />
 
-                    <div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-3 lg:gap-8 lg:p-8">
+                    <div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-4 lg:gap-8 lg:p-8">
                         <div v-for="user in props.users.data" :key="user.id">
                             <UserCard :user="user" />
                         </div>

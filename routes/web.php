@@ -20,7 +20,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class);
-    Route::get('/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
+    Route::match(['get', 'post'],'/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
     Route::put('user/profile/bio',\App\Http\Controllers\UpdateUserBioInformationController::class)->name('user-bio-information.update');
     Route::get('user/{user}/vcard',\App\Http\Controllers\VcardController::class)->name('user.vcard');
 });

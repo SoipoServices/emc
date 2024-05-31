@@ -22,7 +22,7 @@ defineProps({
                         <ApplicationMark v-else class="object-cover w-full h-full rounded-full shadow-md"/>
                     </div>
                 </div>
-                <div class="px-6 mt-16 h-96">
+                <div class="px-6 mt-16 h-1/4">
                     <h1 class="mb-1 text-3xl font-bold text-center text-gray-800 dark:text-white">{{ user.name }}</h1>
                     <p class="text-sm text-center text-gray-800 dark:text-white" v-if="user.position">{{ user.position }}</p>
                     <p class="pt-3 text-sm text-center text-gray-800 dark:text-white" v-if="user.telephone">
@@ -44,7 +44,7 @@ defineProps({
 
                     <p class="pt-3 text-base font-normal text-center text-gray-600 dark:text-white" v-if="user.bio">
 
-                        <div class="h-32 overflow-y-auto" >
+                        <div class="mb-4 overflow-y-auto h-60" >
                          {{user.bio}}
                         </div>
                         <hr/>
