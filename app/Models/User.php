@@ -48,7 +48,9 @@ use Laravel\Sanctum\HasApiTokens;
         'email_verified_at',
         'oauth_id',
         'oauth_type',
-        'feedback_submitted_at'
+        'feedback_submitted_at',
+        'is_disabled',
+        'profile_photo_path'
     ];
 
     /**
@@ -82,7 +84,8 @@ use Laravel\Sanctum\HasApiTokens;
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_admin' => 'boolean'
+            'is_admin' => 'boolean',
+            'is_disabled' => 'boolean'
         ];
     }
 
