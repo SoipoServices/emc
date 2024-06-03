@@ -14,9 +14,6 @@
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
-        @auth
-            <script async src="https://tally.so/widgets/embed.js" defer></script>
-        @endauth
     </head>
     <body class="font-sans antialiased">
         @inertia
