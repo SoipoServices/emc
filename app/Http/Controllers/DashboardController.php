@@ -24,7 +24,7 @@ class DashboardController extends Controller
             $request->user()->feedback_submitted_at = Carbon::now();
             $request->user()->save();
         }else if(empty($request->user()->feedback_submitted_at)){
-            $form = 'Hi '.$request->user()->name.', if you haven\'t answered our form yet, please it take just a couple of minutes. <a href="https://tally.so/r/31rZbl" class="underline">Click here to start</a>';
+            $form = 'Hi '.$request->user()->name.', if you haven\'t answered our form yet, please it take just a couple of minutes. <a href="https://tally.so/r/31rZbl" target="_blank" class="underline">Click here to start</a>';
             session()->flash('flash.banner', $form);
         }
 
