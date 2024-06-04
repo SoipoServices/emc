@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\Tags\Tag;
@@ -15,9 +17,24 @@ class DashboardController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): Response|RedirectResponse
     {
 
+        if($request->get('feedbacks') == true){
+            $request->user()->feedback_submitted_at = Carbon::now();
+            $request->user()->save();
+        }else if(empty($request->user()->feedback_submitted_at)){
+            $form = 'Hi '.$request->user()->name.', if you haven\'t answered our form yet, please it take just a couple of minutes. <a href="https://tally.so/r/31rZbl" target="_blank" class="underline">Click here to start</a>';
+            session()->flash('flash.banner', $form);
+        }
+
+
+
+        if(empty($request->user()->position) || empty($request->user()->bio)){
+            session()->flash('flash.banner', 'Please make sure to fill up your Profile and Bio information!');
+            session()->flash('flash.bannerStyle', 'danger');
+            return redirect()->route('profile.show');
+        }
         $tags = Tag::where('type','categories')->get();
         $search = $request->get('search');
         $category = $request->get('category');

@@ -22,8 +22,8 @@ defineProps({
                         <ApplicationMark v-else class="object-cover w-full h-full rounded-full shadow-md"/>
                     </div>
                 </div>
-                <div class="px-6 mt-16">
-                    <h1 class="mb-1 text-3xl font-bold text-center dark:text-white">{{ user.name }}</h1>
+                <div class="px-6 mt-16 h-1/4">
+                    <h1 class="mb-1 text-3xl font-bold text-center text-gray-800 dark:text-white">{{ user.name }}</h1>
                     <p class="text-sm text-center text-gray-800 dark:text-white" v-if="user.position">{{ user.position }}</p>
                     <p class="pt-3 text-sm text-center text-gray-800 dark:text-white" v-if="user.telephone">
                         <a :href="'tel:'+user.telephone" >
@@ -43,7 +43,11 @@ defineProps({
 
 
                     <p class="pt-3 text-base font-normal text-center text-gray-600 dark:text-white" v-if="user.bio">
-                        {{user.bio}}
+
+                        <div class="mb-4 overflow-y-auto h-60" >
+                         {{user.bio}}
+                        </div>
+                        <hr/>
                     </p>
                     <div class="flex justify-center pt-5 pb-5 mx-auto text-gray-600 dark:text-white">
 
@@ -60,7 +64,7 @@ defineProps({
                             </div>
                         </a>
 
-                        <a :href="user.linkedin_url" class="mx-5" v-if="user.linkedin_url">
+                        <a :href="user.linkedin_profile_url" class="mx-5" v-if="user.linkedin_profile_url">
                             <div aria-label="Linkedin">
                                 <v-icon name="fa-linkedin" class="w-4 h-4 " animation="wrench" hover/>
                             </div>

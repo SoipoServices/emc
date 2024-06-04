@@ -143,6 +143,12 @@ const logout = () => {
                                             Profile
                                         </DropdownLink>
 
+
+                                        <a target="_blank" v-if="$page.props.auth.user.is_admin === true " :href="route('filament.admin.pages.dashboard')" class="block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800">
+                                            Admin area
+                                        </a>
+
+
                                         <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
                                             API Tokens
                                         </DropdownLink>

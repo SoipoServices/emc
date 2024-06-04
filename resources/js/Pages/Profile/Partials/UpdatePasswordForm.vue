@@ -24,14 +24,14 @@ const updatePassword = () => {
         onSuccess: () => form.reset(),
         onError: () => {
             if (form.errors.password) {
-                form.reset('password', 'password_confirmation');
+                form.reset('password');//, 'password_confirmation'
                 passwordInput.value.focus();
             }
 
-            if (form.errors.current_password) {
-                form.reset('current_password');
-                currentPasswordInput.value.focus();
-            }
+            // if (form.errors.current_password) {
+            //     form.reset('current_password');
+            //     currentPasswordInput.value.focus();
+            // }
         },
     });
 };
@@ -48,18 +48,18 @@ const updatePassword = () => {
         </template>
 
         <template #form>
-            <div class="col-span-6 sm:col-span-4">
+            <!-- <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="current_password" value="Current Password" />
                 <TextInput
                     id="current_password"
                     ref="currentPasswordInput"
                     v-model="form.current_password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block w-full mt-1"
                     autocomplete="current-password"
                 />
                 <InputError :message="form.errors.current_password" class="mt-2" />
-            </div>
+            </div> -->
 
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="password" value="New Password" />
@@ -68,7 +68,7 @@ const updatePassword = () => {
                     ref="passwordInput"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block w-full mt-1"
                     autocomplete="new-password"
                 />
                 <InputError :message="form.errors.password" class="mt-2" />
@@ -80,7 +80,7 @@ const updatePassword = () => {
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block w-full mt-1"
                     autocomplete="new-password"
                 />
                 <InputError :message="form.errors.password_confirmation" class="mt-2" />

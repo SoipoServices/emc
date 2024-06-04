@@ -3,49 +3,76 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Exception;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Socialite\Facades\Socialite;
-
+use Illuminate\Support\Str;
 use function Laravel\Prompts\error;
 
 class LinkedinController extends Controller
 {
     public function linkedinRedirect()
     {
-        return Socialite::driver('linkedin')->redirect();
+        return Socialite::driver('linkedin-openid')->redirect();
     }
 
     public function linkedinCallback()
     {
+
         try {
 
-            $user = Socialite::driver('linkedin')->user();
+            $linkedinUser = Socialite::driver('linkedin-openid')->user();
 
-            dd($user);
-            $linkedinUser = User::where('oauth_id', $user->id)->first();
+            $user = User::where('email',$linkedinUser->email)->first();
 
-            if($linkedinUser){
+            if($user){
 
-                Auth::login($linkedinUser);
+                if(empty($user->profile_photo_path)){
+                    $url = $linkedinUser->avatar;
+                    $user->profile_photo_path = $this->downloadAvatar($url,$linkedinUser->name);
+                    Log::debug("Linkedin avatar update",['profile'=>$user->profile_photo_path, 'url'=>$url]);
+                }
 
-                return redirect('/dashboard');
+                $user->oauth_id = $linkedinUser->id;
+                $user->oauth_type = 'linkedin';
+                $user->save();
+                Auth::login($user);
 
+                return redirect()->route('dashboard');
             }else{
+
+                $password = Str::password();
+
                 $user = User::create([
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'oauth_id' => $user->id,
+                    'name' => $linkedinUser->name,
+                    'email' => $linkedinUser->email,
+                    'profile_photo_path' =>  $this->downloadAvatar($linkedinUser->avatar,$linkedinUser->name),
+                    'oauth_id' => $linkedinUser->id,
                     'oauth_type' => 'linkedin',
-                    'password' => encrypt('admin12345')
+                    'password' =>  Hash::make($password),
+                    'email_verified_at' => Carbon::now()->subMinutes(1)
                 ]);
 
                 Auth::login($user);
 
-                return redirect('/dashboard');
+                return redirect()->route('dashboard');
             }
 
         } catch (Exception $e) {
-            return error(403,$e->getMessage());
+            return abort(403,$e->getMessage());
         }
+    }
+
+    protected function downloadAvatar(string $url,string $userName):string{
+        $fileName = "profile-photos/".Str::slug($userName);
+        $content = file_get_contents($url);
+        $size = getimagesize($url);
+        $extension = image_type_to_extension($size[2]);
+        $fileName .= $extension;
+        Storage::disk('public')->put($fileName, $content);
+        return $fileName;
     }
 }

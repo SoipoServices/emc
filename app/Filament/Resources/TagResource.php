@@ -31,7 +31,8 @@ class TagResource extends Resource
                 Forms\Components\Textarea::make('slug')->hint('Translatable')
                     ->hintIcon('heroicon-m-language')->required()->translatable(),
                 Forms\Components\TextInput::make('type')->required()->datalist([
-                    'categories' => "Categories"
+                    'categories' => "Categories",
+                    'tag' => "Tag"
                 ]),
             ]);
     }
