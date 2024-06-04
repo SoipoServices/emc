@@ -39,12 +39,12 @@ const logout = () => {
             </Link>
             <span class="sr-only">Entrepreneur Meet Cagliari</span>
             <nav class="flex gap-5 ml-auto sm:gap-6" v-if="canLogin" >
-                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                     About
                 </NavLink>
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                     Events
-                </NavLink>
+                </NavLink> -->
 
                 <NavLink v-if="$page.props.auth.user" :href="route('dashboard')">
                     Dashboard

@@ -12,12 +12,10 @@
 
         </p>
         <nav class="flex gap-4 sm:ml-auto sm:gap-6">
-            <!-- <a class="text-xs hover:underline underline-offset-4" href="#">
-                    Terms of Service
-                </a>
-                <a class="text-xs hover:underline underline-offset-4" href="#">
-                    Privacy Policy
-                </a> -->
+
+            <a target="_blank" :href="route('terms.show')" class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">Terms of Service</a>
+            <a target="_blank" :href="route('policy.show')" class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">Privacy Policy</a>
+            <a href="https://www.iubenda.com/privacy-policy/89321358/cookie-policy" class="text-xs hover:underline underline-offset-4 iubenda-white iubenda-noiframe iubenda-embed " title="Cookie Policy ">Cookie Policy</a>
 
             <a href="https://www.linkedin.com/groups/9588305/"
                 class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400" target="_blank">
