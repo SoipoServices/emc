@@ -13,13 +13,19 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->string('photo_path', 2048)->nullable();
             $table->string('title');
             $table->string('slug');
             $table->text('description');
             $table->string('address');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->foreignId('user_id')->constrained()->onDelete()->onUpdate();
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->boolean('is_approved')->nullable()->default(false);
             $table->timestamps();
         });
     }

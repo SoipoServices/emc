@@ -2,8 +2,18 @@
 import AppLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 
-const canRegister = true;
-
+defineProps({
+    title: String,
+    canLogin: {
+        type: Boolean,
+    },
+    canRegister: {
+        type: Boolean,
+    },
+    events: {
+        type: Object,
+    }
+});
 </script>
 
 <template>
@@ -112,7 +122,7 @@ const canRegister = true;
                 </div>
             </div>
         </section>
-        <section class="w-full py-12 bg-gray-100 md:py-24 lg:py-32 dark:bg-gray-800">
+        <section class="w-full py-12 bg-gray-100 md:py-24 lg:py-32 dark:bg-gray-800" v-if="events">
             <div class="container px-4 mx-auto md:px-6">
                 <div class="flex flex-col items-center justify-center space-y-4 text-center">
                     <div class="space-y-2">
@@ -129,43 +139,26 @@ const canRegister = true;
                     </div>
                 </div>
                 <div class="grid items-start max-w-5xl gap-6 py-12 mx-auto lg:grid-cols-2 lg:gap-12">
-                    <div class="grid gap-4">
+                    <div class="grid gap-4" v-for="event in events" :key="event.id">
                         <div
                             class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-800 dark:bg-gray-950">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-lg font-bold">June 15, 2023</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">San Francisco, CA</p>
+                                    <h3 class="text-lg font-bold">{{event.start_date}}</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{event.address}}</p>
                                 </div>
                                 <div class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800">
-                                    Networking</div>
+                                    {{event.tags}}</div>
                             </div>
                             <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                Join us for an evening of networking and idea-sharing as we explore the latest
-                                trends
-                                and challenges
-                                in the entrepreneurial landscape.
+                                {{event.title}}
                             </p>
-                        </div>
-                        <div
-                            class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold">July 20, 2023</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">New York City, NY</p>
-                                </div>
-                                <div class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800">
-                                    Funding</div>
-                            </div>
                             <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                Explore the latest funding opportunities and strategies to secure investment for
-                                your
-                                business. Hear
-                                from successful entrepreneurs who have navigated the funding landscape.
+                                {{event.description}}
                             </p>
                         </div>
                     </div>
-                    <div class="grid gap-4">
+                    <!-- <div class="grid gap-4">
                         <div
                             class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-800 dark:bg-gray-950">
                             <div class="flex items-center justify-between">
@@ -198,7 +191,7 @@ const canRegister = true;
                                 team building, and navigating growth challenges.
                             </p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
