@@ -23,7 +23,7 @@ class Event extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['photo_path', 'title', 'slug', 'description', 'address', 'start_date', 'end_date', 'is_approved', 'user_id'];
+    protected $fillable = ['photo_path','link', 'title', 'slug', 'description', 'address', 'start_date', 'end_date', 'is_approved', 'user_id'];
 
     /**
      * The accessors to append to the model's array form.

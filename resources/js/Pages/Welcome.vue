@@ -12,7 +12,11 @@ defineProps({
     },
     events: {
         type: Object,
-    }
+    },
+    locale: {
+        type: String,
+        default: 'en'
+    },
 });
 </script>
 
@@ -32,7 +36,8 @@ defineProps({
                             networking opportunities, and personalized guidance to propel your business forward.
                         </p>
                         <div class="mt-6 space-x-4">
-                            <Link v-if="canRegister" :href="route('register')" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
+                            <Link v-if="canRegister" :href="route('register')"
+                                class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
                             Join Now
                             </Link>
                         </div>
@@ -74,7 +79,8 @@ defineProps({
                             <h3 class="text-lg font-bold">Innovative Insights</h3>
                         </div>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Gain access to cutting-edge strategies and best practices from industry leaders and successful entrepreneurs.
+                            Gain access to cutting-edge strategies and best practices from industry leaders and
+                            successful entrepreneurs.
                         </p>
                     </div>
                     <div class="grid gap-1">
@@ -141,56 +147,36 @@ defineProps({
                     <div class="grid gap-4" v-for="event in events" :key="event.id">
                         <div
                             class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold">{{event.start_date}}</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{event.address}}</p>
+
+                            <a :href="event.link" target="_blank">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-lg font-bold">{{ event.title }}</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ event.address }}</p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ event.start_date }}</p>
+                                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                                            {{ event.title }}
+                                        </p>
+                                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                                            {{ event.description }}
+                                        </p>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <img v-if="event.photo_path" :src="event.photo_url"
+                                            class="inline-block w-20 h-20 mx-auto my-4 rounded-lg" />
+                                        <div v-if="event.tags?.length > 0"
+                                            class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800">
+                                            <div v-for="tag in event.tags" :key="tag.id">{{ tag.name[locale] }}</div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
-                                <div class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800">
-                                    {{event.tags}}</div>
-                            </div>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                {{event.title}}
-                            </p>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                {{event.description}}
-                            </p>
+
+                            </a>
+
                         </div>
                     </div>
-                    <!-- <div class="grid gap-4">
-                        <div
-                            class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold">August 10, 2023</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Chicago, IL</p>
-                                </div>
-                                <div class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800">
-                                    Marketing</div>
-                            </div>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                Discover cutting-edge marketing strategies and tactics to effectively promote your
-                                business and
-                                reach your target audience.
-                            </p>
-                        </div>
-                        <div
-                            class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-800 dark:bg-gray-950">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="text-lg font-bold">September 5, 2023</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Seattle, WA</p>
-                                </div>
-                                <div class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800">
-                                    Scaling</div>
-                            </div>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                Learn strategies and best practices for scaling your business, including operational
-                                efficiency,
-                                team building, and navigating growth challenges.
-                            </p>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </section>
@@ -198,95 +184,28 @@ defineProps({
             <div class="container px-4 mx-auto md:px-6">
                 <div class="flex flex-col items-center justify-center space-y-4 text-center">
                     <div class="space-y-2">
-                        <h2 class="pb-4 text-3xl font-bold tracking-tighter sm:text-5xl">Join Our Entrepreneur Group</h2>
+                        <h2 class="pb-4 text-3xl font-bold tracking-tighter sm:text-5xl">Join Our Entrepreneur Group
+                        </h2>
                         <p
                             class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                                Discover a vibrant community of innovators in Cagliari.
-                                This platform offers a unique space for local entrepreneurs to connect, share insights, and foster collaboration.
-                                Whether you're starting a new venture or looking to expand your network, this group provides valuable resources and a supportive environment to help your business thrive.
-                                Joining this group could be the stepping stone to forming lasting partnerships and exploring new opportunities in the entrepreneurial landscape of Cagliari.
+                            Discover a vibrant community of innovators in Cagliari.
+                            This platform offers a unique space for local entrepreneurs to connect, share insights, and
+                            foster collaboration.
+                            Whether you're starting a new venture or looking to expand your network, this group provides
+                            valuable resources and a supportive environment to help your business thrive.
+                            Joining this group could be the stepping stone to forming lasting partnerships and exploring
+                            new opportunities in the entrepreneurial landscape of Cagliari.
                         </p>
                     </div>
                     <div class="w-full max-w-sm mx-auto space-y-2">
-                        <Link v-if="canRegister" :href="route('register')" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
-                            Join Now
-                            </Link>
+                        <Link v-if="canRegister" :href="route('register')"
+                            class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
+                        Join Now
+                        </Link>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-            <div
-                class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-            >
-                <div id="screenshot-container" class="relative flex items-stretch flex-1 w-full">
-                    <img
-                        src="../../images/event_pic.jpg"
-                        alt="Laravel documentation screenshot"
-                        class="aspect-video h-full w-full flex-1 rounded-[10px] object-top object-cover drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)]"
-                        @error="handleImageError"
-                    />
-                    <div
-                        class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900">
-                    </div>
-                </div>
-
-                <div class="relative flex items-center gap-6 lg:items-end">
-                    <div id="docs-card-content" class="flex items-start gap-6 lg:flex-col">
-
-
-                        <div class="pt-3 sm:pt-5 lg:pt-0">
-
-                            <p class="mt-4 text-sm/relaxed">
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <a
-                href="https://www.facebook.com/groups/6784218835040596/"
-                target="_blank"
-                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-            >
-                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                    <v-icon name="fa-facebook" class="w-12 h-12 sm:h-10 sm:w-10" animation="wrench" fill="#FF2D20" hover/>
-                </div>
-
-                <div class="pt-3 sm:pt-5">
-                    <h2 class="text-xl font-semibold text-black dark:text-white">Facebook</h2>
-
-                    <p class="mt-4 text-sm/relaxed">
-                        Discover a vibrant community of innovators in Cagliari with a dedicated Facebook group for entrepreneurs. This platform offers a unique space for local entrepreneurs to connect, share insights, and foster collaboration. Whether you're starting a new venture or looking to expand your network, this group provides valuable resources and a supportive environment to help your business thrive. Joining this group could be the stepping stone to forming lasting partnerships and exploring new opportunities in the entrepreneurial landscape of Cagliari.
-                    </p>
-                </div>
-
-                <svg class="size-6 shrink-0 self-center stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-            </a>
-
-            <a
-                href="https://www.linkedin.com/groups/9588305/"
-                target="_blank"
-                class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-            >
-                <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16">
-                    <v-icon name="fa-linkedin" class="w-12 h-12 sm:h-10 sm:w-10" animation="wrench" fill="#FF2D20" hover/>
-                </div>
-
-                <div class="pt-3 sm:pt-5">
-                    <h2 class="text-xl font-semibold text-black dark:text-white">LinkedIn</h2>
-
-                    <p class="mt-4 text-sm/relaxed">
-                        Welcome to the Cagliari Entrepreneurs Network on LinkedIn, a vibrant community designed to unite local entrepreneurs. This group is the perfect hub for Cagliari-based innovators looking to network, share ideas, and collaborate on exciting projects. Members can expect a supportive environment where they can connect with peers, discover potential partnerships, and explore new business opportunities. Join us to engage with fellow entrepreneurs and turn amazing possibilities into reality. Whether you're a seasoned business owner or just starting, this group aims to foster growth and success within our dynamic entrepreneurial ecosystem.
-                    </p>
-                </div>
-
-                <svg class="size-6 shrink-0 self-center stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
-            </a>
-
-        </div> -->
 
     </AppLayout>
 </template>

@@ -64,6 +64,7 @@ class EventResource extends Resource
                 DateTimePicker::make('start_date')->required(),
                 DateTimePicker::make('end_date')->required(),
                 TextInput::make('address')->required(),
+                TextInput::make('link')->required()->rule('url'),
                 Select::make('user_id')
                     ->relationship(name: 'user', titleAttribute: 'name')->required(),
                 SpatieTagsInput::make('tags'),
