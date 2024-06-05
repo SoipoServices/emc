@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Checks\MailCheck;
+use App\Models\User;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Health\Checks\Checks\DatabaseCheck;
@@ -30,5 +32,9 @@ class AppServiceProvider extends ServiceProvider
         // if (App::environment('production')) {
         //     URL::forceScheme('https');
         // }
+
+        Gate::define('viewPulse', function (User $user) {
+            return $user->is_admin;
+        });
     }
 }
