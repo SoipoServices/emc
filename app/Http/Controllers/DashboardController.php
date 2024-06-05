@@ -40,13 +40,13 @@ class DashboardController extends Controller
         $category = $request->get('category');
 
         if(!empty($category) && !empty($search)){
-           $query = User::search($search)->query(fn ($q) => $q->verified()->hasBio()->withAnyTags([$category],'categories')->with('tags'));
+           $query = User::search($search)->query(fn ($q) => $q->inRandomOrder()->verified()->hasBio()->withAnyTags([$category],'categories')->with('tags'));
         }else if(!empty($search)){
-            $query = User::search($search)->query(fn ($q) => $q->verified()->hasBio()->with('tags'));
+            $query = User::search($search)->query(fn ($q) => $q->inRandomOrder()->verified()->hasBio()->with('tags'));
         }else if(!empty($category)){
-            $query = User::verified()->hasBio()->with('tags')->withAnyTags([$category],'categories');
+            $query = User::inRandomOrder()->verified()->hasBio()->with('tags')->withAnyTags([$category],'categories');
         }else{
-            $query = User::verified()->hasBio()->with('tags');
+            $query = User::inRandomOrder()->verified()->hasBio()->with('tags');
         }
 
         $users = $query->paginate(self::PAGINATION);
