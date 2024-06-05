@@ -45,7 +45,7 @@ defineProps({
                     <div class="flex flex-col items-start space-y-4">
                         <img src="../../images/event_pic.jpg" alt="Meetup event in cagliari" @error="handleImageError"
                             width="550" height="310"
-                            class="object-cover object-center mx-auto overflow-hidden aspect-video rounded-xl sm:w-full" />
+                            class="object-cover object-center mx-auto overflow-hidden opacity-60 aspect-video rounded-xl sm:w-full" />
                     </div>
                 </div>
             </div>
