@@ -11,7 +11,7 @@ class EventStats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Users', Event::count()),
+            Stat::make('Total Events', Event::count()),
         ];
     }
 }

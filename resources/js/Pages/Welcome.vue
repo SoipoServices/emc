@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
+import Event from '@/Pages/Welcome/Event.vue';
 
 defineProps({
     title: String,
@@ -96,7 +97,7 @@ defineProps({
                             <h3 class="text-lg font-bold">Powerful Networking</h3>
                         </div>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Connect with like-minded individuals, forge valuable partnerships, and expand your
+                            Connect with like-minded individuals, all from the beautiful city of Cagliari, forge valuable partnerships, and expand your
                             professional
                             network.
                         </p>
@@ -131,51 +132,18 @@ defineProps({
             <div class="container px-4 mx-auto md:px-6">
                 <div class="flex flex-col items-center justify-center space-y-4 text-center">
                     <div class="space-y-2">
-                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">Upcoming Entrepreneur Group
-                            Meetings
+                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">Upcoming Entrepreneur Group Meetings and Member events
                         </h2>
                         <p
                             class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                            Mark your calendars and join us for our upcoming entrepreneur group meetings. Discover
-                            the
-                            dates,
-                            locations, and key highlights of each event.
+                            Mark your calendars and join us for our upcoming entrepreneur group meetings and member events. Discover
+                            the dates, locations, and key highlights of each event.
                         </p>
                     </div>
                 </div>
                 <div class="grid items-start max-w-5xl gap-6 py-12 mx-auto lg:grid-cols-2 lg:gap-12">
                     <div class="grid gap-4" v-for="event in events" :key="event.id">
-                        <div
-                            class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-800 dark:bg-gray-950">
-
-                            <a :href="event.link" target="_blank">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="text-lg font-bold">{{ event.title }}</h3>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ event.address }}</p>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ event.start_date }}</p>
-                                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                            {{ event.title }}
-                                        </p>
-                                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                            {{ event.description }}
-                                        </p>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <img v-if="event.photo_path" :src="event.photo_url"
-                                            class="inline-block w-20 h-20 mx-auto my-4 rounded-lg" />
-                                        <div v-if="event.tags?.length > 0"
-                                            class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800">
-                                            <div v-for="tag in event.tags" :key="tag.id">{{ tag.name[locale] }}</div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </a>
-
-                        </div>
+                        <Event :event="event" :locale="locale" />
                     </div>
                 </div>
             </div>

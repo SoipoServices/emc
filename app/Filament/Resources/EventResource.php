@@ -13,6 +13,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\Textarea;
@@ -60,7 +61,7 @@ class EventResource extends Resource
                     ->dehydrated(false),
                 FileUpload::make('photo_path')->disk(self::photoDisk()),
 
-                Textarea::make('description')->required(),
+                RichEditor::make('description')->required(),
                 DateTimePicker::make('start_date')->required(),
                 DateTimePicker::make('end_date')->required(),
                 TextInput::make('address')->required(),
