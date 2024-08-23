@@ -21,7 +21,7 @@ class HomeController extends Controller
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
-            'events' => Event::approved()->with('tags')->get(),
+            'events' => Event::approved()->with('tags')->orderBy('id','desc')->get(),
             'title' => "Entrepreneur Meet Cagliari",
             'phpVersion' => PHP_VERSION,
         ]);
