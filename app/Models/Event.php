@@ -23,7 +23,7 @@ class Event extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['photo_path','link', 'title', 'slug', 'description', 'address', 'start_date', 'end_date', 'is_approved', 'user_id'];
+    protected $fillable = ['is_member_event', 'photo_path', 'link', 'title', 'slug', 'description', 'address', 'start_date', 'end_date', 'is_approved', 'user_id'];
 
     /**
      * The accessors to append to the model's array form.
@@ -44,35 +44,41 @@ class Event extends Model
         return [
             'start_date' => 'datetime:d-M-Y H:00',
             'end_date' => 'datetime:d-M-Y H:00',
-            'is_approved' => 'boolean'
+            'is_approved' => 'boolean',
+            'is_member_event' => 'boolean'
         ];
     }
 
 
-      /**
-      * Get the indexable data array for the model.
-      *
-      * @return array<string, mixed>
-      */
-      #[SearchUsingPrefix(['title', 'slug','address'])]
-      #[SearchUsingFullText(['description'])]
-      public function toSearchableArray(): array
-      {
-          return [
-              'id' => $this->id,
-              'title' => $this->title,
-              'slug' => $this->slug,
-              'address' => $this->address,
-              'toSearchableArray' => $this->toSearchableArray,
-              'start_date' => $this->start_date,
-              'end_date' => $this->end_date,
-          ];
-      }
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    #[SearchUsingPrefix(['title', 'slug', 'address'])]
+    #[SearchUsingFullText(['description'])]
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'address' => $this->address,
+            'toSearchableArray' => $this->toSearchableArray,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+        ];
+    }
 
-      public function scopeApproved($query)
-      {
-          return $query->where('is_approved',true);
-      }
+    public function scopeApproved($query)
+    {
+        return $query->where('is_approved', true);
+    }
+
+    public function scopeMemberEvent($query)
+    {
+        return $query->where('is_member_event', true);
+    }
 
     public function user(): BelongsTo
     {

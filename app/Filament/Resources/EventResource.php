@@ -70,6 +70,7 @@ class EventResource extends Resource
                     ->relationship(name: 'user', titleAttribute: 'name')->required(),
                 SpatieTagsInput::make('tags'),
                 Toggle::make('is_approved'),
+                Toggle::make('is_member_event'),
 
             ]);
     }
@@ -85,10 +86,17 @@ class EventResource extends Resource
                 TextColumn::make('start_date')->since(),
                 TextColumn::make('end_date')->since(),
                 ToggleColumn::make('is_approved'),
+                ToggleColumn::make('is_member_event'),
+
 
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('is_approved')
+                    ->options([
+                        true => 'Yes',
+                        false => 'No',
+                    ]),
+                Tables\Filters\SelectFilter::make('is_member_event')
                     ->options([
                         true => 'Yes',
                         false => 'No',
