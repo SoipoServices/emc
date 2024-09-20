@@ -47,9 +47,9 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $eventId)
+    public function show(string $slug)
     {
-        $event = Event::approved()->with('tags')->orderBy('id','desc')->findOrFail($eventId);
+        $event = Event::approved()->where('slug',$slug)->with('tags')->orderBy('id','desc')->firstOrFail();
         return Inertia::render('Event', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),

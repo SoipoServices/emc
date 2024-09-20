@@ -9,7 +9,7 @@ use Inertia\Inertia;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/events', [EventController::class,'index'])->name('event.index');
-Route::get('/event/{id}', [EventController::class,'show'])->name('event.show');
+Route::get('/event/{slug}', [EventController::class,'show'])->name('event.show');
 
 Route::middleware([
     'auth:sanctum',
