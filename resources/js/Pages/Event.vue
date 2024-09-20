@@ -27,7 +27,7 @@ defineProps({
         <section class="py-12 bg-white">
             <div class="container px-4 mx-auto">
                 <div class="mx-auto">
-                    <div class="flex gap-4">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
                             <h2 class="mb-4 text-4xl font-semibold text-gray-800"> {{ event.title }}</h2>
                             <p class="mb-6 text-lg text-gray-600" v-html="event.description"></p>
