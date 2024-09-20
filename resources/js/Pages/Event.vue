@@ -53,7 +53,7 @@ defineProps({
                             </a>
                         </div>
                         <div>
-                            <img class="object-cover w-full h-[63rem] mb-6 rounded-md" v-if="event.photo_path"
+                            <img class="object-cover w-full mb-6 rounded-md" v-if="event.photo_path"
                             :src="event.photo_url" :alt="event.title">
                         </div>
                     </div>
