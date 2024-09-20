@@ -33,7 +33,7 @@ defineProps({
                     <p class="mb-6 text-lg text-gray-600" v-html="event.description"></p>
 
                     <div v-if="event.tags?.length > 0"
-                        class="inline-block px-3 py-1 my-4 text-sm bg-gray-100 rounded-lg dark:bg-gray-800">
+                        class="inline-block px-3 py-1 my-4 text-sm bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-white">
                         <div v-for="tag in event.tags" :key="tag.id">{{ tag.name[locale] }}</div>
                     </div>
 
