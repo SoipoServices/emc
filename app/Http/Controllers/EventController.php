@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEventRequest;
-use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
+
 
 class EventController extends Controller
 {
@@ -13,7 +18,14 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Events', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'events' => Event::approved()->with('tags')->orderBy('id','desc')->get(),
+            'title' => "Entrepreneur Meet Cagliari",
+            'phpVersion' => PHP_VERSION,
+        ]);
     }
 
     /**
@@ -35,9 +47,17 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show(int $eventId)
     {
-        //
+        $event = Event::approved()->with('tags')->orderBy('id','desc')->findOrFail($eventId);
+        return Inertia::render('Event', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'event' => $event,
+            'title' => $event->title,
+            'phpVersion' => PHP_VERSION,
+        ]);
     }
 
     /**

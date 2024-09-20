@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedinController;
 use Illuminate\Foundation\Application;
@@ -7,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/events', [EventController::class,'index'])->name('event.index');
+Route::get('/event/{id}', [EventController::class,'show'])->name('event.show');
 
 Route::middleware([
     'auth:sanctum',
