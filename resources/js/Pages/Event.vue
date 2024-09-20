@@ -27,7 +27,7 @@ defineProps({
         <section class="py-12 bg-white">
             <div class="container px-4 mx-auto">
                 <div class="max-w-3xl mx-auto">
-                    <img class="object-cover w-full h-64 mb-6 rounded-md" v-if="event.photo_path" :src="event.photo_url"
+                    <img class="object-cover w-full h-[63rem] mb-6 rounded-md" v-if="event.photo_path" :src="event.photo_url"
                         :alt="event.title">
                     <h2 class="mb-4 text-4xl font-semibold text-gray-800"> {{ event.title }}</h2>
                     <p class="mb-6 text-lg text-gray-600" v-html="event.description"></p>
