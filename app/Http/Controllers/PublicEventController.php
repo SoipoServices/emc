@@ -6,16 +6,10 @@ use App\Models\Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Inertia\Response;
 
-class HomeController extends Controller
+class PublicEventController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request):Response|RedirectResponse
+    public function index()
     {
         $events = Event::approved()
             ->with('tags')
@@ -23,16 +17,26 @@ class HomeController extends Controller
             ->orderBy('start_date', 'asc')
             ->get();
 
-        $emcEvents = $events->where('is_member_event', false);
-        $memberEvents = $events->where('is_member_event', true);
-
-        return Inertia::render('Welcome', [
+        return Inertia::render('Events', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
-            'events' => $emcEvents,
-            'memberEvents' => $memberEvents,
+            'events' => $events,
             'title' => "Entrepreneur Meet Cagliari",
+            'phpVersion' => PHP_VERSION,
+        ]);
+    }
+
+    public function show(string $slug)
+    {
+        $event = Event::approved()->where('slug', $slug)->with('tags')->firstOrFail();
+
+        return Inertia::render('Event', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'event' => $event,
+            'title' => $event->title,
             'phpVersion' => PHP_VERSION,
         ]);
     }

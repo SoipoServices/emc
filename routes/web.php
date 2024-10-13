@@ -5,14 +5,15 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\ReactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/events', [EventController::class,'index'])->name('event.index');
-Route::get('/event/{slug}', [EventController::class,'show'])->name('event.show');
+Route::get('/events', [PublicEventController::class, 'index'])->name('events.index');
+Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('event.show');
 
 Route::middleware([
     'auth:sanctum',
@@ -33,7 +34,14 @@ Route::middleware([
     Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/posts/{post}/react', [ReactionController::class, 'toggle'])->name('posts.react');
+    Route::get('/events/list', [EventController::class, 'list'])->name('events.list');
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+    Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 });
+
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'linkedinCallback'])->name('linkedin.callback');

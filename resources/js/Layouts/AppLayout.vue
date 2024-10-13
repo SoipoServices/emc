@@ -74,6 +74,9 @@ const logout = () => {
                                 <NavLink :href="route('billboard.index')" :active="route().current('billboard.index')">
                                     Billboard
                                 </NavLink>
+                                <NavLink :href="route('events.list')" :active="route().current('events.list')">
+                                    Events
+                                </NavLink>
                             </div>
                         </div>
 
@@ -226,6 +229,9 @@ const logout = () => {
                         <!-- Add Responsive Billboard Link -->
                         <ResponsiveNavLink :href="route('billboard.index')" :active="route().current('billboard.index')">
                             Billboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('events.list')" :active="route().current('events.list')">
+                            Events
                         </ResponsiveNavLink>
                     </div>
 

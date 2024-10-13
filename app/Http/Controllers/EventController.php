@@ -3,16 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Inertia\Response;
+use App\Notifications\NewEventForApproval;
+use Illuminate\Support\Str;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Storage;
 
-
-class EventController extends Controller
+class EventController extends BaseController
 {
+    use AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Event::class, 'event', [
+            'except' => ['index', 'show', 'list', 'store']
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,15 +45,48 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Events/Create', [
+            'tinymceApiKey' => config('services.tinymce.api_key'),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'address' => 'required|string|max:255',
+            'image' => 'nullable|image|max:1024', // Allow image upload, max 1MB
+        ]);
+
+        $event = new Event($validated);
+        $event->user_id = $request->user()->id;
+        $event->slug = Str::slug($validated['title']);
+        $event->is_approved = false;
+        $event->is_member_event = true;
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('event_images', 'public');
+            $event->photo_path = $path;
+        }
+
+        $event->save();
+
+        // Notify admin
+        $admin = User::where('is_admin', true)->first();
+        if ($admin) {
+            $admin->notify(new NewEventForApproval($event));
+        }
+
+        return redirect()->route('events.list')->with('flash', [
+            'banner' => 'Event created successfully and sent for approval!',
+            'bannerStyle' => 'success',
+        ]);
     }
 
     /**
@@ -65,15 +110,44 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return Inertia::render('Events/Edit', [
+            'event' => $event,
+            'tinymceApiKey' => config('services.tinymce.api_key'),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(Request $request, Event $event)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'address' => 'required|string|max:255',
+            'image' => 'nullable|image|max:1024', // Allow image upload, max 1MB
+        ]);
+
+        $event->update($validated);
+        $event->slug = Str::slug($validated['title']);
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($event->photo_path) {
+                Storage::disk('public')->delete($event->photo_path);
+            }
+            $path = $request->file('image')->store('event_images', 'public');
+            $event->photo_path = $path;
+        }
+
+        $event->save();
+
+        return redirect()->route('events.list')->with('flash', [
+            'banner' => 'Event updated successfully!',
+            'bannerStyle' => 'success',
+        ]);
     }
 
     /**
@@ -81,6 +155,33 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+
+        return redirect()->route('events.index')->with('flash', [
+            'banner' => 'Event deleted successfully!',
+            'bannerStyle' => 'success',
+        ]);
+    }
+
+    public function list()
+    {
+        $user = auth()->user();
+
+        $events = Event::with(['tags', 'user'])
+            ->where(function ($query) use ($user) {
+                $query->where('is_approved', true)
+                      ->orWhere('user_id', $user->id);
+            })
+            ->orderBy('start_date', 'asc')
+            ->get();
+
+        return Inertia::render('Events/List', [
+            'events' => $events,
+            'can' => [
+                'updateEvent' => $events->mapWithKeys(function ($event) {
+                    return [$event->id => $this->authorize('update', $event, false)];
+                }),
+            ],
+        ]);
     }
 }

@@ -38,28 +38,32 @@ const logout = () => {
             <ApplicationMark class="block w-auto h-9" />
             </Link>
             <span class="sr-only">Entrepreneur Meet Cagliari</span>
-            <nav class="flex gap-5 ml-auto sm:gap-6" v-if="canLogin" >
-                <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+            <nav class="flex gap-5 ml-auto sm:gap-6">
+                <div v-if="canLogin">
+
+                    <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                     About
                 </NavLink>
                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                     Events
                 </NavLink> -->
 
-                <NavLink v-if="$page.props.auth.user" :href="route('dashboard')">
-                    Dashboard
-                </NavLink>
-                <div v-else>
-                    <NavLink :href="route('login')" class="mr-4">
-                    Log in
+                    <NavLink v-if="$page.props.auth.user" :href="route('dashboard')">
+                        Dashboard
                     </NavLink>
+                    <div v-else>
+                        <NavLink :href="route('login')" class="mr-4">
+                            Log in
+                        </NavLink>
 
-                    <NavLink v-if="canRegister" :href="route('register')">
-                    Register
-                    </NavLink>
+                        <NavLink v-if="canRegister" :href="route('register')">
+                            Register
+                        </NavLink>
+                    </div>
                 </div>
-
-
+                <NavLink :href="route('events.index')">
+                        Events
+                        </NavLink>
             </nav>
         </header>
         <main class="flex-1">

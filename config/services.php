@@ -44,4 +44,8 @@ return [
         'redirect' => env('APP_URL', 'http://localhost').'/auth/linkedin/callback',
     ],
 
+    'tinymce' => [
+        'api_key' => env('TINYMCE_API_KEY'),
+    ],
+
 ];

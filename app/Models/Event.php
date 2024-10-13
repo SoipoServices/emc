@@ -10,6 +10,7 @@ use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
 use Spatie\Tags\HasTags;
+use Illuminate\Support\Str;
 
 class Event extends Model
 {
@@ -23,7 +24,18 @@ class Event extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['is_member_event', 'photo_path', 'link', 'title', 'slug', 'description', 'address', 'start_date', 'end_date', 'is_approved', 'user_id'];
+    protected $fillable = [
+        'title',
+        'description',
+        'start_date',
+        'end_date',
+        'address',
+        'slug',
+        'is_approved',
+        'is_member_event',
+        'user_id',
+        'photo_path'
+    ];
 
     /**
      * The accessors to append to the model's array form.
@@ -32,6 +44,7 @@ class Event extends Model
      */
     protected $appends = [
         'photo_url',
+        'plain_description',
     ];
 
     /**
@@ -39,16 +52,22 @@ class Event extends Model
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'start_date' => 'datetime:d-M-Y H:00',
-            'end_date' => 'datetime:d-M-Y H:00',
-            'is_approved' => 'boolean',
-            'is_member_event' => 'boolean'
-        ];
-    }
+    protected $casts = [
+        'start_date' => 'datetime:d-M-Y H:00',
+        'end_date' => 'datetime:d-M-Y H:00',
+        'is_approved' => 'boolean',
+        'is_member_event' => 'boolean'
+    ];
 
+    /**
+     * Get the plain text version of the description.
+     *
+     * @return string
+     */
+    public function getPlainDescriptionAttribute()
+    {
+        return strip_tags($this->description);
+    }
 
     /**
      * Get the indexable data array for the model.
@@ -83,5 +102,10 @@ class Event extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getPhotoUrlAttribute()
+    {
+        return $this->photo_path ? asset('storage/' . $this->photo_path) : null;
     }
 }
