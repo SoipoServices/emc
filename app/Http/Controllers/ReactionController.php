@@ -15,6 +15,7 @@ class ReactionController extends Controller
             'emoji' => 'required|string',
         ]);
 
+
         $reaction = $post->reactions()->where('user_id', $request->user()->id)->first();
 
         if ($reaction) {

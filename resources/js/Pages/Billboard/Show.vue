@@ -10,6 +10,7 @@ const props = defineProps({
 
 const form = useForm({
     body: '',
+    emoji: null,
 });
 
 const editingComment = ref(null);
@@ -50,7 +51,8 @@ const deleteComment = (id) => {
 };
 
 const toggleReaction = (emoji) => {
-    form.post(route('posts.react', props.post.id), { emoji }, {
+    form.emoji = emoji;
+    form.post(route('posts.react', props.post.id), {
         preserveScroll: true,
     });
 };
