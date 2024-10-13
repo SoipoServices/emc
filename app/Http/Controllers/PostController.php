@@ -97,6 +97,8 @@ class PostController extends BaseController
 
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
+
         return Inertia::render('Billboard/Edit', [
             'post' => $post,
         ]);
@@ -104,6 +106,8 @@ class PostController extends BaseController
 
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $validated = $request->validate([
             'body' => 'required|string|max:1000',
         ]);

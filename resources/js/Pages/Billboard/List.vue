@@ -63,12 +63,21 @@ const getReactionCounts = (post) => {
                         </div>
                         <div class="mt-2 flex items-center justify-between">
                             <span class="text-sm text-gray-500">{{ post.comments_count }} comments</span>
-                            <Link
-                                :href="route('billboard.show', post.id)"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
-                            >
-                                Read more
-                            </Link>
+                            <div>
+                                <Link
+                                    v-if="$page.props.auth.user.id === post.user_id"
+                                    :href="route('billboard.edit', post.id)"
+                                    class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25 transition mr-2"
+                                >
+                                    Edit
+                                </Link>
+                                <Link
+                                    :href="route('billboard.show', post.id)"
+                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
+                                >
+                                    Read more
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
