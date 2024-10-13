@@ -7,6 +7,21 @@ use App\Models\User;
 
 class PostPolicy
 {
+    public function viewAny(User $user)
+    {
+        return true;
+    }
+
+    public function view(User $user, Post $event)
+    {
+        return true;
+    }
+
+    public function create(User $user)
+    {
+        return true; // Allow all authenticated users to create events
+    }
+
     public function update(User $user, Post $post)
     {
         return $user->id === $post->user_id;
