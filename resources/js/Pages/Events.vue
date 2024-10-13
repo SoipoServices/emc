@@ -33,7 +33,7 @@ defineProps({
                                 {{ new Date(event.start_date).toLocaleDateString() }}
                             </p>
                             <p class="mb-4 text-gray-700 dark:text-gray-200">
-                                {{ event.description.substring(0, 100) }}{{ event.description.length > 100 ? '...' : '' }}
+                                {{ event.plain_description.substring(0, 100) }}{{ event.plain_description.length > 100 ? '...' : '' }}
                             </p>
                             <Link :href="route('event.show', event.slug)" class="inline-block px-4 py-2 text-white transition duration-300 bg-blue-600 rounded hover:bg-blue-700">
                                 Learn More
