@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 class EventController extends BaseController
 {
     use AuthorizesRequests;
+    const PAGINATION = 10;
 
     public function __construct()
     {
@@ -173,7 +174,7 @@ class EventController extends BaseController
                       ->orWhere('user_id', $user->id);
             })
             ->latest() // This orders by created_at in descending order
-            ->paginate(10);
+            ->paginate(self::PAGINATION);
 
         return Inertia::render('Events/List', [
             'events' => $events,

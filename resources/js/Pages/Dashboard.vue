@@ -46,9 +46,9 @@ const users = ref(props.users);
                             <UserCard :user="user" />
                         </div>
                     </div>
-                    <div class="max-w-lg py-10 mx-auto">
+                    <div class="px-4 py-10 mx-auto sm:px-6 lg:px-8">
                         <div class="flex flex-wrap items-center justify-center">
-                            <Pagination :items="props.users.links" />
+                            <Pagination  :links="props.users.links" v-if="props.users.links" />
                         </div>
                     </div>
                 </div>

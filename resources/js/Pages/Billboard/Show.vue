@@ -57,7 +57,7 @@ const toggleReaction = (emoji) => {
     });
 };
 
-const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡'];
+const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡','🚀','🧨'];
 </script>
 
 <template>
