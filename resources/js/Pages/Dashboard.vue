@@ -44,6 +44,11 @@ const users = ref(props.users);
                     <div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-4 lg:gap-8 lg:p-8">
                         <div v-for="user in props.users.data" :key="user.id">
                             <UserCard :user="user" />
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                <span v-for="tag in user.tags" :key="tag.name" class="px-2 py-1 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full truncate max-w-[200px]">
+                                    {{ tag.name }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="max-w-lg py-10 mx-auto">
@@ -57,3 +62,11 @@ const users = ref(props.users);
 
     </AppLayout>
 </template>
+
+<style scoped>
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>
