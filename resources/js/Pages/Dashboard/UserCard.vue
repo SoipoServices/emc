@@ -42,13 +42,12 @@ defineProps({
                     </p>
 
 
-                    <p class="pt-3 text-base font-normal text-center text-gray-600 dark:text-white" v-if="user.bio">
+                    <div class="pt-3 text-base font-normal text-center text-gray-600 dark:text-white" v-if="user.bio">
 
                         <div class="mb-4 overflow-y-auto h-60" >
                          {{user.bio}}
                         </div>
-                        <hr/>
-                    </p>
+                    </div>
                     <div class="flex justify-center pt-5 pb-5 mx-auto text-gray-600 dark:text-white">
 
 
