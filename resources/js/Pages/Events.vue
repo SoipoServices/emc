@@ -1,7 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import PublicLayout from '@/Layouts/PublicLayout.vue';
-
+import AppLayout from '@/Layouts/GuestLayout.vue';
 defineProps({
     events: Array,
     canLogin: Boolean,
@@ -13,7 +12,7 @@ defineProps({
 </script>
 
 <template>
-    <PublicLayout :title="title" :can-login="canLogin" :can-register="canRegister">
+    <AppLayout :title="title" :can-login="canLogin" :can-register="canRegister">
         <section class="w-full py-8 bg-gray-100 md:py-16 lg:py-24 dark:bg-gray-800">
             <div class="container px-4 mx-auto">
                 <div class="flex flex-col items-center justify-center mb-8 space-y-4 text-center">
@@ -44,7 +43,7 @@ defineProps({
                 </div>
             </div>
         </section>
-    </PublicLayout>
+    </AppLayout>
 </template>
 
 <style scoped>

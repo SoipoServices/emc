@@ -1,5 +1,5 @@
 <script setup>
-import PublicLayout from '@/Layouts/PublicLayout.vue';
+import AppLayout from '@/Layouts/GuestLayout.vue';
 import { Link } from '@inertiajs/vue3';
 
 defineProps({
@@ -15,7 +15,7 @@ defineProps({
 </script>
 
 <template>
-    <PublicLayout :title="title" :can-register="canRegister" :can-login="canLogin">
+    <AppLayout :title="title" :can-register="canRegister" :can-login="canLogin">
         <section class="py-12 bg-white dark:bg-gray-900">
             <div class="container px-4 mx-auto">
                 <div class="max-w-4xl mx-auto">
@@ -51,5 +51,5 @@ defineProps({
                 </div>
             </div>
         </section>
-    </PublicLayout>
+    </AppLayout>
 </template>
