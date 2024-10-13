@@ -176,8 +176,8 @@ const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡'];
                                         </div>
                                     </div>
                                     <form @submit.prevent="submitComment(post.id)" class="mt-2">
-                                        <textarea v-model="form.body" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="2" placeholder="Add a comment..."></textarea>
-                                        <button type="submit" class="inline-flex items-center px-3 py-1 mt-1 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25">Comment</button>
+                                        <textarea v-model="form.body" class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="2" placeholder="Add a comment..."></textarea>
+                                        <button type="submit" class="mt-1 inline-flex items-center px-3 py-1 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">Comment</button>
                                     </form>
                                 </div>
                             </div>
