@@ -14,7 +14,7 @@ class PublicEventController extends Controller
         $events = Event::approved()
             ->with('tags')
             ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event')
-            ->orderBy('start_date', 'asc')
+            ->latest() // This orders by created_at in descending order
             ->get();
 
         return Inertia::render('Events', [

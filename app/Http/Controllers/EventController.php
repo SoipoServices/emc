@@ -172,8 +172,8 @@ class EventController extends BaseController
                 $query->where('is_approved', true)
                       ->orWhere('user_id', $user->id);
             })
-            ->orderBy('start_date', 'asc')
-            ->get();
+            ->latest() // This orders by created_at in descending order
+            ->paginate(10);
 
         return Inertia::render('Events/List', [
             'events' => $events,

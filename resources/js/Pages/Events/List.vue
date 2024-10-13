@@ -1,9 +1,10 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import Pagination from '@/Components/Pagination.vue';
 
 const props = defineProps({
-    events: Array,
+    events: Object, // Changed from Array to Object to accommodate pagination
     can: Object,
 });
 </script>
@@ -25,7 +26,7 @@ const props = defineProps({
                             Create New Event
                         </Link>
                     </div>
-                    <div v-for="event in events" :key="event.id" class="mb-4 p-4 border rounded">
+                    <div v-for="event in events.data" :key="event.id" class="mb-4 p-4 border rounded">
                         <div class="flex justify-between items-start">
                             <div class="flex-grow">
                                 <div class="flex items-center">
@@ -71,6 +72,7 @@ const props = defineProps({
                             </Link>
                         </div>
                     </div>
+                    <Pagination :links="events.links" class="mt-6" />
                 </div>
             </div>
         </div>

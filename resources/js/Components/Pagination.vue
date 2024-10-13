@@ -1,20 +1,18 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps({
-    items: {
-        type: Object,
-        required: true
-    },
-})
+    links: Array,
+});
 </script>
 
 <template>
-    <div class="join" v-if="items.length > 3">
-        <div v-for="item in items" >
-            <Link v-if="item.url"  class="join-item btn text-white bg-gray-800 dark:bg-gray-200" :href="item.url" :class="{'btn-active' : item.active }" :key="item.id" v-html="item.label"/>
-            <PrimaryButton v-else class="join-item btn bg-gray-800 dark:bg-gray-200" :key="item.id" v-html="item.label" disabled/>
+    <div v-if="links.length > 3">
+        <div class="flex flex-wrap -mb-1">
+            <template v-for="(link, key) in links" :key="key">
+                <div v-if="link.url === null" class="mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border rounded" v-html="link.label" />
+                <Link v-else class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-white focus:border-indigo-500 focus:text-indigo-500" :class="{ 'bg-blue-700 text-white': link.active }" :href="link.url" v-html="link.label" />
+            </template>
         </div>
     </div>
 </template>

@@ -25,17 +25,8 @@ class PostController extends BaseController
     {
         $posts = Post::with(['user', 'reactions'])
             ->withCount('comments')
-            ->latest()
-            ->get()
-            ->map(function ($post) {
-                $post->link_preview = [
-                    'url' => $post->link_url,
-                    'title' => $post->link_title,
-                    'description' => $post->link_description,
-                    'image' => $post->link_image,
-                ];
-                return $post;
-            });
+            ->latest() // This orders by created_at in descending order
+            ->paginate(10);
 
         return Inertia::render('Billboard/List', [
             'posts' => $posts,
