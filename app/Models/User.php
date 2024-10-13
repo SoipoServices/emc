@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
- use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,13 +11,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
- use Laravel\Scout\Attributes\SearchUsingFullText;
- use Laravel\Scout\Attributes\SearchUsingPrefix;
- use Laravel\Scout\Searchable;
- use Spatie\Tags\HasTags;
- use Illuminate\Database\Eloquent\Casts\Attribute;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
+use Spatie\Tags\HasTags;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
- class User extends Authenticatable implements FilamentUser, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -94,55 +94,54 @@ use Laravel\Sanctum\HasApiTokens;
         return $this->is_admin && $this->hasVerifiedEmail();
     }
 
-     /**
-      * Get the indexable data array for the model.
-      *
-      * @return array<string, mixed>
-      */
-     #[SearchUsingPrefix(['name', 'email','telephone','position'])]
-     #[SearchUsingFullText(['bio'])]
-     public function toSearchableArray(): array
-     {
-         return [
-             'id' => $this->id,
-             'name' => $this->name,
-             'email' => $this->email,
-             'bio' => $this->bio,
-         ];
-     }
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    #[SearchUsingPrefix(['name', 'email','telephone','position'])]
+    #[SearchUsingFullText(['bio'])]
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'bio' => $this->bio,
+        ];
+    }
 
-     public function scopeVerified($query)
-     {
-         return $query->whereNotNull('email_verified_at');
-     }
+    public function scopeVerified($query)
+    {
+        return $query->whereNotNull('email_verified_at');
+    }
 
-     public function scopeHasBio($query)
-     {
-         return $query->whereNotNull('bio');
-     }
+    public function scopeHasBio($query)
+    {
+        return $query->whereNotNull('bio');
+    }
 
+    protected function hasBio(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => !empty($this->bio),
+        );
+    }
 
-     protected function hasBio(): Attribute
-     {
-         return Attribute::make(
-             get: fn () => !empty($this->bio),
-         );
-     }
+    protected function isVerified(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => !empty($this->email_verified_at),
+        );
+    }
 
-     protected function isVerified(): Attribute
-     {
-         return Attribute::make(
-             get: fn () => !empty($this->email_verified_at),
-         );
-     }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 
-     public function posts()
-     {
-         return $this->hasMany(Post::class);
-     }
-
-     public function comments()
-     {
-         return $this->hasMany(Comment::class);
-     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

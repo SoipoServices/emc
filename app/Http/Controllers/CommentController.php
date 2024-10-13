@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Notifications\PostInteractionNotification;
 
 class CommentController extends Controller
 {
@@ -21,6 +22,11 @@ class CommentController extends Controller
         $comment->user_id = $request->user()->id;
         $comment->post_id = $post->id;
         $comment->save();
+
+        // Send notification to post author
+        if ($post->user->id !== $request->user()->id) {
+            $post->user->notify(new PostInteractionNotification($post, $request->user(), 'comment'));
+        }
 
         return redirect()->back();
     }
