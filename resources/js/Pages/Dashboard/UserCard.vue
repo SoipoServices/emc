@@ -87,9 +87,9 @@ defineProps({
                             </div>
                         </a>
                     </div>
-                    <div class="flex flex-col justify-center w-full pt-5 pb-5 ">
+                    <div class="flex flex-col justify-center pt-5 pb-5 overflow-x-auto max-w-52">
                         <div v-if="user.tags" class="items-center justify-center mx-auto">
-                            <div class="m-1 badge badge-primary" v-for="tag in user.tags" :key="tag.id">{{ tag.name[locale]}}</div>
+                            <div class="m-1 badge badge-primary truncate ..." v-for="tag in user.tags" :key="tag.id">{{ tag.name[locale]}}</div>
                         </div>
                     </div>
                 </div>

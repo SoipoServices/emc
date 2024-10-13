@@ -72,7 +72,7 @@ const props = defineProps({
                             </Link>
                         </div>
                     </div>
-                    <Pagination :links="events.links" class="mt-6" />
+                    <Pagination :links="events.links" v-if="events.links" class="mt-6" />
                 </div>
             </div>
         </div>

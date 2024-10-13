@@ -28,6 +28,13 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     use Searchable;
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['tags'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

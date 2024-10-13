@@ -81,7 +81,7 @@ const getReactionCounts = (post) => {
                             </div>
                         </div>
                     </div>
-                    <Pagination :links="posts.links" class="mt-6" />
+                    <Pagination :links="posts.links" v-if="posts.links" class="mt-6" />
                 </div>
             </div>
         </div>

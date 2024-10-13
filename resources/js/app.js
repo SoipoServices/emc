@@ -17,6 +17,8 @@ import * as FaIcons from "oh-vue-icons/icons/fa";
 
 addIcons(FaFacebook, FaLinkedin, FaTwitter, FaYoutube, FaLink, FaSearch, FaMailBulk, FaPhoneAlt, FaDownload);
 
+import Multiselect from 'vue-multiselect'
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
@@ -25,6 +27,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .component('v-icon',OhVueIcon)
+            .component('multiselect', Multiselect)
             .mount(el);
     },
     progress: {

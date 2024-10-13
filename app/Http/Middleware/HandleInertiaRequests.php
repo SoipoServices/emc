@@ -36,7 +36,8 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'locale' => app()->currentLocale()
+            'locale' => app()->currentLocale(),
+            'user_tags' =>  fn () => $request->user() ?  $request->user()->tags : [],
         ]);
     }
 }

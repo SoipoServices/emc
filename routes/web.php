@@ -10,6 +10,8 @@ use App\Http\Controllers\ReactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UserTagController;
+use App\Http\Controllers\TagController;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/events', [PublicEventController::class, 'index'])->name('events.index');
@@ -41,7 +43,10 @@ Route::middleware([
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('/billboard/{post}/edit', [PostController::class, 'edit'])->name('billboard.edit');
+    Route::put('/user/tags', [UserTagController::class, 'update'])->name('user-tags.update');
 });
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'linkedinCallback'])->name('linkedin.callback');
+
+Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
