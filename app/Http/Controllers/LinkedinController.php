@@ -25,7 +25,6 @@ class LinkedinController extends Controller
         try {
 
             $linkedinUser = Socialite::driver('linkedin-openid')->user();
-
             $user = User::where('email',$linkedinUser->email)->first();
 
             if($user){
@@ -62,7 +61,10 @@ class LinkedinController extends Controller
             }
 
         } catch (Exception $e) {
-            return abort(403,$e->getMessage());
+            return redirect()->route('login')->with('flash', [
+                'banner' => 'Something went wrong trying to log you in with linkedin, try again.',
+                'bannerStyle' => 'danger',
+            ]);;
         }
     }
 
