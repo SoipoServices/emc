@@ -13,6 +13,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    position: '',
     terms: false,
 });
 
@@ -83,6 +84,19 @@ const submit = () => {
                     autocomplete="new-password"
                 />
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="position" value="Position" />
+                <TextInput
+                    id="position"
+                    v-model="form.position"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="position"
+                />
+                <InputError class="mt-2" :message="form.errors.position" />
             </div>
 
             <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">

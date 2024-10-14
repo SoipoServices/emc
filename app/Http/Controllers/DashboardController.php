@@ -49,13 +49,13 @@ class DashboardController extends Controller
         }
 
         if(!empty($category) && !empty($search)){
-           $query = User::search($search)->query(fn ($q) => $q->inRandomOrder($request->session()->get('session_rand'))->verified()->hasBio()->withAnyTags([$category],'categories')->with('tags'));
+           $query = User::search($search)->query(fn ($q) => $q->inRandomOrder($request->session()->get('session_rand'))->verified()->hasPosition()->withAnyTags([$category],'categories')->with('tags'));
         }else if(!empty($search)){
-            $query = User::search($search)->query(fn ($q) => $q->inRandomOrder($request->session()->get('session_rand'))->verified()->hasBio()->with('tags'));
+            $query = User::search($search)->query(fn ($q) => $q->inRandomOrder($request->session()->get('session_rand'))->verified()->hasPosition()->with('tags'));
         }else if(!empty($category)){
-            $query = User::inRandomOrder($request->session()->get('session_rand'))->verified()->hasBio()->with('tags')->withAnyTags([$category],'categories');
+            $query = User::inRandomOrder($request->session()->get('session_rand'))->verified()->hasPosition()->with('tags')->withAnyTags([$category],'categories');
         }else{
-            $query = User::inRandomOrder($request->session()->get('session_rand'))->verified()->hasBio()->with('tags');
+            $query = User::inRandomOrder($request->session()->get('session_rand'))->verified()->hasPosition()->with('tags');
         }
 
         $users = $query->paginate(self::PAGINATION);

@@ -128,6 +128,11 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $query->whereNotNull('bio');
     }
 
+    public function scopeHasPosition($query)
+    {
+        return $query->whereNotNull('position');
+    }
+
     protected function hasBio(): Attribute
     {
         return Attribute::make(
