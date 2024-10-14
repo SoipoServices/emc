@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Notifications\NewEventForApproval;
+use App\Notifications\NewEventCreated;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -82,6 +83,12 @@ class EventController extends BaseController
         $admin = User::where('is_admin', true)->first();
         if ($admin) {
             $admin->notify(new NewEventForApproval($event));
+        }
+
+        // Send email notification about new event
+        $users = User::where('id', '!=', $request->user()->id)->get(); // Exclude the event creator
+        foreach ($users as $user) {
+            $user->notify(new NewEventCreated($event));
         }
 
         return redirect()->route('events.list')->with('flash', [

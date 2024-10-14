@@ -87,12 +87,12 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="position" value="Position" />
+                <InputLabel for="position" value="Job position" />
                 <TextInput
                     id="position"
                     v-model="form.position"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="block w-full mt-1"
                     required
                     autocomplete="position"
                 />
