@@ -34,7 +34,8 @@ class Event extends Model
         'is_approved',
         'is_member_event',
         'user_id',
-        'photo_path'
+        'photo_path',
+        'link'
     ];
 
     /**
