@@ -1,10 +1,6 @@
 <script setup>
-
-
 defineProps({
-    event: {
-        type: Object,
-    },
+    event: Object,
     locale: {
         type: String,
         default: 'en'
@@ -36,8 +32,11 @@ defineProps({
             <p class="block mb-4 overflow-y-auto font-sans text-base antialiased font-light leading-relaxed text-inherit h-60" v-html="event.description">
             </p>
             <div v-if="event.tags?.length > 0"
-                class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-white">
-            <div v-for="tag in event.tags" :key="tag.id">{{ tag.name[locale] }}</div>
+                class="flex flex-wrap gap-2">
+                <span v-for="tag in event.tags" :key="tag.id"
+                      class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-white">
+                    {{ tag.name[locale] }}
+                </span>
             </div>
         </div>
         <div class="p-6 pt-0">

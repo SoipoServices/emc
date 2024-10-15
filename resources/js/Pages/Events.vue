@@ -1,13 +1,12 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/GuestLayout.vue';
+import { Link } from '@inertiajs/vue3';
+
 defineProps({
-    events: Array,
+    title: String,
     canLogin: Boolean,
     canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
-    title: String,
+    events: Array,
 });
 </script>
 
@@ -35,8 +34,14 @@ defineProps({
                             <p class="mb-4 text-gray-700 dark:text-gray-200">
                                 {{ event.plain_description.substring(0, 100) }}{{ event.plain_description.length > 100 ? '...' : '' }}
                             </p>
-                            <Link :href="route('event.show', event.slug)" class="inline-block px-4 py-2 text-white transition duration-300 bg-blue-600 rounded hover:bg-blue-700">
-                                Learn More
+                            <div v-if="event.tags?.length > 0" class="flex flex-wrap gap-2 mb-4">
+                                <span v-for="tag in event.tags" :key="tag.id"
+                                      class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-white">
+                                    {{ tag.name[$page.props.locale] }}
+                                </span>
+                            </div>
+                            <Link :href="route('event.show', event.slug)" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
+                                Read More
                             </Link>
                         </div>
                     </div>

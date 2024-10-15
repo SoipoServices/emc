@@ -35,18 +35,24 @@ defineProps({
                                         <strong>Location:</strong> {{ event.address }}
                                     </p>
                                 </div>
+                                <div v-if="event.tags?.length > 0" class="flex flex-wrap gap-2 mb-4">
+                                    <span v-for="tag in event.tags" :key="tag.id"
+                                          class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-white">
+                                        {{ tag.name[locale] }}
+                                    </span>
+                                </div>
                                 <div class="flex justify-start gap-x-4">
                                     <a
                                         :href="event.link"
                                         target="_blank"
-                                        class="px-6 py-3 text-white transition duration-300 ease-in-out bg-blue-600 rounded-md hover:bg-blue-700"
+                                        class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
                                     >
                                         RSVP
                                     </a>
                                     <Link
                                         v-if="!$page.props.auth.user"
                                         :href="route('register')"
-                                        class="px-6 py-3 text-white transition duration-300 ease-in-out bg-black rounded-md"
+                                        class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-800 rounded-md shadow h-9 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
                                     >
                                         Become a member
                                     </Link>
