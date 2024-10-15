@@ -20,7 +20,7 @@ class HomeController extends Controller
         $events = Event::approved()
             ->with('tags')
             ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event')
-            ->orderBy('start_date', 'asc')
+            ->orderBy('start_date', 'desc')
             ->get();
 
         $emcEvents = $events->where('is_member_event', false);

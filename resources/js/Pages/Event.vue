@@ -37,13 +37,20 @@ defineProps({
                                     <strong>Location:</strong> {{ event.address }}
                                 </p>
                             </div>
-                            <div class="flex justify-center md:justify-start">
-                                <Link
-                                    v-if="canLogin"
-                                    :href="route('login')"
+                            <div class="flex justify-center gap-x-4 md:justify-start">
+                                <a
+                                    :href="event.link"
+                                    target="_blank"
                                     class="px-6 py-3 text-white transition duration-300 ease-in-out bg-blue-600 rounded-md hover:bg-blue-700"
                                 >
-                                    Login to RSVP
+                                    RSVP
+                                </a>
+                                <Link
+                                    v-if="!$page.props.auth.user"
+                                    :href="route('register')"
+                                    class="px-6 py-3 text-white transition duration-300 ease-in-out bg-black rounded-md"
+                                >
+                                    Become a member
                                 </Link>
                             </div>
                         </div>
