@@ -1,32 +1,22 @@
 <script setup>
+import { Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/GuestLayout.vue';
-import { Head, Link, router } from '@inertiajs/vue3';
 import Event from '@/Pages/Welcome/Event.vue';
 
 defineProps({
-    title: String,
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    events: {
-        type: Object,
-    },
-    memberEvents:{
-        type: Object,
-    },
-    locale: {
-        type: String,
-        default: 'en'
-    },
+    canLogin: Boolean,
+    canRegister: Boolean,
+    applicationName: String,
+    emcEvents: Array,
+    memberEvents: Array,
 });
 </script>
 
 <template>
-    <AppLayout title="Welcome" :can-register="canRegister" :can-login="true">
+    <AppLayout :title="applicationName">
+        <Head :title="applicationName" />
 
+        <!-- Elevate Your Entrepreneurial Journey Section -->
         <section class="w-full py-12 md:py-24 lg:py-32 border-y">
             <div class="px-4 mx-auto space-y-10 md:px-6 xl:space-y-16">
                 <div class="grid max-w-[1300px] mx-auto gap-4 px-4 sm:px-6 md:px-10 md:grid-cols-2 md:gap-16">
@@ -54,6 +44,8 @@ defineProps({
                 </div>
             </div>
         </section>
+
+        <!-- Unlock Your Entrepreneurial Potential Section -->
         <section class="w-full py-12 md:py-24 lg:py-32">
             <div class="container px-4 mx-auto space-y-12 md:px-6">
                 <div class="flex flex-col items-center justify-center space-y-4 text-center">
@@ -101,8 +93,7 @@ defineProps({
                         </div>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
                             Connect with like-minded individuals, all from the beautiful city of Cagliari, forge valuable partnerships, and expand your
-                            professional
-                            network.
+                            professional network.
                         </p>
                     </div>
                     <div class="grid gap-1">
@@ -123,54 +114,53 @@ defineProps({
                         </div>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
                             Receive tailored advice and mentorship from experienced entrepreneurs and industry
-                            experts
-                            to
-                            accelerate your business growth.
+                            experts to accelerate your business growth.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="w-full pt-12 bg-gray-100 dark:bg-gray-800" v-if="events">
+
+        <!-- EMC Events Section -->
+        <section class="w-full py-12 bg-white dark:bg-gray-900" v-if="emcEvents.length > 0">
             <div class="container px-4 mx-auto md:px-6">
                 <div class="flex flex-col items-center justify-center space-y-4 text-center">
                     <div class="space-y-2">
-                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">Upcoming Entrepreneur Group Meetings events
-                        </h2>
-                        <p
-                            class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">Upcoming Entrepreneur Group Meetings</h2>
+                        <p class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                             Mark your calendars and join us for our upcoming entrepreneur group meetings. Discover
                             the dates, locations, and key highlights of each event.
                         </p>
                     </div>
                 </div>
-                <div class="grid items-start max-w-5xl gap-6 py-12 mx-auto lg:grid-cols-2 lg:gap-12">
-                    <div class="grid gap-4" v-for="event in events" :key="event.id">
-                        <Event :event="event" :locale="locale" />
+                <div class="grid items-start gap-6 py-12 mx-auto max-w-7xl md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                    <div class="grid gap-4" v-for="event in emcEvents" :key="event.id">
+                        <Event :event="event" :locale="$page.props.locale" />
                     </div>
                 </div>
             </div>
         </section>
-        <section class="w-full py-12 bg-gray-100 dark:bg-gray-800" v-if="memberEvents">
+
+        <!-- Member Events Section -->
+        <section class="w-full py-12 bg-gray-100 dark:bg-gray-800" v-if="memberEvents.length > 0">
             <div class="container px-4 mx-auto md:px-6">
                 <div class="flex flex-col items-center justify-center space-y-4 text-center">
                     <div class="space-y-2">
-                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">Upcoming member events
-                        </h2>
-                        <p
-                            class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                            Mark your calendars and join us for our upcoming member events. Discover
-                            the dates, locations, and key highlights of each event.
+                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">Upcoming Member Events</h2>
+                        <p class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                            Exclusive events for our members. Join us for networking, learning, and growth opportunities.
                         </p>
                     </div>
                 </div>
-                <div class="grid items-start max-w-5xl gap-6 py-12 mx-auto lg:grid-cols-2 lg:gap-12">
+                <div class="grid items-start gap-6 py-12 mx-auto max-w-7xl md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
                     <div class="grid gap-4" v-for="event in memberEvents" :key="event.id">
-                        <Event :event="event" :locale="locale" />
+                        <Event :event="event" :locale="$page.props.locale" />
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Join Our Entrepreneur Group Section -->
         <section class="w-full py-12 border-t md:py-24 lg:py-32">
             <div class="container px-4 mx-auto md:px-6">
                 <div class="flex flex-col items-center justify-center space-y-4 text-center">

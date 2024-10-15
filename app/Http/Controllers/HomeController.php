@@ -15,25 +15,27 @@ class HomeController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request):Response|RedirectResponse
+    public function __invoke(Request $request): Response|RedirectResponse
     {
         $events = Event::approved()
             ->with('tags')
             ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event')
             ->orderBy('start_date', 'desc')
-            ->get();
+            ->get()
+            ->groupBy('is_member_event')
+            ->map(function ($groupedEvents) {
+                return $groupedEvents->take(3); // Changed from 2 to 3
+            });
 
-        $emcEvents = $events->where('is_member_event', false);
-        $memberEvents = $events->where('is_member_event', true);
+        $emcEvents = $events[false] ?? collect();
+        $memberEvents = $events[true] ?? collect();
 
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'events' => $emcEvents,
+            'applicationName' => config('app.name'),
+            'emcEvents' => $emcEvents,
             'memberEvents' => $memberEvents,
-            'title' => "Entrepreneur Meet Cagliari",
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 }
