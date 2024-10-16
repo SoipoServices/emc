@@ -6,6 +6,7 @@ use App\Traits\HasPhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
@@ -13,8 +14,10 @@ use Spatie\Tags\HasTags;
 use Illuminate\Support\Str;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Spatie\Sitemap\Contracts\Sitemapable;
+use Spatie\Sitemap\Tags\Url;
 
-class Event extends Model
+class Event extends Model implements Sitemapable
 {
     use HasPhoto;
     use HasFactory;
@@ -121,5 +124,11 @@ class Event extends Model
             author: $this->user->name,
             image: $this->photo_url
         );
+    }
+
+    public function toSitemapTag(): Url | string | array
+    {
+        // Simple return:
+        return route('event.show',['slug'=>$this->slug] );
     }
 }

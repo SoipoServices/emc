@@ -44,9 +44,10 @@ Route::middleware([
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('/billboard/{post}/edit', [PostController::class, 'edit'])->name('billboard.edit');
     Route::put('/user/tags', [UserTagController::class, 'update'])->name('user-tags.update');
+    Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+
 });
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'linkedinCallback'])->name('linkedin.callback');
 
-Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
