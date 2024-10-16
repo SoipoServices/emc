@@ -11,6 +11,8 @@ use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
 use Spatie\Tags\HasTags;
 use Illuminate\Support\Str;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class Event extends Model
 {
@@ -18,6 +20,7 @@ class Event extends Model
     use HasFactory;
     use HasTags;
     use Searchable;
+    use HasSEO;
 
     /**
      * The attributes that are mass assignable.
@@ -108,5 +111,15 @@ class Event extends Model
     public function getPhotoUrlAttribute()
     {
         return $this->photo_path ? asset('storage/' . $this->photo_path) : null;
+    }
+
+    public function getDynamicSEOData(): SEOData
+    {
+        return new SEOData(
+            title: $this->title,
+            description: Str::limit($this->plain_description,180),
+            author: $this->user->name,
+            image: $this->photo_url
+        );
     }
 }

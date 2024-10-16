@@ -6,6 +6,8 @@ use App\Models\Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use RalphJSmit\Laravel\SEO\Facades\SEOManager;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class PublicEventController extends Controller
 {
@@ -30,6 +32,14 @@ class PublicEventController extends Controller
     public function show(string $slug)
     {
         $event = Event::approved()->where('slug', $slug)->with('tags')->firstOrFail();
+
+        SEOManager::SEODataTransformer(function (SEOData $SEOData) use($event) : SEOData  {
+                        $eventSEOData = $event->getDynamicSEOData();
+                        $SEOData->title =  $eventSEOData->title;
+                        $SEOData->description =  $eventSEOData->description;
+                        $SEOData->image =  $eventSEOData->image;
+            return $SEOData;
+        });
 
         return Inertia::render('Event', [
             'canLogin' => Route::has('login'),

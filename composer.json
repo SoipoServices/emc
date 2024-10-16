@@ -21,6 +21,7 @@
         "laravel/socialite": "^5.14",
         "laravel/tinker": "^2.9",
         "outerweb/filament-translatable-fields": "^1.1",
+        "ralphjsmit/laravel-seo": "^1.6",
         "spatie/laravel-health": "^1.28",
         "spatie/laravel-tags": "^4.6",
         "tightenco/ziggy": "^2.0"
