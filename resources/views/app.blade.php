@@ -16,54 +16,12 @@
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
 
-    <script type="text/javascript">
-        var _iub = _iub || [];
-        _iub.csConfiguration = {
-            "askConsentAtCookiePolicyUpdate": true,
-            "floatingPreferencesButtonDisplay": "anchored-center-right",
-            "lang": "en-GB",
-            "perPurposeConsent": true,
-            "siteId": 3659833,
-            "whitelabel": false,
-            "gdprAppliesGlobally": false,
-            "cookiePolicyId": 89321358,
-            "banner": {
-                "acceptButtonCaptionColor": "#FFFFFF",
-                "acceptButtonColor": "#0073CE",
-                "acceptButtonDisplay": true,
-                "backgroundColor": "#FFFFFF",
-                "closeButtonRejects": true,
-                "customizeButtonCaptionColor": "#4D4D4D",
-                "customizeButtonColor": "#DADADA",
-                "customizeButtonDisplay": true,
-                "explicitWithdrawal": true,
-                "listPurposes": true,
-                "position": "float-top-center",
-                "showTitle": false,
-                "textColor": "#000000"
-            }
-        };
-    </script>
-    <script type="text/javascript" src="https://cs.iubenda.com/autoblocking/3659833.js"></script>
-    <script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
-
     <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-MT88SH9T');
-    </script>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MT88SH9T');</script>
     <!-- End Google Tag Manager -->
 
 </head>
