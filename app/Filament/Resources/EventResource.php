@@ -87,8 +87,6 @@ class EventResource extends Resource
                 TextColumn::make('end_date')->since(),
                 ToggleColumn::make('is_approved'),
                 ToggleColumn::make('is_member_event'),
-
-
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('is_approved')

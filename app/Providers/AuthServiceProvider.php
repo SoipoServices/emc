@@ -8,11 +8,14 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Auth\TaggableUserProvider;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Business;
+use App\Policies\BusinessPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
     protected $policies = [
         Event::class => EventPolicy::class,
+        Business::class => BusinessPolicy::class,
     ];
 
     public function boot(): void

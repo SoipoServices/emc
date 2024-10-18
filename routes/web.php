@@ -12,10 +12,15 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserTagController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\BusinessController;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/events', [PublicEventController::class, 'index'])->name('events.index');
 Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('event.show');
+Route::get('/businesses', [BusinessController::class, 'index'])->name('businesses.index');
+Route::get('/businesses', [BusinessController::class, 'show'])->name('businesses.show')->parameters([
+    'business' => 'businesses:slug',
+]);;
 
 Route::middleware([
     'auth:sanctum',
@@ -45,9 +50,12 @@ Route::middleware([
     Route::get('/billboard/{post}/edit', [PostController::class, 'edit'])->name('billboard.edit');
     Route::put('/user/tags', [UserTagController::class, 'update'])->name('user-tags.update');
     Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
-
+    Route::get('/businesses/create', [BusinessController::class, 'create'])->name('businesses.create');
+    Route::post('/businesses', [BusinessController::class, 'store'])->name('businesses.store');
+    Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('businesses.edit');
+    Route::put('/businesses/{business}', [BusinessController::class, 'update'])->name('businesses.update');
+    Route::delete('/businesses/{business}', [BusinessController::class, 'destroy'])->name('businesses.destroy');
 });
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');
 Route::get('auth/linkedin/callback', [LinkedinController::class, 'linkedinCallback'])->name('linkedin.callback');
-
