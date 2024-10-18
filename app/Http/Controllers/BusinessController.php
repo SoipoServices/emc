@@ -47,7 +47,9 @@ class BusinessController extends Controller
 
     public function create()
     {
-        return Inertia::render('Businesses/Create');
+        return Inertia::render('Businesses/Create', [
+            'tinymceApiKey' => config('services.tinymce.api_key'),
+        ]);
     }
 
     public function store(Request $request)
@@ -90,6 +92,7 @@ class BusinessController extends Controller
         $this->authorize('update', $business);
         return Inertia::render('Businesses/Edit', [
             'business' => $business,
+            'tinymceApiKey' => config('services.tinymce.api_key'),
         ]);
     }
 
