@@ -64,6 +64,9 @@ const logout = () => {
                 <NavLink :href="route('events.index')">
                         Events
                         </NavLink>
+                        <NavLink :href="route('public.businesses.index')">
+                        Brands
+                        </NavLink>
             </nav>
         </header>
         <main class="flex-1">

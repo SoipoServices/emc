@@ -20,25 +20,25 @@ const submit = () => {
 <template>
     <AppLayout title="Edit Post">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Edit Post
             </h2>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg">
                     <form @submit.prevent="submit">
                         <textarea
                             v-model="form.body"
-                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             rows="3"
                             placeholder="What's on your mind?"
                         ></textarea>
-                        <div v-if="form.errors.body" class="text-red-600 mt-1">{{ form.errors.body }}</div>
+                        <div v-if="form.errors.body" class="mt-1 text-red-600">{{ form.errors.body }}</div>
                         <button
                             type="submit"
-                            class="mt-2 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
+                            class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md hover:bg-gray-700"
                             :disabled="form.processing"
                         >
                             Update Post

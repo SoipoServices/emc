@@ -85,6 +85,7 @@ class EventResource extends Resource
                 TextColumn::make('address')->searchable(),
                 TextColumn::make('start_date')->since(),
                 TextColumn::make('end_date')->since(),
+                TextColumn::make('user.name'),
                 ToggleColumn::make('is_approved'),
                 ToggleColumn::make('is_member_event'),
             ])

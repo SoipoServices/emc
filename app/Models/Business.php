@@ -34,11 +34,14 @@ class Business extends Model
         'description',
         'priority',
         'is_sponsor',
+        'is_public',
         'is_approved',
+        'user_id'
     ];
 
     protected $casts = [
         'is_sponsor' => 'boolean',
+        'is_public' => 'boolean',
         'is_approved' => 'boolean',
         'priority' => 'integer',
     ];
@@ -81,6 +84,11 @@ class Business extends Model
     public function scopeApproved($query)
     {
         return $query->where('is_approved', true);
+    }
+
+    public function scopePublic($query)
+    {
+        return $query->where('is_public', true);
     }
 
     public function getDynamicSEOData(): SEOData

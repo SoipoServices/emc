@@ -36,7 +36,7 @@ class EventController extends BaseController
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
-            'events' => Event::approved()->with('tags')->orderBy('id','desc')->get(),
+            'events' => Event::approved()->with('tags')->orderBy('id', 'desc')->get(),
             'title' => "Entrepreneur Meet Cagliari",
             'phpVersion' => PHP_VERSION,
         ]);
@@ -102,7 +102,7 @@ class EventController extends BaseController
      */
     public function show(string $slug)
     {
-        $event = Event::approved()->where('slug',$slug)->with('tags')->orderBy('id','desc')->firstOrFail();
+        $event = Event::approved()->where('slug', $slug)->with('tags')->orderBy('id', 'desc')->firstOrFail();
         return Inertia::render('Event', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
@@ -171,21 +171,32 @@ class EventController extends BaseController
         ]);
     }
 
-    public function list()
+    public function list(Request $request)
     {
         $user = auth()->user();
 
-        $events = Event::with(['tags', 'user'])
-            ->where(function ($query) use ($user) {
-                $query->where('is_approved', true)
-                      ->orWhere('user_id', $user->id);
-            })
-            ->latest() // This orders by created_at in descending order
-            ->paginate(self::PAGINATION);
+        $search = $request->input('search');
 
-        return Inertia::render('Events/List', [
+        if ($search) {
+            $query = Event::search($search)->query(fn($q) => $q->approved()->where(function ($query) use ($user) {
+                $query->where('is_approved', true)
+                    ->orWhere('user_id', $user->id);
+            })->with(['tags', 'user'])->orderBy('id', 'desc')->latest());
+        } else {
+            $query = Event::approved()->where(function ($query) use ($user) {
+                $query->where('is_approved', true)
+                    ->orWhere('user_id', $user->id);
+            })->with(['tags', 'user'])->orderBy('id', 'desc')->latest();
+        }
+        $events = $query->paginate(self::PAGINATION);
+
+        return Inertia::render('Events/Index', [
             'events' => $events,
+            'search' => $search,
             'can' => [
+                'createEvent' => $events->mapWithKeys(function ($events) {
+                    return [$events->id => $this->authorize('create', $events, false)];
+                }),
                 'updateEvent' => $events->mapWithKeys(function ($event) {
                     return [$event->id => $this->authorize('update', $event, false)];
                 }),

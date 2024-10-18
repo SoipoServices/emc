@@ -90,7 +90,6 @@ class Event extends Model implements Sitemapable
             'title' => $this->title,
             'slug' => $this->slug,
             'address' => $this->address,
-            'toSearchableArray' => $this->toSearchableArray,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
         ];

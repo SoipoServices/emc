@@ -6,6 +6,7 @@ use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PublicEventController;
+use App\Http\Controllers\PublicBusinessController;
 use App\Http\Controllers\ReactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -17,10 +18,8 @@ use App\Http\Controllers\BusinessController;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/events', [PublicEventController::class, 'index'])->name('events.index');
 Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('event.show');
-Route::get('/businesses', [BusinessController::class, 'index'])->name('businesses.index');
-Route::get('/businesses', [BusinessController::class, 'show'])->name('businesses.show')->parameters([
-    'business' => 'businesses:slug',
-]);;
+Route::get('/companies', [PublicBusinessController::class, 'index'])->name('public.businesses.index');
+Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
 
 Route::middleware([
     'auth:sanctum',
@@ -50,6 +49,7 @@ Route::middleware([
     Route::get('/billboard/{post}/edit', [PostController::class, 'edit'])->name('billboard.edit');
     Route::put('/user/tags', [UserTagController::class, 'update'])->name('user-tags.update');
     Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+    Route::get('/businesses', [BusinessController::class, 'index'])->name('businesses.index');
     Route::get('/businesses/create', [BusinessController::class, 'create'])->name('businesses.create');
     Route::post('/businesses', [BusinessController::class, 'store'])->name('businesses.store');
     Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('businesses.edit');

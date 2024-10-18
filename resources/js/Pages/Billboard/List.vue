@@ -4,6 +4,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 
 const props = defineProps({
+    can: Object,
     posts: Object, // Changed from Array to Object to accommodate pagination
 });
 
@@ -20,20 +21,26 @@ const getReactionCounts = (post) => {
 <template>
     <AppLayout title="Billboard List">
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Billboard List
-            </h2>
+
+            <div class="flex justify-between">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+            Billboard
+        </h2>
+        <Link
+          v-if="can.createPost"
+          :href="route('billboard.create')"
+          type="submit"
+          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md hover:bg-gray-700"
+        >
+        Create New Post
+        </Link>
+            </div>
         </template>
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-semibold">Recent Posts</h3>
-                        <Link :href="route('billboard.create')" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25">
-                            Create New Post
-                        </Link>
-                    </div>
+
                     <div v-for="post in posts.data" :key="post.id" class="p-4 mb-4 border rounded">
                         <p class="mt-2 mb-4">{{ post.body }}</p>
 
