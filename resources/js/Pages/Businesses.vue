@@ -24,7 +24,7 @@ defineProps({
                 </div>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     <div v-for="business in businesses" :key="business.id" class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
-                        <img v-if="business.photo_url" :src="business.photo_url" :alt="business.name" class="object-cover w-full h-48">
+                        <img v-if="business.photo_url" :src="business.photo_url" :alt="business.name" class="object-contain w-full h-48">
                         <div class="p-4">
                             <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">{{ business.title }}</h3>
 
