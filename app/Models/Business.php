@@ -11,10 +11,11 @@ use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Str;
+use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
 
 
-class Business extends Model
+class Business extends Model implements Sitemapable
 {
     use HasFactory;
     use Searchable;
@@ -104,7 +105,7 @@ class Business extends Model
     public function toSitemapTag(): Url | string | array
     {
         // Simple return:
-        return route('event.show',['slug'=>$this->slug] );
+        return route('public.business.show',['slug'=>$this->slug] );
     }
 
 }

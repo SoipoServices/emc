@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Business;
 use App\Models\Event;
 use Illuminate\Console\Command;
 use Psr\Http\Message\UriInterface;
@@ -32,7 +33,6 @@ class GenerateSitemap extends Command
     public function handle()
     {
 
-
         SitemapGenerator::create(config('app.url'))
             ->shouldCrawl(function (UriInterface $url) {
                 return strpos($url->getQuery(), 'page') === false;
@@ -40,6 +40,8 @@ class GenerateSitemap extends Command
             ->getSitemap()
             ->add('events.index')
             ->add(Event::all())
+            ->add('public.businesses.index')
+            ->add(Business::all())
             ->writeToFile(public_path('sitemap.xml'));
     }
 }
