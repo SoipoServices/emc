@@ -21,7 +21,7 @@ const form = useForm({
     <AppLayout title="Event List">
         <template #header>
       <div class="flex justify-between">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
           Events
         </h2>
         <Search  :locale="locale" :search="form.search">
@@ -30,7 +30,7 @@ const form = useForm({
               v-if="can.createEvent"
               :href="route('events.create')"
           type="submit"
-          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md hover:bg-gray-700"
+          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md dark:bg-white dark:text-gray-800 hover:bg-gray-700"
           :disabled="form.processing"
         >
         Create Event
@@ -40,7 +40,7 @@ const form = useForm({
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg">
+                <div class="p-6 overflow-hidden bg-white shadow-xl dark:bg-gray-800 dark:text-white sm:rounded-lg">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-lg font-semibold">Upcoming Events</h3>
                     </div>
@@ -84,7 +84,7 @@ const form = useForm({
                             </Link>
                             <Link
                                 :href="route('event.show', event.slug)"
-                                class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25"
+                                class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md dark:bg-white dark:text-gray-800 hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25"
                             >
                                 View Event
                             </Link>

@@ -30,7 +30,7 @@ const getReactionCounts = (post) => {
           v-if="can.createPost"
           :href="route('billboard.create')"
           type="submit"
-          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md hover:bg-gray-700"
+          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase border border-transparent rounded-md dark:bg-white dark:text-gray-800 hover:bg-gray-700"
         >
         Create New Post
         </Link>
@@ -39,7 +39,7 @@ const getReactionCounts = (post) => {
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg">
+                <div class="p-6 overflow-hidden bg-white shadow-xl dark:bg-gray-800 dark:text-white sm:rounded-lg">
 
                     <div v-for="post in posts.data" :key="post.id" class="p-4 mb-4 border rounded">
                         <p class="mt-2 mb-4">{{ post.body }}</p>
@@ -81,7 +81,7 @@ const getReactionCounts = (post) => {
                                 </Link>
                                 <Link
                                     :href="route('billboard.show', post.id)"
-                                    class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition bg-gray-800 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25"
+                                    class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition border border-transparent rounded-md dark:bg-white dark:text-gray-800 hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25"
                                 >
                                     Read more
                                 </Link>

@@ -38,26 +38,26 @@ const handleImageUpload = (e) => {
 <template>
   <app-layout>
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800">
+      <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-white">
         Edit Business
       </h2>
     </template>
 
     <div class="py-12">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">
+        <div class="overflow-hidden bg-white shadow-xl dark:bg-gray-800 dark:text-white sm:rounded-lg">
+          <div class="p-6 bg-white border-b border-gray-200 dark:bg-gray-800 dark:text-white">
             <form @submit.prevent="submit">
               <div class="mb-6">
                 <label
-                  class="block mb-2 text-xs font-bold text-gray-700 uppercase"
+                  class="block mb-2 text-xs font-bold text-gray-700 uppercase dark:text-white"
                   for="name"
                 >
                   Name *
                 </label>
                 <input
                   v-model="form.name"
-                  class="w-full p-2 border border-gray-400"
+                  class="w-full p-2 border border-gray-400 dark:bg-gray-800 dark:text-white"
                   type="text"
                   name="name"
                   id="name"
@@ -70,14 +70,14 @@ const handleImageUpload = (e) => {
 
               <div class="mb-6">
                 <label
-                  class="block mb-2 text-xs font-bold text-gray-700 uppercase"
+                  class="block mb-2 text-xs font-bold text-gray-700 uppercase dark:text-white"
                   for="url"
                 >
                   Website URL
                 </label>
                 <input
                   v-model="form.url"
-                  class="w-full p-2 border border-gray-400"
+                  class="w-full p-2 border border-gray-400 dark:bg-gray-800 dark:text-white"
                   type="url"
                   name="url"
                   id="url"
@@ -89,14 +89,14 @@ const handleImageUpload = (e) => {
 
               <div class="mb-6">
                 <label
-                  class="block mb-2 text-xs font-bold text-gray-700 uppercase"
+                  class="block mb-2 text-xs font-bold text-gray-700 uppercase dark:text-white"
                   for="linkedin_url"
                 >
                   LinkedIn URL
                 </label>
                 <input
                   v-model="form.linkedin_url"
-                  class="w-full p-2 border border-gray-400"
+                  class="w-full p-2 border border-gray-400 dark:bg-gray-800 dark:text-white"
                   type="url"
                   name="linkedin_url"
                   id="linkedin_url"
@@ -111,7 +111,7 @@ const handleImageUpload = (e) => {
 
               <div class="mb-6">
                 <label
-                  class="block mb-2 text-xs font-bold text-gray-700 uppercase"
+                  class="block mb-2 text-xs font-bold text-gray-700 uppercase dark:text-white"
                   for="photo_path"
                 >
                   Photo
@@ -133,14 +133,14 @@ const handleImageUpload = (e) => {
 
               <div class="mb-6">
                 <label
-                  class="block mb-2 text-xs font-bold text-gray-700 uppercase"
+                  class="block mb-2 text-xs font-bold text-gray-700 uppercase dark:text-white"
                   for="telephone"
                 >
                   Telephone
                 </label>
                 <input
                   v-model="form.telephone"
-                  class="w-full p-2 border border-gray-400"
+                  class="w-full p-2 border border-gray-400 dark:bg-gray-800 dark:text-white"
                   type="tel"
                   name="telephone"
                   id="telephone"
@@ -155,14 +155,14 @@ const handleImageUpload = (e) => {
 
               <div class="mb-6">
                 <label
-                  class="block mb-2 text-xs font-bold text-gray-700 uppercase"
+                  class="block mb-2 text-xs font-bold text-gray-700 uppercase dark:text-white"
                   for="email"
                 >
                   Email
                 </label>
                 <input
                   v-model="form.email"
-                  class="w-full p-2 border border-gray-400"
+                  class="w-full p-2 border border-gray-400 dark:bg-gray-800 dark:text-white"
                   type="email"
                   name="email"
                   id="email"
@@ -175,7 +175,7 @@ const handleImageUpload = (e) => {
 
               <div class="mb-6">
                 <label
-                  class="block text-gray-700 uppercase cursor-pointer label"
+                  class="block text-gray-700 uppercase cursor-pointer dark:text-white label"
                   for="is_public"
                 >
                   <span class="mr-2 label-text">Public</span>
@@ -199,7 +199,7 @@ const handleImageUpload = (e) => {
 
               <div class="mb-6">
                 <label
-                  class="block mb-2 text-xs font-bold text-gray-700 uppercase"
+                  class="block mb-2 text-xs font-bold text-gray-700 uppercase dark:text-white"
                   for="description"
                 >
                   Description

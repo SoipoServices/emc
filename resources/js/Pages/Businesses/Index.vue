@@ -41,7 +41,7 @@ export default defineComponent({
           v-if="can.createBusiness"
           :href="route('businesses.create')"
           type="submit"
-          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md hover:bg-gray-700"
+          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md dark:bg-white dark:text-gray-800 hover:bg-gray-700"
           :disabled="form.processing"
         >
           Add your business
@@ -56,7 +56,7 @@ export default defineComponent({
             <div
               v-for="business in businesses.data"
               :key="business.id"
-              class="overflow-hidden bg-white rounded-lg shadow-md min-h-[300px]"
+              class="overflow-hidden bg-white dark:bg-gray-800 dark:text-white rounded-lg shadow-md min-h-[300px]"
             >
               <img
                 v-if="business.photo_url"

@@ -63,14 +63,14 @@ const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡','🚀','🧨'];
 <template>
     <AppLayout :title="'Post by ' + post.user.name">
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-white ">
                 Post Details
             </h2>
         </template>
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg">
+                <div class="p-6 overflow-hidden bg-white shadow-xl dark:bg-gray-800 dark:text-white sm:rounded-lg">
                     <div class="mb-6">
                         <div class="flex items-center mb-4">
                             <img :src="post.user.profile_photo_url" :alt="post.user.name" class="w-12 h-12 mr-4 rounded-full">
@@ -112,7 +112,7 @@ const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡','🚀','🧨'];
                                     </div>
                                     <template v-if="editingComment && editingComment.id === comment.id">
                                         <form @submit.prevent="updateComment(comment.id)">
-                                            <textarea v-model="form.body" class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="2"></textarea>
+                                            <textarea v-model="form.body" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:text-white focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="2"></textarea>
                                             <div class="mt-2">
                                                 <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Save</button>
                                                 <button @click="cancelEdit" type="button" class="px-4 py-2 ml-2 text-gray-700 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
@@ -132,8 +132,8 @@ const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡','🚀','🧨'];
                     </div>
 
                     <form @submit.prevent="submitComment">
-                        <textarea v-model="form.body" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="3" placeholder="Add a comment..."></textarea>
-                        <button type="submit" class="px-4 py-2 mt-2 text-white bg-blue-500 rounded hover:bg-blue-600" :disabled="form.processing">
+                        <textarea v-model="form.body" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring dark:bg-gray-800 dark:text-white focus:ring-indigo-200 focus:ring-opacity-50" rows="3" placeholder="Add a comment..."></textarea>
+                        <button type="submit" class="px-4 py-2 mt-2 text-white bg-gray-800 rounded dark:bg-white dark:text-gray-800 hover:bg-gray-600" :disabled="form.processing">
                             Post Comment
                         </button>
                     </form>
