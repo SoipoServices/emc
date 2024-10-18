@@ -39,10 +39,10 @@ class PublicBusinessController extends Controller
         ->firstOrFail();
 
         SEOManager::SEODataTransformer(function (SEOData $SEOData) use($business) : SEOData  {
-                        $eventSEOData = $business->getDynamicSEOData();
-                        $SEOData->title =  $eventSEOData->title;
-                        $SEOData->description =  $eventSEOData->description;
-                        $SEOData->image =  $eventSEOData->image;
+                        $businessSEOData = $business->getDynamicSEOData();
+                        $SEOData->title =  $businessSEOData->title;
+                        $SEOData->description =  $businessSEOData->description;
+                        $SEOData->image =  $businessSEOData->image;
             return $SEOData;
         });
 
