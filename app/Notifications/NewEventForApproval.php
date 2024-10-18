@@ -29,7 +29,7 @@ class NewEventForApproval extends Notification
         return (new MailMessage)
                     ->line('A new event has been created and requires your approval.')
                     ->line('Event Title: ' . $this->event->title)
-                    ->action('Review Event', url('/admin/events/' . $this->event->id))
+                    ->action('Review Event', route('filament.admin.resources.events.edit',['record'=>$this->event->id] ))
                     ->line('Thank you for using our application!');
     }
 }

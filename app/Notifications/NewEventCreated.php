@@ -32,7 +32,7 @@ class NewEventCreated extends Notification implements ShouldQueue
                     ->line('Event Title: ' . $this->event->title)
                     ->line('Event Date: ' . $this->event->start_date->format('F j, Y, g:i a'))
                     ->line('Event Location: ' . $this->event->address)
-                    ->action('View Event', url('/events/' . $this->event->slug))
+                    ->action('View Event',  route('event.show',['slug'=>$this->event->slug]))
                     ->line('Thank you for using our application!');
     }
 }

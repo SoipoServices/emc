@@ -29,7 +29,7 @@ class NewBusinessForApproval extends Notification
         return (new MailMessage)
                     ->line('A new business has been created and requires your approval.')
                     ->line('Name: ' . $this->business->name)
-                    ->action('Review Business', url('/admin/business/' . $this->business->id))
+                    ->action('Review Business', route('filament.admin.resources.businesses.edit',['record'=>$this->business->id]))
                     ->line('Thank you for using our application!');
     }
 }
