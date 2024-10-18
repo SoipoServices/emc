@@ -35,7 +35,7 @@ const searchUser = () => {
     <form class="max-w-lg mx-auto" @submitted="searchUser">
         <div class="form-control ">
             <div class="flex input-group">
-                <select v-if="tags" name="category" @change="searchUser" class="py-2 text-white bg-gray-800 rounded-l-lg border-inherit dark:bg-gray-200 " v-model="form.category">
+                <select v-if="tags" name="category" @change="searchUser" class="py-2 text-white bg-gray-800 rounded-l-lg dark:text-gray-700 border-inherit dark:bg-gray-200 " v-model="form.category">
                     <option selected value="">Pick a category</option>
                     <option v-for="tag in tags" :key="tag.id" :value="tag.slug[locale]"> {{ tag.name[locale] }}</option>
                 </select>
