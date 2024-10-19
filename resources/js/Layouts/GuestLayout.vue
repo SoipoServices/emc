@@ -39,16 +39,7 @@ const logout = () => {
             </Link>
             <span class="sr-only">Entrepreneur Meet Cagliari</span>
             <nav class="flex gap-5 ml-auto sm:gap-6">
-                <div v-if="canLogin">
-
-                    <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                    About
-                </NavLink>
-                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                    Events
-                </NavLink> -->
-
-                    <NavLink v-if="$page.props.auth.user" :href="route('dashboard')">
+                <NavLink v-if="$page.props.auth.user" :href="route('dashboard')">
                         Dashboard
                     </NavLink>
                     <div v-else>
@@ -60,7 +51,6 @@ const logout = () => {
                             Register
                         </NavLink>
                     </div>
-                </div>
                 <NavLink :href="route('events.index')">
                         Events
                         </NavLink>
