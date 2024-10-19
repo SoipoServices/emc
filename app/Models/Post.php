@@ -13,6 +13,27 @@ class Post extends Model
 
     protected $fillable = ['body', 'link_url', 'link_title', 'link_description', 'link_image','user_id'];
 
+     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'plain_description',
+    ];
+
+
+      /**
+     * Get the plain text version of the description.
+     *
+     * @return string
+     */
+    public function getPlainDescriptionAttribute()
+    {
+        return strip_tags($this->body);
+    }
+
+
     public function user()
     {
         return $this->belongsTo(User::class);

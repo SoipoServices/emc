@@ -42,7 +42,7 @@ const getReactionCounts = (post) => {
                 <div class="p-6 overflow-hidden bg-white shadow-xl dark:bg-gray-800 dark:text-white sm:rounded-lg">
 
                     <div v-for="post in posts.data" :key="post.id" class="p-4 mb-4 border rounded">
-                        <p class="mt-2 mb-4">{{ post.body }}</p>
+                        <p class="mt-2 mb-4" v-html="post.plain_description"></p>
 
                         <!-- Link Preview -->
                         <div v-if="post.link_preview && post.link_preview.url" class="p-2 mt-2 mb-4 border rounded">
