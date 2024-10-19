@@ -29,6 +29,16 @@ class PostController extends BaseController
             ->latest() // This orders by created_at in descending order
             ->paginate(self::PAGINATION);
 
+        $posts->map(function ($post) {
+            $post->link_preview = [
+                'url' => $post->link_url,
+                'title' => $post->link_title,
+                'description' => $post->link_description,
+                'image' => $post->link_image,
+            ];
+            return $post;
+        });
+
         return Inertia::render('Billboard/List', [
             'posts' => $posts,
             'can' => [
@@ -77,9 +87,16 @@ class PostController extends BaseController
         $post->loadCount(['reactions as reactions_count' => function ($query) {
             $query->select(DB::raw('count(distinct(user_id))'));
         }]);
+       $link_preview = [
+            'url' => $post->link_url,
+            'title' => $post->link_title,
+            'description' => $post->link_description,
+            'image' => $post->link_image,
+        ];
 
         return Inertia::render('Billboard/Show', [
             'post' => $post,
+            'link_preview' => $link_preview,
             'can' => [
                 'update' => auth()->user()->can('update', $post),
                 'delete' => auth()->user()->can('delete', $post),

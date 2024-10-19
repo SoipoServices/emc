@@ -121,6 +121,16 @@ const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡','🚀','🧨'];
                                     </template>
                                     <template v-else>
                                         <p class="mt-1">{{ comment.body }}</p>
+                                        <!-- Link Preview -->
+                                        <div v-if="post.link_preview && post.link_preview.url" class="p-2 mt-2 mb-4 border rounded">
+                                            <a :href="post.link_preview.url" target="_blank" rel="noopener noreferrer" class="flex items-start">
+                                                <img v-if="post.link_preview.image" :src="post.link_preview.image" alt="Link preview" class="object-cover w-24 h-24 mr-4">
+                                                <div>
+                                                    <h3 class="font-bold">{{ post.link_preview.title }}</h3>
+                                                    <p class="text-sm text-gray-600">{{ post.link_preview.description }}</p>
+                                                </div>
+                                            </a>
+                                        </div>
                                         <div v-if="$page.props.auth.user.id === comment.user_id" class="mt-2">
                                             <button @click="editComment(comment)" class="mr-2 text-blue-600 hover:underline">Edit</button>
                                             <button @click="deleteComment(comment.id)" class="text-red-600 hover:underline">Delete</button>
