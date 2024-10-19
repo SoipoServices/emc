@@ -11,7 +11,7 @@ class Post extends Model
     use HasFactory;
     use HasSEO;
 
-    protected $fillable = ['body', 'link_url', 'link_title', 'link_description', 'link_image'];
+    protected $fillable = ['body', 'link_url', 'link_title', 'link_description', 'link_image','user_id'];
 
     public function user()
     {
