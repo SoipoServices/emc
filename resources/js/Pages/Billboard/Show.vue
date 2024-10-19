@@ -79,7 +79,7 @@ const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡','🚀','🧨'];
                                 <p class="text-gray-500">{{ new Date(post.created_at).toLocaleString() }}</p>
                             </div>
                         </div>
-                        <p class="mb-4 text-lg">{{ post.body }}</p>
+                        <p class="mb-4 text-lg" v-html="post.body "></p>
                         <div v-if="post.link_url" class="p-4 mb-4 border rounded">
                             <a :href="post.link_url" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
                                 <h4 class="font-bold">{{ post.link_title }}</h4>
