@@ -27,11 +27,11 @@ class BusinessPolicy
 
     public function update(User $user, Business $business)
     {
-        return $user->id === $business->user_id;
+        return $user->id === $business->user_id || $user->is_admin;
     }
 
     public function delete(User $user, Business $business)
     {
-        return $user->id === $business->user_id;
+        return $user->id === $business->user_id || $user->is_admin;
     }
 }
