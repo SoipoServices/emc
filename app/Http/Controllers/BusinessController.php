@@ -18,6 +18,13 @@ class BusinessController extends BaseController
     const PAGINATION = 10;
 
 
+    public function __construct()
+    {
+        $this->authorizeResource(Business::class, 'business', [
+            'except' => ['index', 'show', 'list', 'store']
+        ]);
+    }
+
     public function index(Request $request)
     {
         $search = $request->input('search');
