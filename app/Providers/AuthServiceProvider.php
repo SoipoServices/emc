@@ -13,10 +13,10 @@ use App\Policies\BusinessPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    protected $policies = [
-        Event::class => EventPolicy::class,
-        Business::class => BusinessPolicy::class,
-    ];
+    // protected $policies = [
+    //     Event::class => EventPolicy::class,
+    //     Business::class => BusinessPolicy::class,
+    // ];
 
     public function boot(): void
     {
