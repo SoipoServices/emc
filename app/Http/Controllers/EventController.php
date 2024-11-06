@@ -25,6 +25,7 @@ class EventController extends Controller
      */
     public function index()
     {
+
         return Inertia::render('Events', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
@@ -169,7 +170,6 @@ class EventController extends Controller
     public function list(Request $request)
     {
         $user = auth()->user();
-
         $search = $request->input('search');
 
         if ($search) {
@@ -190,10 +190,10 @@ class EventController extends Controller
             'search' => $search,
             'can' => [
                 'createEvent' => $events->mapWithKeys(function ($events) {
-                    return [$events->id => $this->authorize('create', $events, false)];
+                    return [$events->id => auth()->user()->can('create', $events)];
                 }),
                 'updateEvent' => $events->mapWithKeys(function ($event) {
-                    return [$event->id => $this->authorize('update', $event, false)];
+                    return [$event->id => auth()->user()->can('update', $event)];
                 }),
             ],
         ]);

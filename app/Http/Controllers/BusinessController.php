@@ -36,10 +36,10 @@ class BusinessController extends Controller
             'search' => $search,
             'can' => [
                 'createBusiness' => $businesses->mapWithKeys(function ($business) {
-                    return [$business->id => $this->authorize('create', $business, false)];
+                    return [$business->id =>  auth()->user()->can('create', $business)];
                 }),
                 'updateBusiness' => $businesses->mapWithKeys(function ($business) {
-                    return [$business->id => $this->authorize('update', $business, false)];
+                    return [$business->id => auth()->user()->can('update', $business)];
                 }),
             ],
         ]);
