@@ -10,22 +10,15 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Notifications\NewEventForApproval;
 use App\Notifications\NewEventCreated;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
-class EventController extends BaseController
+class EventController extends Controller
 {
     use AuthorizesRequests;
     const PAGINATION = 10;
 
-    public function __construct()
-    {
-        $this->authorizeResource(Event::class, 'event', [
-            'except' => ['index', 'show', 'list', 'store']
-        ]);
-    }
 
     /**
      * Display a listing of the resource.
@@ -129,6 +122,7 @@ class EventController extends BaseController
      */
     public function update(Request $request, Event $event)
     {
+        $this->authorize('update', $event);
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -163,6 +157,7 @@ class EventController extends BaseController
      */
     public function destroy(Event $event)
     {
+        $this->authorize('delete', $event);
         $event->delete();
 
         return redirect()->route('events.index')->with('flash', [

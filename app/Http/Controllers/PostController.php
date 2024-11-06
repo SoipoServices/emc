@@ -8,19 +8,12 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Embed\Embed;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controller as BaseController;
 
-class PostController extends BaseController
+class PostController extends Controller
 {
     use AuthorizesRequests;
     const PAGINATION = 10;
 
-    public function __construct()
-    {
-        $this->authorizeResource(Post::class, 'post', [
-            'except' => ['index', 'show', 'store']
-        ]);
-    }
 
     public function index()
     {
@@ -149,6 +142,8 @@ class PostController extends BaseController
 
     public function destroy(Post $post)
     {
+        $this->authorize('update', $post);
+
         $post->delete();
 
         return redirect()->route('billboard.index')->with('flash', [

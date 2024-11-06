@@ -5,25 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Business;
 use App\Models\User;
 use App\Notifications\NewBusinessForApproval;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Illuminate\Routing\Controller as BaseController;
 
-class BusinessController extends BaseController
+class BusinessController extends Controller
 {
     use AuthorizesRequests;
     const PAGINATION = 10;
 
-
-    public function __construct()
-    {
-        $this->authorizeResource(Business::class, 'business', [
-            'except' => ['index', 'show', 'list', 'store']
-        ]);
-    }
 
     public function index(Request $request)
     {
