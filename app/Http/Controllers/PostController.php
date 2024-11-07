@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmails;
 use App\Models\Post;
+use App\Models\User;
+use App\Notifications\NewPostCreated;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
@@ -64,6 +67,11 @@ class PostController extends Controller
             $post->link_title = $info->title;
             $post->link_description = $info->description;
             $post->link_image = $info->image;
+        }
+
+        $users = User::where('id', '!=', $request->user()->id)->get(); // Exclude the event creator
+        foreach ($users as $user) {
+            $user->notify(new NewPostCreated($post));
         }
 
         $post->save();

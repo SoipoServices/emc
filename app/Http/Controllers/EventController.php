@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmails;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -84,6 +85,7 @@ class EventController extends Controller
         foreach ($users as $user) {
             $user->notify(new NewEventCreated($event));
         }
+
 
         return redirect()->route('events.list')->with('flash', [
             'banner' => 'Event created successfully and sent for approval!',
