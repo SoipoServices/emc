@@ -20,6 +20,9 @@ Route::get('/events', [PublicEventController::class, 'index'])->name('events.ind
 Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('event.show');
 Route::get('/companies', [PublicBusinessController::class, 'index'])->name('public.businesses.index');
 Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
+Route::get('/event/entrepreneurs-meet-cagliari-presents-inside-sardinias-innovation-hub', function () {
+    return redirect('/event/entrepreneurs-meet-cagliari-presents-inside-one-of-sardinias-innovation-hubs');
+});
 
 Route::middleware([
     'auth:sanctum',
