@@ -30,7 +30,7 @@ const getReactionCounts = (post) => {
           v-if="can.createPost"
           :href="route('billboard.create')"
           type="submit"
-          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase border border-transparent rounded-md dark:bg-white dark:text-gray-800 hover:bg-gray-700"
+          class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md dark:bg-white dark:text-gray-800 hover:bg-gray-700"
         >
         Create New Post
         </Link>
