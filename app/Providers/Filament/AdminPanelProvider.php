@@ -44,13 +44,17 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 UserStats::class,
                 EventStats::class
-//                Widgets\FilamentInfoWidget::class,
+                //                Widgets\FilamentInfoWidget::class,
             ])
-            ->plugin(FilamentTranslatableFieldsPlugin::make()
-                ->supportedLocales([
-                    'en' => 'English',
-                    'it' => 'Italian',
-                ]),)
+            ->plugins(
+                [
+                    FilamentTranslatableFieldsPlugin::make()->supportedLocales([
+                            'en' => 'English',
+                            'it' => 'Italian',
+                    ]),
+                    \A21ns1g4ts\FilamentShortUrl\FilamentShortUrlPlugin::make()
+                ]
+            )
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -65,6 +69,5 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
-
     }
 }
