@@ -38,7 +38,7 @@ class AddUserToEmailOctopusList extends Command
                 'status' => 'SUBSCRIBED', // optional
             ]);
 
-            return $response['status']; // SUBSCRIB
+            return Arr::get($response,'status'); // SUBSCRIB
         }
         return null;
     }
