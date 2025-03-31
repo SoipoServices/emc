@@ -28,7 +28,7 @@ class AddUsersToMailingList extends Command
      */
     public function handle()
     {
-        User::all()->foreach(function($user){
+        User::all()->each(function($user){
             AddUserToEmailOctopusList::add($user);
         });
        
