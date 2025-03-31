@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05cd916a4fabadda58b9367012dfb60f",
+    "content-hash": "7211f7f92c0db6d3c79335a481b5c98e",
     "packages": [
         {
             "name": "a21ns1g4ts/filament-short-url",
@@ -2235,6 +2235,131 @@
                 }
             ],
             "time": "2023-10-12T05:21:21+00:00"
+        },
+        {
+            "name": "goran-popovic/email-octopus-laravel",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/goran-popovic/email-octopus-laravel.git",
+                "reference": "f997ecf20d19e98e5a334a593505e7c96fd25e10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/goran-popovic/email-octopus-laravel/zipball/f997ecf20d19e98e5a334a593505e7c96fd25e10",
+                "reference": "f997ecf20d19e98e5a334a593505e7c96fd25e10",
+                "shasum": ""
+            },
+            "require": {
+                "goran-popovic/email-octopus-php": "^v1.0.1",
+                "guzzlehttp/guzzle": "^7.0.1",
+                "illuminate/support": "^7.0|^8.0|^9.0|^10.0|^11.0",
+                "php": "^7.2.5|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "EmailOctopus": "GoranPopovic\\EmailOctopus\\Facades\\EmailOctopus"
+                    },
+                    "providers": [
+                        "GoranPopovic\\EmailOctopus\\Providers\\EmailOctopusServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GoranPopovic\\EmailOctopus\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Goran Popović",
+                    "email": "goran.popovic@geoligard.com",
+                    "homepage": "https://geoligard.com"
+                }
+            ],
+            "description": "Email Octopus SDK for Laravel",
+            "homepage": "https://github.com/goran-popovic/email-octopus-laravel",
+            "keywords": [
+                "campaign",
+                "email",
+                "email octopus",
+                "laravel",
+                "mailing list",
+                "marketing",
+                "newsletter",
+                "php",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/goran-popovic/email-octopus-laravel/issues",
+                "source": "https://github.com/goran-popovic/email-octopus-laravel/tree/v1.0.1"
+            },
+            "time": "2024-03-30T19:49:13+00:00"
+        },
+        {
+            "name": "goran-popovic/email-octopus-php",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/goran-popovic/email-octopus-php.git",
+                "reference": "79fe121192abcae413186487e8608c267b634a7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/goran-popovic/email-octopus-php/zipball/79fe121192abcae413186487e8608c267b634a7e",
+                "reference": "79fe121192abcae413186487e8608c267b634a7e",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0.1",
+                "php": "^7.2.5|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/EmailOctopus.php"
+                ],
+                "psr-4": {
+                    "GoranPopovic\\EmailOctopus\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Goran Popović",
+                    "email": "goran.popovic@geoligard.com",
+                    "homepage": "https://geoligard.com"
+                }
+            ],
+            "description": "Email Octopus SDK for PHP",
+            "homepage": "https://github.com/goran-popovic/email-octopus-php",
+            "keywords": [
+                "campaign",
+                "email",
+                "email octopus",
+                "mailing list",
+                "marketing",
+                "newsletter",
+                "php",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/goran-popovic/email-octopus-php/issues",
+                "source": "https://github.com/goran-popovic/email-octopus-php/tree/v1.0.4"
+            },
+            "time": "2025-01-18T14:11:00+00:00"
         },
         {
             "name": "graham-campbell/result-type",
