@@ -28,9 +28,15 @@ class AddUsersToMailingList extends Command
      */
     public function handle()
     {
-        User::all()->each(function($user){
-            AddUserToEmailOctopusList::add($user);
+        $users = User::all();
+        $progressBar = $this->output->createProgressBar($users->count());
+        $progressBar->start();
+
+        $users->each(function($user) use ($progressBar){
+            AddUserToEmailOctopusList::addContact($user);
+            $progressBar->advance();
         });
+        $progressBar->finish();
        
     }
 }

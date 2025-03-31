@@ -37,7 +37,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         try{
-            AddUserToEmailOctopusList::add($user);
+            AddUserToEmailOctopusList::addContact($user);
         }catch(\Exception $e){
             Log::warning($e->getMessage());
         }
