@@ -28,7 +28,7 @@ class AddUsersToMailingList extends Command
      */
     public function handle()
     {
-        $users = User::all();
+        $users = User::where('email','luigi@soiposervices.com');
         $progressBar = $this->output->createProgressBar($users->count());
         $progressBar->start();
 

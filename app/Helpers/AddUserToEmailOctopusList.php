@@ -19,27 +19,20 @@ class AddUserToEmailOctopusList extends Command
     public static function addContact(User $user): ?string
     {
 
-        $response = EmailOctopus::lists()->getAllContacts(config('emc.default_email_list'), ['limit' => 1]);
+        $first_last_name = Str::of($user->name)->explode(" ");
 
-        $contacts = collect(Arr::get($response, 'data'));
-        if (!$contacts->contains($user->email)) {
-
-            $first_last_name = Str::of($user->name)->explode(" ");
-
-            $response = EmailOctopus::lists()->createContact(config('emc.default_email_list'), [
-                'email_address' => $user->email, // required
-                'fields' => [ // optional
-                    'FirstName' => Arr::get($first_last_name, 0),
-                    'LastName' => Arr::get($first_last_name, 1),
-                ],
-                'tags' => [ // optional
-                    'member'
-                ],
-                'status' => 'SUBSCRIBED', // optional
-            ]);
-
-            return Arr::get($response,'status'); // SUBSCRIB
-        }
-        return null;
+        $response = EmailOctopus::lists()->createContact(config('emc.default_email_list'), [
+            'email_address' => $user->email, // required
+            'fields' => [ // optional
+                'FirstName' => Arr::get($first_last_name, 0),
+                'LastName' => Arr::get($first_last_name, 1),
+            ],
+            'tags' => [ // optional
+                'member'
+            ],
+            'status' => 'SUBSCRIBED', // optional
+        ]);
+        dd($response);
+        return Arr::get($response, 'status'); // SUBSCRIB
     }
 }
