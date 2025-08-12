@@ -62,7 +62,7 @@ export default defineComponent({
                 v-if="business.photo_url"
                 :src="business.photo_url"
                 :alt="business.name"
-                class="object-cover w-full h-48"
+                class="object-contain w-full h-48"
               />
               <div class="p-4">
                 <h3 class="text-lg font-semibold">
