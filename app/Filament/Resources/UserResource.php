@@ -49,6 +49,7 @@ class UserResource extends Resource
                                 Forms\Components\DateTimePicker::make('email_verified_at'),
                                 Forms\Components\Toggle::make('is_admin'),
                                 Forms\Components\Toggle::make('is_disabled'),
+                                Forms\Components\Toggle::make('is_visible'),
                                 Forms\Components\SpatieTagsInput::make('tags'),
                                 Forms\Components\DatePicker::make('feedback_submitted_at'),
                             ]),

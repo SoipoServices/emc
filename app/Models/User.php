@@ -57,7 +57,8 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'oauth_type',
         'feedback_submitted_at',
         'is_disabled',
-        'profile_photo_path'
+        'profile_photo_path',
+        'is_visible'
     ];
 
     /**
@@ -132,6 +133,12 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     {
         return $query->whereNotNull('position');
     }
+
+    public function scopeIsVisible($query)
+    {
+        return $query->where('is_visible',true);
+    }
+    
 
     protected function hasBio(): Attribute
     {
