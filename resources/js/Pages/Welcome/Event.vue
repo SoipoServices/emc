@@ -21,6 +21,12 @@ defineProps({
                 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                 {{ event.title }}
             </h5>
+            <div v-if="event.is_member_event"
+                class="flex items-center gap-4 mb-4">
+                    <div>
+                        <h6 class="text-sm font-semibold">Organized by {{ event.user.name }}</h6>
+                    </div>
+            </div>
             <h6
                 class="block mb-2 font-sans antialiased font-semibold leading-snug tracking-normal text-l text-blue-gray-800">
                 {{ event.start_date }}

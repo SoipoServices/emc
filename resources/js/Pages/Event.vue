@@ -25,11 +25,34 @@ defineProps({
                                 {{ event.title }}
                             </h2>
                             <div class="space-y-4">
+
+                                <div class="block md:hidden">
+                                      <div class="p-4 bg-gray-100 rounded-lg dark:bg-gray-800">
+                                    <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">Event Details</h3>
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        <strong>Date:</strong> {{ new Date(event.start_date).toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}
+                                    </p>
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        <strong>Location:</strong> {{ event.address }}
+                                    </p>
+                                    <div class="flex justify-start mt-2 gap-x-4">
+                                    <a
+                                        :href="event.link"
+                                        target="_blank"
+                                        class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                                    >
+                                        RSVP
+                                    </a>
+                                  
+                                </div>
+                                </div>
+                                    </div>
+
                                 <div class="prose dark:prose-invert max-w-none" v-html="event.description"></div>
                                 <div class="p-4 bg-gray-100 rounded-lg dark:bg-gray-800">
                                     <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">Event Details</h3>
                                     <p class="text-gray-600 dark:text-gray-300">
-                                        <strong>Date:</strong> {{ new Date(event.start_date).toLocaleString() }}
+                                        <strong>Date:</strong> {{ new Date(event.start_date).toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}
                                     </p>
                                     <p class="text-gray-600 dark:text-gray-300">
                                         <strong>Location:</strong> {{ event.address }}
@@ -52,7 +75,7 @@ defineProps({
                                     <Link
                                         v-if="!$page.props.auth.user"
                                         :href="route('register')"
-                                        class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-800 rounded-md shadow h-9 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
+                                        class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-900 transition-colors bg-transparent border border-gray-900 rounded-md shadow hover:bg-gray-900 h-9 hover:text-gray-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border dark:border-gray-50 dark:text-gray-50 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
                                     >
                                         Become a member
                                     </Link>

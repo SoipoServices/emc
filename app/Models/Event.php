@@ -60,8 +60,8 @@ class Event extends Model implements Sitemapable
      * @return array<string, string>
      */
     protected $casts = [
-        'start_date' => 'datetime:d-M-Y H:00',
-        'end_date' => 'datetime:d-M-Y H:00',
+        'start_date' => 'datetime:d-M-Y H:i',
+        'end_date' => 'datetime:d-M-Y H:i',
         'is_approved' => 'boolean',
         'is_member_event' => 'boolean'
     ];

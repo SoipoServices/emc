@@ -18,8 +18,8 @@ class HomeController extends Controller
     public function __invoke(Request $request): Response|RedirectResponse
     {
         $events = Event::approved()
-            ->with('tags')
-            ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event')
+            ->with(['tags','user'])
+            ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event','user_id')
             ->orderBy('start_date', 'desc')
             ->get()
             ->groupBy('is_member_event')
