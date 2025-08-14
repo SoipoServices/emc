@@ -24,7 +24,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?int $navigationSort = 1;
-    protected static function profilePhotoDisk():string
+    protected static function profilePhotoDisk(): string
     {
         return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : config('jetstream.profile_photo_disk', 'public');
     }
@@ -43,9 +43,9 @@ class UserResource extends Resource
                                 Forms\Components\TextInput::make('telephone'),
                                 Forms\Components\TextInput::make('password')
                                     ->password()
-                                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                                    ->dehydrated(fn ($state) => filled($state))
-                                    ->required(fn (string $context): bool => $context === 'create'),
+                                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
+                                    ->dehydrated(fn($state) => filled($state))
+                                    ->required(fn(string $context): bool => $context === 'create'),
                                 Forms\Components\DateTimePicker::make('email_verified_at'),
                                 Forms\Components\Toggle::make('is_admin'),
                                 Forms\Components\Toggle::make('is_disabled'),
@@ -84,20 +84,20 @@ class UserResource extends Resource
                 Tables\Columns\ToggleColumn::make('is_visible'),
                 Tables\Columns\SpatieTagsColumn::make('tags'),
                 Tables\Columns\IconColumn::make('is_verified')
-                    ->icon(fn (string $state): string => match ($state) {
+                    ->icon(fn(string $state): string => match ($state) {
                         default => 'heroicon-o-exclamation-triangle',
                         "1" => 'heroicon-o-check',
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         "1" => 'success',
                         default => 'warning',
                     }),
                 Tables\Columns\IconColumn::make('has_bio')
-                    ->icon(fn (string $state): string => match ($state) {
+                    ->icon(fn(string $state): string => match ($state) {
                         default => 'heroicon-o-exclamation-triangle',
                         "1" => 'heroicon-o-check',
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         "1" => 'success',
                         default => 'warning',
                     }),
@@ -116,7 +116,13 @@ class UserResource extends Resource
                     ->options([
                         true => 'Yes',
                         false => 'No',
-                    ])
+                    ])->query(function (Builder $query, $value) {
+                        if ($value === 'true' || $value === true) {
+                            $query->whereNotNull('bio')->where('bio', '!=', '');
+                        } elseif ($value === 'false' || $value === false) {
+                            $query->whereNull('bio')->orWhere('bio', '');
+                        }
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -126,7 +132,7 @@ class UserResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('created_at','desc');
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
