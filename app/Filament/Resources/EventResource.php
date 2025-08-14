@@ -46,16 +46,26 @@ class EventResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->required()->afterStateUpdated(function ($get, $set, ?string $state) {
-                    if (!$get('is_slug_changed_manually') && filled($state)) {
-                        $set('slug', Str::slug($state));
-                    }
-                })
+                TextInput::make('title')
+                    ->required()
+                    ->afterStateUpdated(function ($get, $set, ?string $state) {
+                        if (!$get('is_slug_changed_manually') && filled($state)) {
+                            $set('slug', Str::slug($state));
+                        }
+                    })
                     ->reactive(),
-                TextInput::make('slug')->required()->afterStateUpdated(function ($set) {
-                    $set('is_slug_changed_manually', true);
-                })
-                    ->required(),
+
+                TextInput::make('slug')
+                    ->required()
+                    ->afterStateUpdated(function ($get, $set, ?string $state) {
+                        // Only set manually if the slug is changed and not empty
+                        if (filled($state)) {
+                            $set('is_slug_changed_manually', true);
+                        } else {
+                            $set('is_slug_changed_manually', false);
+                        }
+                    })
+                    ->reactive(),
                 Hidden::make('is_slug_changed_manually')
                     ->default(false)
                     ->dehydrated(false),
@@ -108,7 +118,7 @@ class EventResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])->defaultSort('created_at','desc');
+            ])->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
