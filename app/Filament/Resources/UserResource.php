@@ -81,6 +81,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('telephone')->searchable(),
                 Tables\Columns\ToggleColumn::make('is_admin'),
                 Tables\Columns\ToggleColumn::make('is_disabled'),
+                Tables\Columns\TextColumn::make('is_visible'),
                 Tables\Columns\SpatieTagsColumn::make('tags'),
                 Tables\Columns\IconColumn::make('is_verified')
                     ->icon(fn (string $state): string => match ($state) {
