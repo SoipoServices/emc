@@ -24,37 +24,39 @@ defineProps({
                     </p>
                 </div>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <div v-for="event in events" :key="event.id" class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
-                        <img v-if="event.photo_url" :src="event.photo_url" :alt="event.title" class="object-cover w-full h-48">
-                        <div class="p-4">
-                            <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">{{ event.title }}</h3>
-                            <div
-                                v-if="event.is_member_event"
-                                class="flex items-center gap-4 mb-4"
-                            >
-                                <div v-if="event.user">
-                                    <h6 class="text-sm font-semibold">
-                                        Organized by {{ event.user.name }}
-                                    </h6>
+                    <a :href="route('event.show', event.slug)" v-for="event in events" :key="event.id">
+                        <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
+                            <img v-if="event.photo_url" :src="event.photo_url" :alt="event.title" class="object-cover w-full h-48">
+                            <div class="p-4">
+                                <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">{{ event.title }}</h3>
+                                <div
+                                    v-if="event.is_member_event"
+                                    class="flex items-center gap-4 mb-4"
+                                >
+                                    <div v-if="event.user">
+                                        <h6 class="text-sm font-semibold">
+                                            Organized by {{ event.user.name }}
+                                        </h6>
+                                    </div>
                                 </div>
+                                <p class="mb-2 text-sm text-gray-600 dark:text-gray-300">
+                                    {{ new Date(event.start_date).toLocaleDateString() }}
+                                </p>
+                                <p class="mb-4 text-gray-700 dark:text-gray-200">
+                                    {{ event.plain_description.substring(0, 100) }}{{ event.plain_description.length > 100 ? '...' : '' }}
+                                </p>
+                                <div v-if="event.tags?.length > 0" class="flex flex-wrap gap-2 mb-4">
+                                    <span v-for="tag in event.tags" :key="tag.id"
+                                        class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-white">
+                                        {{ tag.name[$page.props.locale] }}
+                                    </span>
+                                </div>
+                                <!-- <Link :href="route('event.show', event.slug)" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
+                                    Read More
+                                </Link> -->
                             </div>
-                            <p class="mb-2 text-sm text-gray-600 dark:text-gray-300">
-                                {{ new Date(event.start_date).toLocaleDateString() }}
-                            </p>
-                            <p class="mb-4 text-gray-700 dark:text-gray-200">
-                                {{ event.plain_description.substring(0, 100) }}{{ event.plain_description.length > 100 ? '...' : '' }}
-                            </p>
-                            <div v-if="event.tags?.length > 0" class="flex flex-wrap gap-2 mb-4">
-                                <span v-for="tag in event.tags" :key="tag.id"
-                                      class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-white">
-                                    {{ tag.name[$page.props.locale] }}
-                                </span>
-                            </div>
-                            <Link :href="route('event.show', event.slug)" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
-                                Read More
-                            </Link>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
