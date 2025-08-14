@@ -28,6 +28,16 @@ defineProps({
                         <img v-if="event.photo_url" :src="event.photo_url" :alt="event.title" class="object-cover w-full h-48">
                         <div class="p-4">
                             <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">{{ event.title }}</h3>
+                            <div
+                                v-if="event.is_member_event"
+                                class="flex items-center gap-4 mb-4"
+                            >
+                                <div v-if="event.user">
+                                    <h6 class="text-sm font-semibold">
+                                        Organized by {{ event.user.name }}
+                                    </h6>
+                                </div>
+                            </div>
                             <p class="mb-2 text-sm text-gray-600 dark:text-gray-300">
                                 {{ new Date(event.start_date).toLocaleDateString() }}
                             </p>

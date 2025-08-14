@@ -14,8 +14,8 @@ class PublicEventController extends Controller
     public function index()
     {
         $events = Event::approved()
-            ->with('tags')
-            ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event')
+            ->with(['tags','user']) 
+            ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event','user_id')
             ->latest() // This orders by created_at in descending order
             ->get();
 
@@ -31,7 +31,7 @@ class PublicEventController extends Controller
 
     public function show(string $slug)
     {
-        $event = Event::approved()->where('slug', $slug)->with('tags')->firstOrFail();
+        $event = Event::approved()->where('slug', $slug)->with(['tags','user'])->firstOrFail();
 
         SEOManager::SEODataTransformer(function (SEOData $SEOData) use($event) : SEOData  {
                         $eventSEOData = $event->getDynamicSEOData();

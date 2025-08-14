@@ -23,7 +23,7 @@ defineProps({
             </h5>
             <div v-if="event.is_member_event"
                 class="flex items-center gap-4 mb-4">
-                    <div>
+                    <div v-if="event.user">
                         <h6 class="text-sm font-semibold">Organized by {{ event.user.name }}</h6>
                     </div>
             </div>

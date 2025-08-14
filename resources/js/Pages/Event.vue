@@ -26,6 +26,16 @@ defineProps({
                             >
                                 {{ event.title }}
                             </h2>
+                            <div
+                                v-if="event.is_member_event"
+                                class="flex items-center gap-4 mb-4"
+                            >
+                                <div v-if="event.user">
+                                    <h6 class="text-sm font-semibold">
+                                        Organized by {{ event.user.name }}
+                                    </h6>
+                                </div>
+                            </div>
                             <div class="space-y-4">
                                 <div class="block md:hidden">
                                     <div
@@ -76,7 +86,7 @@ defineProps({
                                     class="prose dark:prose-invert max-w-none"
                                     v-html="event.description"
                                 ></div>
-                              
+
                                 <div
                                     v-if="event.tags?.length > 0"
                                     class="flex flex-wrap gap-2 mb-4"
@@ -119,33 +129,33 @@ defineProps({
                                     />
                                 </div>
                             </div>
-                              <div
-                                    class="p-4 mt-5 bg-gray-100 rounded-lg dark:bg-gray-800"
+                            <div
+                                class="p-4 mt-5 bg-gray-100 rounded-lg dark:bg-gray-800"
+                            >
+                                <h3
+                                    class="mb-2 text-xl font-semibold text-gray-800 dark:text-white"
                                 >
-                                    <h3
-                                        class="mb-2 text-xl font-semibold text-gray-800 dark:text-white"
-                                    >
-                                        Event Details
-                                    </h3>
-                                    <p class="text-gray-600 dark:text-gray-300">
-                                        <strong>Date:</strong>
-                                        {{
-                                            new Date(
-                                                event.start_date
-                                            ).toLocaleTimeString([], {
-                                                year: "numeric",
-                                                month: "numeric",
-                                                day: "numeric",
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                            })
-                                        }}
-                                    </p>
-                                    <p class="text-gray-600 dark:text-gray-300">
-                                        <strong>Location:</strong>
-                                        {{ event.address }}
-                                    </p>
-                                </div>
+                                    Event Details
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    <strong>Date:</strong>
+                                    {{
+                                        new Date(
+                                            event.start_date
+                                        ).toLocaleTimeString([], {
+                                            year: "numeric",
+                                            month: "numeric",
+                                            day: "numeric",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                        })
+                                    }}
+                                </p>
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    <strong>Location:</strong>
+                                    {{ event.address }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
