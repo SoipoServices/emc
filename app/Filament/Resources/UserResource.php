@@ -111,6 +111,11 @@ class UserResource extends Resource
                     ->options([
                         true => 'Yes',
                         false => 'No',
+                    ]),
+                Tables\Filters\SelectFilter::make('has_bio')
+                    ->options([
+                        true => 'Yes',
+                        false => 'No',
                     ])
             ])
             ->actions([
