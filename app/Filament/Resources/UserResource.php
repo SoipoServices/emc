@@ -14,7 +14,7 @@ use Filament\SpatieLaravelTagsPlugin\Types\AllTagTypes;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Database\Eloquent\Builder ;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
 
@@ -112,17 +112,17 @@ class UserResource extends Resource
                         true => 'Yes',
                         false => 'No',
                     ]),
-                Tables\Filters\SelectFilter::make('has_bio')
-                    ->options([
-                        true => 'Yes',
-                        false => 'No',
-                    ])->query(function (Builder $query, $value) {
-                        if ($value === 'true' || $value === true) {
-                            $query->whereNotNull('bio')->where('bio', '!=', '');
-                        } elseif ($value === 'false' || $value === false) {
-                            $query->whereNull('bio')->orWhere('bio', '');
-                        }
-                    })
+               Tables\Filters\TernaryFilter::make('has_bio')
+                    ->label('Has Bio')
+                    ->placeholder('All users')
+                    ->trueLabel('Users with Bio')
+                    ->falseLabel('Users without Bio')
+                    ->queries(
+                       true: fn (Builder $query) => $query->whereNotNull('bio')->where('bio', '!=', ''),
+                       false:  fn (Builder $query) => $query->whereNull('bio')->orWhere('bio', ''),
+                       blank: fn (Builder $query) => $query
+                    ),
+                
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
