@@ -18,6 +18,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Flex;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -34,13 +37,17 @@ class PostResource extends Resource
     {
         return $schema
             ->components([
-                RichEditor::make('body')->required(),
-                Select::make('user_id')
-                    ->relationship(name: 'user', titleAttribute: 'name')->required(),
-                TextInput::make('link_title'),
-                Textarea::make('link_description'),
-                TextInput::make('link_url')->rule('url'),
-                TextInput::make('link_image')->rule('url'),
+                Section::make([
+                        RichEditor::make('body')->required()
+                    ]),
+                    Section::make([
+                        Select::make('user_id')
+                            ->relationship(name: 'user', titleAttribute: 'name')->required(),
+                        TextInput::make('link_title'),
+                        Textarea::make('link_description'),
+                        TextInput::make('link_url')->rule('url'),
+                        TextInput::make('link_image')->rule('url'),
+                    ])->grow(false),
             ]);
     }
 
@@ -48,7 +55,8 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('body')->searchable(),
+                TextColumn::make('body')->searchable()->limit(50)
+                    ->formatStateUsing(fn($state) => strip_tags($state)),
                 TextColumn::make('link_title')->searchable(),
                 TextColumn::make('user.name'),
             ])
@@ -62,7 +70,8 @@ class PostResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
