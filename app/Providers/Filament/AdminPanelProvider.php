@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use A21ns1g4ts\FilamentShortUrl\Filament\Resources\ShortUrlResource\Widgets\ShortUrlStats;
 use App\Filament\Resources\EventResource\Widgets\EventStats;
 use App\Filament\Resources\UserResource\Widgets\UserStats;
 use Filament\Http\Middleware\Authenticate;
@@ -42,9 +43,10 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
+                ShortUrlStats::class,
                 UserStats::class,
-                EventStats::class
-                //                Widgets\FilamentInfoWidget::class,
+                EventStats::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->plugins(
                 [
