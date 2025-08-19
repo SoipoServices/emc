@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users;
 
+use App\Filament\Exports\UserExporter;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Tabs;
 use Filament\Forms\Components\TextInput;
@@ -36,6 +37,8 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\Database\Eloquent\Builder ;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use Filament\Actions\ExportAction;
+use Filament\Actions\ExportBulkAction;
 
 class UserResource extends Resource
 {
@@ -93,6 +96,10 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(UserExporter::class),
+            ])
             ->columns([
                 ImageColumn::make('profile_photo_path')->disk(self::profilePhotoDisk()),
                 TextColumn::make('name')->searchable(),
@@ -148,6 +155,7 @@ class UserResource extends Resource
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    ExportBulkAction::make()->exporter(UserExporter::class),
                     DeleteBulkAction::make(),
                 ]),
             ])
