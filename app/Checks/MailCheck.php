@@ -2,6 +2,7 @@
 
 namespace App\Checks;
 
+use Exception;
 use Spatie\Health\Checks\Check;
 use Spatie\Health\Checks\Result;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
@@ -34,7 +35,7 @@ class MailCheck extends Check
             $transport->start();
 
             return $result->ok();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $result->failed($e->getMessage());
         }
     }

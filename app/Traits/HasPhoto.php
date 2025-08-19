@@ -11,7 +11,7 @@ trait HasPhoto
     /**
      * Update the user's profile photo.
      *
-     * @param  \Illuminate\Http\UploadedFile  $photo
+     * @param UploadedFile $photo
      * @param  string  $storagePath
      * @return void
      */
@@ -52,7 +52,7 @@ trait HasPhoto
     /**
      * Get the URL to the  photo.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return Attribute
      */
     public function photoUrl(): Attribute
     {
