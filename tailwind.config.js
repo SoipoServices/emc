@@ -11,6 +11,9 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        './vendor/lara-zeus/core/resources/views/**/*.blade.php',
+        './vendor/lara-zeus/sky/resources/views/themes/**/*.blade.php',
+        './vendor/lara-zeus/sky/resources/views/filament/**/*.blade.php'
     ],
 
     theme: {

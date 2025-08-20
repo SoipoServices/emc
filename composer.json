@@ -13,6 +13,7 @@
         "inertiajs/inertia-laravel": "^1.0",
         "jeroendesloovere/vcard": "^1.7",
         "jerome/filterable": "^1.1",
+        "lara-zeus/sky": "^4.0",
         "lara-zeus/spatie-translatable": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/jetstream": "^5.0",
@@ -21,10 +22,11 @@
         "laravel/scout": "^10.8",
         "laravel/socialite": "^5.14",
         "laravel/tinker": "^2.9",
+        "owenvoke/blade-fontawesome": "^2.9",
         "ralphjsmit/laravel-seo": "^1.6",
+        "secondnetwork/blade-tabler-icons": "^3.34",
         "spatie/laravel-health": "^1.28",
         "spatie/laravel-sitemap": "^7.2",
-        "spatie/laravel-tags": "^4.6",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {

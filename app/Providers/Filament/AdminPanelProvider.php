@@ -22,6 +22,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use LaraZeus\Sky\SkyPlugin;
 use LaraZeus\SpatieTranslatable\SpatieTranslatablePlugin;
 use SolutionForest\FilamentTranslateField\FilamentTranslateFieldPlugin;
 
@@ -58,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
                     // FilamentShortUrlPlugin::make()
                     SpatieTranslatablePlugin::make()
                      ->defaultLocales(['en' ,'it']),
+                     SkyPlugin::make()->navigationGroupLabel('CMS')
                 ]
             )
             ->middleware([
