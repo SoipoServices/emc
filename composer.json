@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "a21ns1g4ts/filament-short-url": "^4.0",
         "embed/embed": "^4.4",
         "filament/filament": "^4.0",
         "filament/spatie-laravel-tags-plugin": "^4.0",
@@ -83,5 +84,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/SoipoServices/filament-short-url.git"
+        }
+    ]
 }

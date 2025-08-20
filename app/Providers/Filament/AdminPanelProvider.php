@@ -48,14 +48,14 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->widgets([
                 AccountWidget::class,
-                // ShortUrlStats::class,
+                ShortUrlStats::class,
                 UserStats::class,
                 EventStats::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
             ->plugins(
                 [
-                    // FilamentShortUrlPlugin::make()
+                    FilamentShortUrlPlugin::make(),
                     SpatieTranslatablePlugin::make()
                      ->defaultLocales(['en' ,'it']),
                 ]
