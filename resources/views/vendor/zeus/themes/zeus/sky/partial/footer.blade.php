@@ -14,7 +14,7 @@
             <div class="flex items-center gap-6">
                 <nav class="flex gap-4">
                     <a href="{{ route('terms.show') }}" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">Terms of Service</a>
-                    <a href="{{ route('policy.show') }}" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">Privacy Policy</a>
+                    <a href="{{ route('privacy.show') }}" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">Privacy Policy</a>
                     <a href="https://www.iubenda.com/privacy-policy/89321358/cookie-policy" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" title="Cookie Policy">Cookie Policy</a>
                 </nav>
                 

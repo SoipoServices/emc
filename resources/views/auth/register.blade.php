@@ -86,7 +86,6 @@
                                 </div>
                             </div>
 
-                            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                                 <div class="flex items-center">
                                     <input id="terms" name="terms" type="checkbox" required
                                            class="w-4 h-4 text-black border-gray-300 rounded focus:ring-black dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:focus:ring-white">
@@ -94,10 +93,9 @@
                                         I agree to the
                                         <a target="_blank" href="{{ route('terms.show') }}" class="font-semibold text-black hover:text-gray-700 dark:text-white dark:hover:text-gray-300">Terms of Service</a>
                                         and
-                                        <a target="_blank" href="{{ route('policy.show') }}" class="font-semibold text-black hover:text-gray-700 dark:text-white dark:hover:text-gray-300">Privacy Policy</a>
+                                        <a target="_blank" href="{{ route('privacy.show') }}" class="font-semibold text-black hover:text-gray-700 dark:text-white dark:hover:text-gray-300">Privacy Policy</a>
                                     </label>
                                 </div>
-                            @endif
 
                             <div>
                                 <button type="submit" 

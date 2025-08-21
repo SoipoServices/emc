@@ -18,6 +18,10 @@ Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('publi
 Route::get('/companies', [PublicBusinessController::class, 'index'])->name('public.businesses.index');
 Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
 
+// Legal Pages
+Route::view('/terms', 'legal.terms')->name('terms.show');
+Route::view('/privacy', 'legal.privacy')->name('privacy.show');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
