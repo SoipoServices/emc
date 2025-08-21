@@ -59,7 +59,7 @@ class AppViewServiceProvider extends ServiceProvider
         }
 
         try {
-            $mainNav = \LaraZeus\Sky\SkyPlugin::get()->getModel('Navigation')::fromHandle('main-nav');
+            $mainNav = \LaraZeus\Sky\SkyPlugin::get()->getModel('Navigation')::fromHandle('main');
         } catch (\Exception $e) {
             // If navigation fails, set to null
             $mainNav = null;
