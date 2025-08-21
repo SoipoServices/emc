@@ -6,7 +6,6 @@ use App\Helpers\AddUserToEmailOctopusList;
 use App\Models\User;
 use Illuminate\Console\Command;
 
-
 class AddUsersToMailingList extends Command
 {
     /**
@@ -28,15 +27,15 @@ class AddUsersToMailingList extends Command
      */
     public function handle()
     {
-        $users = User::where('email','luigi@soiposervices.com');
+        $users = User::where('email', 'luigi@soiposervices.com');
         $progressBar = $this->output->createProgressBar($users->count());
         $progressBar->start();
 
-        $users->each(function($user) use ($progressBar){
+        $users->each(function ($user) use ($progressBar) {
             AddUserToEmailOctopusList::addContact($user);
             $progressBar->advance();
         });
         $progressBar->finish();
-       
+
     }
 }

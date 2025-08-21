@@ -11,7 +11,7 @@
             </div>
 
             <!-- Main Navigation -->
-            <nav class="hidden space-x-8 md:flex">
+            <nav class="space-x-8 md:flex">
                 @if($mainNav && $mainNav->items)
                     @foreach($mainNav->items as $item)
                         @if($item['type'] === 'external-link')

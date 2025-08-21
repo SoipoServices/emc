@@ -8,7 +8,6 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class EventStats extends BaseWidget
 {
-
     protected function getStats(): array
     {
         return [

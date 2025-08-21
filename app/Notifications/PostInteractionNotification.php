@@ -2,19 +2,21 @@
 
 namespace App\Notifications;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Post;
-use App\Models\User;
 
 class PostInteractionNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     protected $post;
+
     protected $interactingUser;
+
     protected $interactionType;
 
     public function __construct(Post $post, User $interactingUser, string $interactionType)

@@ -5,24 +5,21 @@ namespace App\Models;
 use App\Traits\HasPhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-use Illuminate\Support\Str;
 use Spatie\Sitemap\Contracts\Sitemapable;
 use Spatie\Sitemap\Tags\Url;
-
 
 class Business extends Model implements Sitemapable
 {
     use HasFactory;
-    use Searchable;
     use HasPhoto;
     use HasSEO;
-
-
+    use Searchable;
 
     protected $fillable = [
         'name',
@@ -37,7 +34,7 @@ class Business extends Model implements Sitemapable
         'is_sponsor',
         'is_public',
         'is_approved',
-        'user_id'
+        'user_id',
     ];
 
     protected $casts = [
@@ -62,7 +59,7 @@ class Business extends Model implements Sitemapable
         return $this->belongsTo(User::class);
     }
 
-    #[SearchUsingPrefix(['name','slug'])]
+    #[SearchUsingPrefix(['name', 'slug'])]
     #[SearchUsingFullText(['description'])]
     public function toSearchableArray()
     {
@@ -72,7 +69,7 @@ class Business extends Model implements Sitemapable
         ];
     }
 
-     /**
+    /**
      * Get the plain text version of the description.
      *
      * @return string
@@ -96,16 +93,15 @@ class Business extends Model implements Sitemapable
     {
         return new SEOData(
             title: $this->name,
-            description: Str::limit($this->plain_description,180),
+            description: Str::limit($this->plain_description, 180),
             author: $this->user->name,
             image: $this->photo_url
         );
     }
 
-    public function toSitemapTag(): Url | string | array
+    public function toSitemapTag(): Url|string|array
     {
         // Simple return:
-        return route('public.business.show',['slug'=>$this->slug] );
+        return route('public.business.show', ['slug' => $this->slug]);
     }
-
 }

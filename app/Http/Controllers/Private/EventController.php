@@ -120,7 +120,7 @@ class EventController extends Controller
             $user->notify(new NewEventCreated($event));
         }
 
-        return redirect()->route('private.events.list',['user' => $request->user()->id])->with('success', 'Event created successfully and sent for approval!');
+        return redirect()->route('private.events.list', ['user' => $request->user()->id])->with('success', 'Event created successfully and sent for approval!');
     }
 
     /**
@@ -194,6 +194,6 @@ class EventController extends Controller
             $admin->notify(new NewEventForApproval($event));
         }
 
-        return redirect()->route('private.events.list',['user' => $request->user()->id])->with('success', 'Event updated successfully and sent for approval!');
+        return redirect()->route('private.events.list', ['user' => $request->user()->id])->with('success', 'Event updated successfully and sent for approval!');
     }
 }

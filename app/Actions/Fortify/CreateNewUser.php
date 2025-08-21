@@ -2,9 +2,9 @@
 
 namespace App\Actions\Fortify;
 
-use Exception;
 use App\Helpers\AddUserToEmailOctopusList;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -37,11 +37,12 @@ class CreateNewUser implements CreatesNewUsers
             'position' => $input['position'],
         ]);
 
-        try{
+        try {
             AddUserToEmailOctopusList::addContact($user);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::warning($e->getMessage());
         }
+
         return $user;
     }
 }

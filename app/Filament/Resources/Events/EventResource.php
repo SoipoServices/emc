@@ -2,46 +2,38 @@
 
 namespace App\Filament\Resources\Events;
 
-use Filament\Schemas\Schema;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\Events\Pages\ListEvents;
 use App\Filament\Resources\Events\Pages\CreateEvent;
 use App\Filament\Resources\Events\Pages\EditEvent;
-use App\Filament\Resources\EventResource\Pages;
-use App\Filament\Resources\EventResource\RelationManagers;
+use App\Filament\Resources\Events\Pages\ListEvents;
 use App\Filament\Resources\Events\RelationManagers\UserRelationManager;
 use App\Models\Event;
-use Closure;
-use Illuminate\Support\Str;
-use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieTagsInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class EventResource extends Resource
 {
     protected static ?string $model = Event::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
+
     protected static ?int $navigationSort = 2;
 
     protected static function photoDisk(): string
@@ -49,19 +41,17 @@ class EventResource extends Resource
         return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : config('emc.photo_disk', 'public');
     }
 
-
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('title')
                     ->required()
-                     ->live(onBlur: true)
-                        ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
-                    ->required()
-            ,
+                    ->required(),
                 Hidden::make('is_slug_changed_manually')
                     ->default(false)
                     ->dehydrated(false),
@@ -105,7 +95,7 @@ class EventResource extends Resource
                     ->options([
                         true => 'Yes',
                         false => 'No',
-                    ])
+                    ]),
             ])
             ->recordActions([
                 EditAction::make(),

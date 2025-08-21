@@ -3,49 +3,44 @@
 namespace App\Filament\Resources\Users;
 
 use App\Filament\Exports\UserExporter;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Tabs;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\SpatieTagsInput;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Columns\SpatieTagsColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Models\User;
-use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
-use Filament\Resources\Components\Tab;
-use Filament\Resources\Resource;
-use Filament\SpatieLaravelTagsPlugin\Types\AllTagTypes;
-use Filament\Tables;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Table;
-use Illuminate\Contracts\Database\Eloquent\Builder ;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Hash;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ExportBulkAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieTagsColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Table;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+
     protected static ?int $navigationSort = 1;
+
     protected static function profilePhotoDisk(): string
     {
         return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : config('jetstream.profile_photo_disk', 'public');
@@ -65,9 +60,9 @@ class UserResource extends Resource
                                 TextInput::make('telephone'),
                                 TextInput::make('password')
                                     ->password()
-                                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
-                                    ->dehydrated(fn($state) => filled($state))
-                                    ->required(fn(string $context): bool => $context === 'create'),
+                                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                                    ->dehydrated(fn ($state) => filled($state))
+                                    ->required(fn (string $context): bool => $context === 'create'),
                                 DateTimePicker::make('email_verified_at'),
                                 Toggle::make('is_admin'),
                                 Toggle::make('is_disabled'),
@@ -86,12 +81,10 @@ class UserResource extends Resource
                                 Textarea::make('youtube_url')->rules(['url']),
 
                             ]),
-                    ])
+                    ]),
 
             ]);
     }
-
-
 
     public static function table(Table $table): Table
     {
@@ -110,26 +103,25 @@ class UserResource extends Resource
                 ToggleColumn::make('is_visible'),
                 SpatieTagsColumn::make('tags'),
                 IconColumn::make('is_verified')
-                    ->icon(fn(string $state): string => match ($state) {
+                    ->icon(fn (string $state): string => match ($state) {
                         default => 'heroicon-o-exclamation-triangle',
-                        "1" => 'heroicon-o-check',
+                        '1' => 'heroicon-o-check',
                     })
-                    ->color(fn(string $state): string => match ($state) {
-                        "1" => 'success',
+                    ->color(fn (string $state): string => match ($state) {
+                        '1' => 'success',
                         default => 'warning',
                     }),
                 IconColumn::make('has_bio')
-                    ->icon(fn(string $state): string => match ($state) {
+                    ->icon(fn (string $state): string => match ($state) {
                         default => 'heroicon-o-exclamation-triangle',
-                        "1" => 'heroicon-o-check',
+                        '1' => 'heroicon-o-check',
                     })
-                    ->color(fn(string $state): string => match ($state) {
-                        "1" => 'success',
+                    ->color(fn (string $state): string => match ($state) {
+                        '1' => 'success',
                         default => 'warning',
                     }),
 
                 TextColumn::make('feedback_submitted_at')->since(),
-
 
             ])
             ->filters([
@@ -138,17 +130,17 @@ class UserResource extends Resource
                         true => 'Yes',
                         false => 'No',
                     ]),
-               TernaryFilter::make('has_bio')
+                TernaryFilter::make('has_bio')
                     ->label('Has Bio')
                     ->placeholder('All users')
                     ->trueLabel('Users with Bio')
                     ->falseLabel('Users without Bio')
                     ->queries(
-                       true: fn (Builder $query) => $query->whereNotNull('bio')->where('bio', '!=', ''),
-                       false:  fn (Builder $query) => $query->whereNull('bio')->orWhere('bio', ''),
-                       blank: fn (Builder $query) => $query
+                        true: fn (Builder $query) => $query->whereNotNull('bio')->where('bio', '!=', ''),
+                        false: fn (Builder $query) => $query->whereNull('bio')->orWhere('bio', ''),
+                        blank: fn (Builder $query) => $query
                     ),
-                
+
             ])
             ->recordActions([
                 EditAction::make(),

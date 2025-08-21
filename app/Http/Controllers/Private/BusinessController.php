@@ -106,7 +106,7 @@ class BusinessController extends Controller
     /**
      * Show the form for editing the specified business.
      */
-    public function edit(User $user,Business $business)
+    public function edit(User $user, Business $business)
     {
         $this->authorize('update', $business);
 
@@ -168,7 +168,7 @@ class BusinessController extends Controller
     /**
      * Remove the specified business from storage.
      */
-    public function destroy(User $user,Business $business)
+    public function destroy(User $user, Business $business)
     {
         $this->authorize('delete', $business);
 
@@ -189,10 +189,11 @@ class BusinessController extends Controller
     {
         $this->authorize('approve', $business);
 
-        $business->is_approved = !$business->is_approved;
+        $business->is_approved = ! $business->is_approved;
         $business->save();
 
         $status = $business->is_approved ? 'approved' : 'unapproved';
+
         return redirect()->back()->with('success', "Business has been {$status}!");
     }
 
@@ -203,10 +204,11 @@ class BusinessController extends Controller
     {
         $this->authorize('sponsorToggle', $business);
 
-        $business->is_sponsor = !$business->is_sponsor;
+        $business->is_sponsor = ! $business->is_sponsor;
         $business->save();
 
         $status = $business->is_sponsor ? 'marked as sponsor' : 'unmarked as sponsor';
+
         return redirect()->back()->with('success', "Business has been {$status}!");
     }
 
@@ -217,10 +219,11 @@ class BusinessController extends Controller
     {
         $this->authorize('togglePublic', $business);
 
-        $business->is_public = !$business->is_public;
+        $business->is_public = ! $business->is_public;
         $business->save();
 
         $status = $business->is_public ? 'made public' : 'made private';
+
         return redirect()->back()->with('success', "Business has been {$status}!");
     }
 }

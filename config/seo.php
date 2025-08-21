@@ -82,7 +82,7 @@ return [
          * so you'll need to add the suffix manually if you want that. If set to null, we'll determine the title
          * just like the other pages.
          */
-        'homepage_title' => "Entrepreneurs Meet Cagliari | Elevate Your Entrepreneurial Journey",
+        'homepage_title' => 'Entrepreneurs Meet Cagliari | Elevate Your Entrepreneurial Journey',
     ],
 
     'description' => [
@@ -91,7 +91,7 @@ return [
          * where we don't have a description set via an associated ->seo model or via
          * the ->getDynamicSEOData() method.
          */
-        'fallback' => "Join our entrepreneur group for insights, networking, and personalized guidance to boost your business success. Connect with like-minded leaders and grow together!",
+        'fallback' => 'Join our entrepreneur group for insights, networking, and personalized guidance to boost your business success. Connect with like-minded leaders and grow together!',
     ],
 
     'image' => [

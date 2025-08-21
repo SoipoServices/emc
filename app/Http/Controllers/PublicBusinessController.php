@@ -15,7 +15,7 @@ class PublicBusinessController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        
+
         // Get sponsors separately for featured section
         $sponsors = Business::approved()
             ->public()
@@ -58,6 +58,7 @@ class PublicBusinessController extends Controller
             $SEOData->title = $businessSEOData->title;
             $SEOData->description = $businessSEOData->description;
             $SEOData->image = $businessSEOData->image;
+
             return $SEOData;
         });
 

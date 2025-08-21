@@ -35,8 +35,8 @@ class NewPostCreated extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line("A new post has been created by {$this->post?->user?->name}.")
-                    ->line($this->post->body);
+            ->line("A new post has been created by {$this->post?->user?->name}.")
+            ->line($this->post->body);
     }
 
     /**

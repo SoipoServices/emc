@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Navigation\Pages;
 
-use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\Navigation\NavigationResource;
+use Filament\Resources\Pages\EditRecord;
 
 class EditNavigation extends EditRecord
 {

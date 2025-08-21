@@ -11,14 +11,16 @@ class LogoutDisabledUsers
     /**
      * Handle an incoming request.
      *
-     * @param Closure(Request):Response $next
+     * @param  Closure(Request):Response  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user() && $request->user()->is_disabled){
+        if ($request->user() && $request->user()->is_disabled) {
             auth()->guard('web')->logout();
+
             return redirect('/login');
         }
+
         return $next($request);
     }
 }

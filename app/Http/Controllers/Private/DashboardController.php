@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers\Private;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,7 +11,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         $search = $request->input('search');
-        
+
         // Handle session-based random seeding like in DashboardController
         if ($request->session()->has('session_rand')) {
             if ((time() - $request->session()->get('session_rand')) > 3600) {
@@ -22,8 +20,8 @@ class DashboardController extends Controller
         } else {
             $request->session()->put('session_rand', time());
         }
-        
-        if (!empty($search)) {
+
+        if (! empty($search)) {
             $query = User::search($search)->query(fn ($q) => $q->inRandomOrder($request->session()->get('session_rand'))->verified()->isVisible()->hasPosition()->with('tags'));
         } else {
             $query = User::inRandomOrder($request->session()->get('session_rand'))->verified()->isVisible()->hasPosition()->with('tags');

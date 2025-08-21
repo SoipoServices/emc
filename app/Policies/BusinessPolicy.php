@@ -4,11 +4,9 @@ namespace App\Policies;
 
 use App\Models\Business;
 use App\Models\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class BusinessPolicy
 {
-
     public function viewAny(User $user)
     {
         return true;

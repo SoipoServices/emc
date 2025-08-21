@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\Business;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -27,9 +26,9 @@ class NewBusinessForApproval extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('A new business has been created and requires your approval.')
-                    ->line('Name: ' . $this->business->name)
-                    ->action('Review Business', route('filament.admin.resources.businesses.edit',['record'=>$this->business->id]))
-                    ->line('Thank you for using our application!');
+            ->line('A new business has been created and requires your approval.')
+            ->line('Name: '.$this->business->name)
+            ->action('Review Business', route('filament.admin.resources.businesses.edit', ['record' => $this->business->id]))
+            ->line('Thank you for using our application!');
     }
 }

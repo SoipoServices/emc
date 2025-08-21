@@ -11,9 +11,9 @@ class Post extends Model
     use HasFactory;
     use HasSEO;
 
-    protected $fillable = ['body', 'link_url', 'link_title', 'link_description', 'link_image','user_id'];
+    protected $fillable = ['body', 'link_url', 'link_title', 'link_description', 'link_image', 'user_id'];
 
-     /**
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array<int, string>
@@ -22,8 +22,7 @@ class Post extends Model
         'plain_description',
     ];
 
-
-      /**
+    /**
      * Get the plain text version of the description.
      *
      * @return string
@@ -32,7 +31,6 @@ class Post extends Model
     {
         return strip_tags($this->body);
     }
-
 
     public function user()
     {

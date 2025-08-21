@@ -37,7 +37,6 @@ return [
         'redirect' => env('APP_URL', 'http://localhost').'/auth/linkedin/callback',
     ],
 
-
     'linkedin-openid' => [
         'client_id' => '77a4qp3ejn7nvn',
         'client_secret' => 'a2rvsTM6uM5SjObz',

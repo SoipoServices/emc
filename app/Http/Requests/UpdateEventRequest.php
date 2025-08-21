@@ -24,12 +24,12 @@ class UpdateEventRequest extends FormRequest
     {
         return [
             'title' => ['required'],
-            'slug'=>  ['required'],
+            'slug' => ['required'],
             'link' => ['required'],
-            'description'=>  ['required'],
-            'address'=>  ['required'],
-            'start_date'=>  ['required','date'],
-            'end_date'=>  ['required','date'],
+            'description' => ['required'],
+            'address' => ['required'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
         ];
     }
 }

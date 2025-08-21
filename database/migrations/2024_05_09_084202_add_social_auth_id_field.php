@@ -1,10 +1,11 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 class AddSocialAuthIdField extends Migration
 {
-/**
+    /**
      * Run the migrations.
      *
      * @return void
@@ -16,6 +17,7 @@ class AddSocialAuthIdField extends Migration
             $table->string('oauth_type')->nullable();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -25,7 +27,7 @@ class AddSocialAuthIdField extends Migration
     {
         Schema::table('users', function ($table) {
             $table->dropColumn('oauth_id');
-           $table->dropColumn('oauth_type');
-         });
+            $table->dropColumn('oauth_type');
+        });
     }
 }

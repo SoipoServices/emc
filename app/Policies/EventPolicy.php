@@ -7,7 +7,6 @@ use App\Models\User;
 
 class EventPolicy
 {
-
     public function viewAny(User $user)
     {
         return true;

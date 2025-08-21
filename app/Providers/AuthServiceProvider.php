@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
+use App\Auth\TaggableUserProvider;
+use App\Models\Business;
 use App\Models\Event;
+use App\Policies\BusinessPolicy;
 use App\Policies\EventPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
-use App\Auth\TaggableUserProvider;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Business;
-use App\Policies\BusinessPolicy;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {

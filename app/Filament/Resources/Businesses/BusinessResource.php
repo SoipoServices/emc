@@ -2,42 +2,37 @@
 
 namespace App\Filament\Resources\Businesses;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Filters\Filter;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\Businesses\Pages\ListBusinesses;
 use App\Filament\Resources\Businesses\Pages\CreateBusiness;
 use App\Filament\Resources\Businesses\Pages\EditBusiness;
-use App\Filament\Resources\BusinessResource\Pages;
+use App\Filament\Resources\Businesses\Pages\ListBusinesses;
 use App\Models\Business;
-use Filament\Forms;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
-use Filament\Tables\Table;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Str;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class BusinessResource extends Resource
 {
     protected static ?string $model = Business::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
 
     protected static function photoDisk(): string
     {
         return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : config('emc.photo_disk', 'public');
     }
-
 
     public static function form(Schema $schema): Schema
     {
@@ -47,12 +42,12 @@ class BusinessResource extends Resource
                     ->disk(self::photoDisk())
                     ->image()
                     ->required(),
-                    RichEditor::make('description')
+                RichEditor::make('description')
                     ->maxLength(65535),
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255)->afterStateUpdated(function ($get, $set, ?string $state) {
-                        if (!$get('is_slug_changed_manually') && filled($state)) {
+                        if (! $get('is_slug_changed_manually') && filled($state)) {
                             $set('slug', Str::slug($state));
                         }
                     })
@@ -63,7 +58,6 @@ class BusinessResource extends Resource
                     ->required(),
                 Select::make('user_id')
                     ->relationship(name: 'user', titleAttribute: 'name')->required(),
-
 
                 TextInput::make('url')
                     ->url()
@@ -107,11 +101,11 @@ class BusinessResource extends Resource
             ])
             ->filters([
                 Filter::make('is_approved')
-                    ->query(fn(Builder $query): Builder => $query->where('is_approved', true)),
+                    ->query(fn (Builder $query): Builder => $query->where('is_approved', true)),
                 Filter::make('is_public')
-                    ->query(fn(Builder $query): Builder => $query->where('is_public', true)),
+                    ->query(fn (Builder $query): Builder => $query->where('is_public', true)),
                 Filter::make('is_sponsor')
-                    ->query(fn(Builder $query): Builder => $query->where('is_sponsor', true)),
+                    ->query(fn (Builder $query): Builder => $query->where('is_sponsor', true)),
             ])
             ->recordActions([
                 EditAction::make(),

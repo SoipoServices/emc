@@ -7,7 +7,6 @@ use App\Models\Event;
 use Illuminate\Console\Command;
 use Psr\Http\Message\UriInterface;
 use Spatie\Sitemap\SitemapGenerator;
-use Spatie\Sitemap\Sitemap;
 
 class GenerateSitemap extends Command
 {

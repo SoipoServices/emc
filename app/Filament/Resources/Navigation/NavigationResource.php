@@ -6,9 +6,11 @@ use App\Filament\Resources\Navigation\Pages\CreateNavigation;
 use App\Filament\Resources\Navigation\Pages\EditNavigation;
 use App\Filament\Resources\Navigation\Pages\ListNavigations;
 use BackedEnum;
-use Filament\Forms\Components\TextInput;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -17,8 +19,6 @@ use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Str;
 use LaraZeus\Sky\Models\Navigation;
@@ -27,10 +27,10 @@ class NavigationResource extends Resource
 {
     protected static ?string $model = Navigation::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-queue-list';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-queue-list';
 
     protected static string|\UnitEnum|null $navigationGroup = 'CMS';
-    
+
     protected static ?int $navigationSort = 99;
 
     protected static bool $showTimestamps = true;
@@ -139,7 +139,7 @@ class NavigationResource extends Resource
                 EditAction::make(),
             ])
             ->headerActions([
-                CreateAction::make()
+                CreateAction::make(),
             ])
             ->bulkActions([
             ]);
