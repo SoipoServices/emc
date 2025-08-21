@@ -42,13 +42,13 @@ Route::middleware([
         Route::put('/{user}/event/{event}', [PrivateEventController::class, 'update'])->name('private.events.update');
         
         // Business Routes
-        Route::get('/{user}/businesses', [BusinessController::class, 'index'])->name('private.businesses.list');
-        Route::get('/{user}/businesses/create', [BusinessController::class, 'create'])->name('private.businesses.create');
-        Route::post('/{user}/businesses', [BusinessController::class, 'store'])->name('private.businesses.store');
-        Route::get('/{user}/businesses/{business}', [BusinessController::class, 'show'])->name('private.businesses.show');
-        Route::get('/{user}/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('private.businesses.edit');
-        Route::put('/{user}/businesses/{business}', [BusinessController::class, 'update'])->name('private.businesses.update');
-        Route::delete('/{user}/businesses/{business}', [BusinessController::class, 'destroy'])->name('private.businesses.destroy');
+        Route::get('/{user}/hustles', [BusinessController::class, 'index'])->name('private.businesses.list');
+        Route::get('/{user}/hustles/create', [BusinessController::class, 'create'])->name('private.businesses.create');
+        Route::post('/{user}/hustles', [BusinessController::class, 'store'])->name('private.businesses.store');
+        Route::get('/{user}/hustles/{business}', [BusinessController::class, 'show'])->name('private.businesses.show');
+        Route::get('/{user}/hustles/{business}/edit', [BusinessController::class, 'edit'])->name('private.businesses.edit');
+        Route::put('/{user}/hustles/{business}', [BusinessController::class, 'update'])->name('private.businesses.update');
+        Route::delete('/{user}/hustles/{business}', [BusinessController::class, 'destroy'])->name('private.businesses.destroy');
         
     });
 

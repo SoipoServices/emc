@@ -1,155 +1,204 @@
 <x-zeus::private-app :$skyTheme>
-<div>
-    <!-- Header -->
-    <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-xl font-bold text-gray-900 dark:text-white">My Businesses</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Manage your business listings</p>
-            </div>
-            <div class="flex items-center gap-2">
-                <a href="{{ route('private.businesses.create', auth()->user()) }}" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-full hover:bg-blue-700">
-                    Add Business
-                </a>
-            </div>
+<!-- Twitter-like Feed Header -->
+<div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-xl font-bold text-gray-900 dark:text-white">My Businesses</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $businesses->total() }} businesses</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <!-- Create Business Button -->
+            <a href="{{ route('private.businesses.create', auth()->user()) }}" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-800 rounded-full hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-800">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Add an hustle
+            </a>
+            
+            <!-- Search Form -->
+            <form method="GET" action="{{ route('private.businesses.list', ['user' => auth()->id()]) }}" class="flex">
+                <div class="relative">
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search businesses..." class="w-64 py-2 pl-4 pr-4 text-sm text-gray-900 bg-gray-100 border-0 rounded-full dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-800 dark:text-white">
+                    <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-2">
+                        <svg class="w-5 h-5 text-gray-400 hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <!-- Business List -->
-    <div class="p-6">
-        @if(session('success'))
-            <div class="p-4 mb-6 text-green-700 bg-green-100 border border-green-400 rounded-2xl dark:bg-green-900 dark:border-green-600 dark:text-green-300">
-                {{ session('success') }}
-            </div>
-        @endif
+@if(session('success'))
+    <div class="p-4 mx-4 mt-4 text-green-700 bg-green-100 border border-green-400 rounded-2xl dark:bg-green-900 dark:border-green-600 dark:text-green-300">
+        {{ session('success') }}
+    </div>
+@endif
 
-        @if($businesses->count() > 0)
-            <div class="space-y-6">
-                @foreach($businesses as $business)
-                    <div class="overflow-hidden bg-white border border-gray-200 shadow-lg dark:bg-gray-800 rounded-2xl dark:border-gray-700">
+<!-- Search Results Info -->
+@if(isset($search) && $search)
+    <div class="flex items-center gap-3 p-4 mx-4 mt-4 border border-blue-200 bg-blue-50 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
+        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <span class="text-blue-900 dark:text-blue-300">Showing search results for:</span>
+        <span class="px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/50 dark:text-blue-300">{{ $search }}</span>
+        <a href="{{ route('private.businesses.list', ['user' => auth()->id()]) }}" class="ml-auto text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">Clear search</a>
+    </div>
+@endif
+
+<!-- Business Feed -->
+<div class="divide-y divide-gray-200 dark:divide-gray-800">
+    @forelse ($businesses as $business)
+        <div class="p-4 transition-colors cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-950">
+            <div class="flex items-start gap-3">
+                <!-- Business Logo -->
+                @if($business->photo_path)
+                    <img src="{{ asset('storage/' . $business->photo_path) }}" alt="{{ $business->name }}" class="object-cover w-12 h-12 rounded-full">
+                @else
+                    <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full dark:bg-gray-800">
+                        <span class="text-sm font-bold text-gray-400 dark:text-gray-500">
+                            {{ substr($business->name, 0, 2) }}
+                        </span>
+                    </div>
+                @endif
+                
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-bold text-gray-900 truncate dark:text-white">{{ $business->name }}</h3>
                         @if($business->is_sponsor)
-                            <!-- Sponsor Badge -->
-                            <div class="px-4 py-2 text-center text-white bg-gradient-to-r from-yellow-400 to-yellow-600">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <span>⭐</span>
-                                    <span class="text-sm font-bold">SPONSOR STATUS</span>
-                                    <span>⭐</span>
-                                </div>
+                            <span class="px-2 py-1 text-xs font-medium text-yellow-800 bg-yellow-100 rounded-full dark:bg-yellow-900/30 dark:text-yellow-300">
+                                ⭐ Sponsor
+                            </span>
+                        @endif
+                        @if(!$business->is_public)
+                            <span class="px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-900/30 dark:text-gray-300">
+                                Private
+                            </span>
+                        @endif
+                        @if(!$business->is_approved)
+                            <span class="px-2 py-1 text-xs font-medium text-orange-800 bg-orange-100 rounded-full dark:bg-orange-900/30 dark:text-orange-300">
+                                Pending Approval
+                            </span>
+                        @endif
+                    </div>
+                    
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">·</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ $business->created_at->diffForHumans() }}</span>
+                    </div>
+                    
+                    <!-- Business Description -->
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-900 dark:text-white">{!! Str::limit(strip_tags($business->description), 200) !!}</p>
+                    </div>
+                    
+                    <!-- Business Details -->
+                    <div class="mt-3 space-y-2">
+                        <!-- Contact Info -->
+                        @if($business->email)
+                            <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                                <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                <span>{{ $business->email }}</span>
                             </div>
                         @endif
-
-                        <div class="p-6">
-                            <div class="flex items-start space-x-4">
-                                @if($business->photo_path)
-                                    <div class="flex-shrink-0">
-                                        <img src="{{ asset('storage/' . $business->photo_path) }}" 
-                                             alt="{{ $business->name }}" 
-                                             class="object-contain w-16 h-16 p-2 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                    </div>
-                                @else
-                                    <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 bg-gray-100 rounded-lg dark:bg-gray-700">
-                                        <span class="text-lg font-bold text-gray-400 dark:text-gray-500">
-                                            {{ substr($business->name, 0, 2) }}
-                                        </span>
-                                    </div>
-                                @endif
-
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-start justify-between">
-                                        <div class="flex-1">
-                                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {{ $business->name }}
-                                            </h3>
-                                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                                {!! Str::limit(strip_tags($business->description), 150) !!}
-                                            </p>
-                                            
-                                            <div class="flex items-center mt-3 space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                                                @if($business->email)
-                                                    <span class="flex items-center space-x-1">
-                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                                                        </svg>
-                                                        <span>{{ $business->email }}</span>
-                                                    </span>
-                                                @endif
-                                                
-                                                @if($business->url)
-                                                    <span class="flex items-center space-x-1">
-                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.559-.499-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.559.499.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.497-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.148.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path>
-                                                        </svg>
-                                                        <span>{{ parse_url($business->website, PHP_URL_HOST) }}</span>
-                                                    </span>
-                                                @endif
-
-                                                <span class="flex items-center space-x-1">
-                                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    <span>Created {{ $business->created_at->diffForHumans() }}</span>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div class="flex items-center ml-4 space-x-2">
-                                            <!-- View Button -->
-                                            <a href="{{ route('public.business.show', $business->slug) }}" 
-                                               class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors">
-                                                View
-                                            </a>
-                                            
-                                            <!-- Edit Button -->
-                                            <a href="{{ route('private.businesses.edit', ['user' => $business->user_id, 'business' => $business->id]) }}" 
-                                               class="px-3 py-1.5 text-xs font-medium text-blue-700 bg-blue-100 rounded-lg hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800 transition-colors">
-                                                Edit
-                                            </a>
-                                            
-                                            <!-- Delete Button -->
-                                            <form action="{{ route('private.businesses.destroy', ['user' => $business->user_id, 'business' => $business->id]) }}" method="POST" class="inline" 
-                                                  onsubmit="return confirm('Are you sure you want to delete this business?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" 
-                                                        class="px-3 py-1.5 text-xs font-medium text-red-700 bg-red-100 rounded-lg hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800 transition-colors">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                        
+                        <!-- Website -->
+                        @if($business->url)
+                            <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                                <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2M17 1l4 4m0 0l-4 4m4-4H11"></path>
+                                </svg>
+                                <span>{{ parse_url($business->url, PHP_URL_HOST) }}</span>
                             </div>
-                        </div>
+                        @endif
                     </div>
-                @endforeach
+                    
+                    <!-- Action Links -->
+                    <div class="flex items-center gap-4 mt-3">
+                        <a href="{{ route('public.business.show', $business->slug) }}" target="_blank" class="text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300" title="View Public Page">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2M17 1l4 4m0 0l-4 4m4-4H11"></path>
+                            </svg>
+                        </a>
+                        
+                        <a href="{{ route('private.businesses.edit', ['user' => $business->user_id, 'business' => $business->id]) }}" class="text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300" title="Edit Business">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                        </a>
+                        
+                        <form action="{{ route('private.businesses.destroy', ['user' => $business->user_id, 'business' => $business->id]) }}" method="POST" class="inline" 
+                              onsubmit="return confirm('Are you sure you want to delete this business? This action cannot be undone.')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 transition-colors hover:text-red-600 dark:text-red-400 dark:hover:text-red-300" title="Delete Business">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <!-- Pagination -->
-            @if($businesses->hasPages())
-                <div class="mt-8">
-                    {{ $businesses->links() }}
-                </div>
-            @endif
-        @else
-            <!-- Empty State -->
-            <div class="py-12 text-center">
-                <div class="flex items-center justify-center w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full dark:bg-gray-800">
-                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+        </div>
+    @empty
+        <div class="py-16 text-center">
+            <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+            <h3 class="mb-2 text-lg font-medium text-gray-900 dark:text-white">No businesses found</h3>
+            <p class="text-gray-500 dark:text-gray-400">{{ isset($search) && $search ? 'Try adjusting your search to find what you\'re looking for.' : 'Be the first to create a business!' }}</p>
+            @unless(isset($search) && $search)
+                <a href="{{ route('private.businesses.create', auth()->user()) }}" class="inline-flex items-center gap-2 px-4 py-2 mt-4 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
-                </div>
-                <h3 class="mb-2 text-lg font-medium text-gray-900 dark:text-white">No businesses yet</h3>
-                <p class="mb-6 text-gray-500 dark:text-gray-400">Get started by creating your first business listing.</p>
-                <a href="{{ route('private.businesses.create', auth()->user()) }}" 
-                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    Add Your First Business
+                    Add an hustle
                 </a>
-            </div>
-        @endif
-    </div>
+            @endunless
+        </div>
+    @endforelse
 </div>
+
+<!-- Pagination -->
+@if($businesses->hasPages())
+    <div class="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-800">
+        <div class="flex items-center">
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+                Showing {{ $businesses->firstItem() }} to {{ $businesses->lastItem() }} of {{ $businesses->total() }} results
+            </p>
+        </div>
+        <div class="flex items-center space-x-2">
+            @if ($businesses->onFirstPage())
+                <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
+                    Previous
+                </span>
+            @else
+                <a href="{{ $businesses->appends(request()->query())->previousPageUrl() }}" 
+                   class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                    Previous
+                </a>
+            @endif
+
+            <span class="px-3 py-2 text-sm text-white bg-blue-800 rounded-lg dark:bg-blue-800 dark:text-white">
+                {{ $businesses->currentPage() }} of {{ $businesses->lastPage() }}
+            </span>
+
+            @if ($businesses->hasMorePages())
+                <a href="{{ $businesses->appends(request()->query())->nextPageUrl() }}" 
+                   class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                    Next
+                </a>
+            @else
+                <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
+                    Next
+                </span>
+            @endif
+        </div>
+    </div>
+@endif
 </x-zeus::private-app>
