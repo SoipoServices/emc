@@ -6,10 +6,9 @@ use App\Filament\Resources\Navigation\Pages\CreateNavigation;
 use App\Filament\Resources\Navigation\Pages\EditNavigation;
 use App\Filament\Resources\Navigation\Pages\ListNavigations;
 use BackedEnum;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\ViewField;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -18,6 +17,9 @@ use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Str;
 use LaraZeus\Sky\Models\Navigation;
 
@@ -52,10 +54,32 @@ class NavigationResource extends Resource
                                 $set('handle', Str::slug($state));
                             })
                             ->required(),
-                        ViewField::make('items')
+                        Repeater::make('items')
                             ->label(__('zeus-sky::filament-navigation.attributes.items'))
                             ->default([])
-                            ->view('zeus::filament.navigation-builder'),
+                            ->schema([
+                                TextInput::make('label')
+                                    ->label('Label')
+                                    ->required(),
+                                Select::make('type')
+                                    ->label('Type')
+                                    ->options([
+                                        'external-link' => 'External Link',
+                                        'route' => 'Route',
+                                    ])
+                                    ->default('external-link')
+                                    ->required(),
+                                TextInput::make('url')
+                                    ->label('URL')
+                                    ->url()
+                                    ->visible(fn ($get) => $get('type') === 'external-link'),
+                                TextInput::make('route')
+                                    ->label('Route')
+                                    ->visible(fn ($get) => $get('type') === 'route'),
+                            ])
+                            ->collapsible()
+                            ->reorderable()
+                            ->addActionLabel('Add Navigation Item'),
                     ])
                     ->columnSpan([
                         12,
@@ -116,7 +140,7 @@ class NavigationResource extends Resource
                 EditAction::make(),
             ])
             ->headerActions([
-                CreateAction::make(),
+                CreateAction::make()
             ])
             ->bulkActions([
             ]);
