@@ -6,7 +6,8 @@ defineProps({
     title: String,
     canLogin: Boolean,
     canRegister: Boolean,
-    events: Array,
+    officialEvents: Array,
+    memberEvents: Array,
 });
 </script>
 
@@ -23,40 +24,66 @@ defineProps({
                         the dates, locations, and key highlights of each event.
                     </p>
                 </div>
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <a :href="route('event.show', event.slug)" v-for="event in events" :key="event.id">
-                        <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
-                            <img v-if="event.photo_url" :src="event.photo_url" :alt="event.title" class="object-cover w-full h-48">
-                            <div class="p-4">
-                                <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">{{ event.title }}</h3>
-                                <div
-                                    v-if="event.is_member_event"
-                                    class="flex items-center gap-4 mb-4"
-                                >
-                                    <div v-if="event.user">
-                                        <h6 class="text-sm font-semibold">
-                                            Organized by {{ event.user.name }}
-                                        </h6>
-                                    </div>
+
+                <!-- Official Entrepreneur Group Meetings -->
+                <div v-if="officialEvents && officialEvents.length > 0" class="mb-16">
+                    <h3 class="mb-8 text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
+                        Upcoming Entrepreneur Group Meetings
+                    </h3>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <a :href="route('public.event.show', event.slug)" v-for="event in officialEvents" :key="event.id">
+                            <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
+                                <img v-if="event.photo_path" :src="`/storage/${event.photo_path}`" :alt="event.title" class="object-cover w-full h-48">
+                                <div class="p-4">
+                                    <h4 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">{{ event.title }}</h4>
+                                    <p class="mb-2 text-sm text-gray-600 dark:text-gray-300">
+                                        {{ new Date(event.start_date).toLocaleDateString() }} {{ new Date(event.start_date).toLocaleTimeString() }}
+                                    </p>
+                                    <p v-if="event.address" class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                        📍 {{ event.address }}
+                                    </p>
+                                    <p class="mb-4 text-gray-700 dark:text-gray-200" v-html="event.description.substring(0, 150) + (event.description.length > 150 ? '...' : '')">
+                                    </p>
                                 </div>
-                                <p class="mb-2 text-sm text-gray-600 dark:text-gray-300">
-                                    {{ new Date(event.start_date).toLocaleDateString() }}
-                                </p>
-                                <p class="mb-4 text-gray-700 dark:text-gray-200">
-                                    {{ event.plain_description.substring(0, 100) }}{{ event.plain_description.length > 100 ? '...' : '' }}
-                                </p>
-                                <div v-if="event.tags?.length > 0" class="flex flex-wrap gap-2 mb-4">
-                                    <span v-for="tag in event.tags" :key="tag.id"
-                                        class="inline-block px-3 py-1 text-sm bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-white">
-                                        {{ tag.name[$page.props.locale] }}
-                                    </span>
-                                </div>
-                                <!-- <Link :href="route('event.show', event.slug)" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors bg-gray-900 rounded-md shadow h-9 text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300">
-                                    Read More
-                                </Link> -->
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Member Events -->
+                <div v-if="memberEvents && memberEvents.length > 0" class="mb-16">
+                    <h3 class="mb-8 text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
+                        Upcoming Member Events
+                    </h3>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <a :href="route('public.event.show', event.slug)" v-for="event in memberEvents" :key="event.id">
+                            <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
+                                <img v-if="event.photo_path" :src="`/storage/${event.photo_path}`" :alt="event.title" class="object-cover w-full h-48">
+                                <div class="p-4">
+                                    <h4 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white">{{ event.title }}</h4>
+                                    <div v-if="event.user" class="mb-2">
+                                        <p class="text-sm font-medium text-blue-600 dark:text-blue-400">
+                                            Organized by {{ event.user.name }}
+                                        </p>
+                                    </div>
+                                    <p class="mb-2 text-sm text-gray-600 dark:text-gray-300">
+                                        {{ new Date(event.start_date).toLocaleDateString() }} {{ new Date(event.start_date).toLocaleTimeString() }}
+                                    </p>
+                                    <p v-if="event.address" class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                        📍 {{ event.address }}
+                                    </p>
+                                    <p class="mb-4 text-gray-700 dark:text-gray-200" v-html="event.description.substring(0, 150) + (event.description.length > 150 ? '...' : '')">
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div v-if="(!officialEvents || officialEvents.length === 0) && (!memberEvents || memberEvents.length === 0)" class="text-center">
+                    <h3 class="mb-4 text-xl font-semibold text-gray-800 dark:text-white">No Upcoming Events</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Check back soon for new events!</p>
                 </div>
             </div>
         </section>

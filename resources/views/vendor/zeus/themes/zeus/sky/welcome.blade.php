@@ -20,7 +20,7 @@
                     <a href="{{ route('register') }}" class="rounded-md bg-black px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
                         Join Now
                     </a>
-                    <a href="{{ route('events.index') }}" class="text-sm font-semibold leading-6 text-white">
+                    <a href="{{ route('public.events.index') }}" class="text-sm font-semibold leading-6 text-white">
                         View Events <span aria-hidden="true">→</span>
                     </a>
                 </div>
@@ -148,7 +148,7 @@
                             We're currently planning our next entrepreneur group meeting. Stay tuned for updates!
                         </p>
                         <div class="mt-6">
-                            <a href="{{ route('events.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                            <a href="{{ route('public.events.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                                 View All Events
                             </a>
                         </div>
@@ -251,7 +251,7 @@
                     <a href="{{ route('register') }}" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-black shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                         Join Now
                     </a>
-                    <a href="{{ route('events.index') }}" class="text-sm font-semibold leading-6 text-white">
+                    <a href="{{ route('public.events.index') }}" class="text-sm font-semibold leading-6 text-white">
                         Learn more <span aria-hidden="true">→</span>
                     </a>
                 </div>

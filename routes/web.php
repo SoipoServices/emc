@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\BusinessController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\Private\DashboardController;
@@ -14,8 +13,8 @@ use App\Http\Controllers\PublicEventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/events', [PublicEventController::class, 'index'])->name('events.index');
-Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('event.show');
+Route::get('/events', [PublicEventController::class, 'index'])->name('public.events.index');
+Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('public.event.show');
 Route::get('/companies', [PublicBusinessController::class, 'index'])->name('public.businesses.index');
 Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
 
@@ -42,12 +41,7 @@ Route::middleware([
     Route::get('/edit-event/{event}', [PrivateEventController::class, 'edit'])->name('private.events.edit');
     Route::put('/edit-event/{event}', [PrivateEventController::class, 'update'])->name('private.events.update');
 
-    Route::get('/events/list', [EventController::class, 'list'])->name('events.list');
-    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-    Route::post('/events', [EventController::class, 'store'])->name('events.store');
-    Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
-    Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
-    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    // Business Routes
     Route::get('/businesses', [BusinessController::class, 'index'])->name('businesses.index');
     Route::get('/businesses/create', [BusinessController::class, 'create'])->name('businesses.create');
     Route::post('/businesses', [BusinessController::class, 'store'])->name('businesses.store');
