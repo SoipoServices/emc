@@ -4,7 +4,7 @@
         <div class="space-y-2">
             @foreach($tags as $tag)
                 <a href="{{ route('tags',['category',$tag->slug]) }}" 
-                   class="flex items-center justify-between p-3 transition-colors bg-gray-50 rounded-xl hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 group">
+                   class="flex items-center justify-between p-3 transition-colors bg-gray-50 rounded-2xl hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 group">
                     <span class="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">
                         {{ $tag->name }}
                     </span>

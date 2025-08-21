@@ -1,9 +1,8 @@
 <div>
 <!-- Hero Section -->
-<section class="relative py-20 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-    <div class="absolute inset-0 bg-grid-gray-900/[0.04] bg-[size:20px_20px] dark:bg-grid-white/[0.02]"></div>
-    <div class="relative px-6 mx-auto max-w-7xl lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
+<section class="relative py-20">
+    <div class="px-6 mx-auto max-w-7xl lg:px-8">
+        <div class="max-w-2xl mx-auto text-center">
             <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
                 Welcome to Our <span class="text-blue-600 dark:text-blue-400">Community</span>
             </h1>
@@ -18,7 +17,7 @@
 @unless($stickies->isEmpty())
 <section class="py-16 bg-white dark:bg-gray-800">
     <div class="px-6 mx-auto max-w-7xl lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
+        <div class="max-w-2xl mx-auto text-center">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                 Featured Stories
             </h2>
@@ -47,9 +46,9 @@
                             <div class="flex items-center gap-3">
                                 <x-heroicon-o-magnifying-glass class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                                 <span class="text-gray-700 dark:text-gray-200">{{ __('Showing Search result of') }}:</span>
-                                <span class="px-3 py-1 text-sm font-medium bg-blue-100 rounded-full text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">{{ request('search') }}</span>
+                                <span class="px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/30 dark:text-blue-300">{{ request('search') }}</span>
                             </div>
-                            <a title="Clear search" href="{{ route('blogs') }}" class="p-2 text-gray-400 transition-colors rounded-lg hover:text-gray-600 hover:bg-gray-100 dark:hover:text-gray-300 dark:hover:bg-gray-700">
+                            <a title="Clear search" href="{{ route('blogs') }}" class="p-2 text-gray-400 transition-colors rounded-full hover:text-gray-600 hover:bg-gray-100 dark:hover:text-gray-300 dark:hover:bg-gray-700">
                                 @svg('heroicon-o-backspace','w-5 h-5')
                             </a>
                         </div>

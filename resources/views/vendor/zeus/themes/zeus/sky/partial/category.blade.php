@@ -1,3 +1,4 @@
-<a href="{{ route('tags',[$category->type,$category->slug]) }}" class="px-4 py-1 bg-primary-600 text-gray-50 inline-flex items-center justify-center mb-2 shadow-sm shadow-primary-600/50 rounded-[10px_20px_30px_40px/30px]">
+<a href="{{ route('tags',[$category->type,$category->slug]) }}" 
+   class="inline-flex items-center px-3 py-1 text-xs font-medium text-blue-800 bg-blue-100 rounded-full hover:bg-blue-200 transition-colors dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50">
     {{ $category->name ?? '' }}
 </a>

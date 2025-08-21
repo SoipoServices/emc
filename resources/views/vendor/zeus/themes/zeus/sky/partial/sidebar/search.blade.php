@@ -8,7 +8,7 @@
                 </svg>
             </div>
             <input 
-                class="w-full pl-10 pr-4 py-3 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400" 
+                class="w-full pl-10 pr-4 py-3 text-sm border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400" 
                 type="text" 
                 name="search" 
                 id="search" 
@@ -16,7 +16,7 @@
                 value="{{ request()->get('search') }}">
         </div>
         @if(request()->filled('search'))
-            <a href="{{ route('blogs') }}" class="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-gray-600 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
+            <a href="{{ route('blogs') }}" class="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-gray-600 transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
