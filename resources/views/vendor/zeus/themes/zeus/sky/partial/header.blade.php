@@ -30,8 +30,8 @@
                         <span class="hidden text-sm font-medium text-gray-900 sm:block dark:text-white">{{ auth()->user()->name }}</span>
                     </a>
                 @else
-                    <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400">Log in</a>
-                    <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-full hover:bg-blue-700">Sign up</a>
+                    <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-gray-900 hover:text-black dark:text-white dark:hover:text-gray-300">Log in</a>
+                    <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-full hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900">Sign up</a>
                 @endauth
             </div>
         </div>

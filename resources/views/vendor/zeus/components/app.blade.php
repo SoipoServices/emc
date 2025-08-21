@@ -109,29 +109,29 @@
                                 @endif
                                 
                                 <div class="p-4">
-                                    <h3 class="mb-2 text-lg font-bold text-gray-900 transition-colors dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">{{ $latestEvent->title }}</h3>
+                                    <h3 class="mb-2 text-lg font-bold text-gray-900 transition-colors dark:text-white group-hover:text-black dark:group-hover:text-gray-200">{{ $latestEvent->title }}</h3>
                                     <div class="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
                                         {!! Str::limit(strip_tags($latestEvent->description), 150) !!}
                                     </div>
                                     
                                     <div class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
                                         <div class="flex items-center">
-                                            <x-heroicon-o-calendar class="w-4 h-4 mr-2 text-blue-500" />
+                                            <x-heroicon-o-calendar class="w-4 h-4 mr-2 text-gray-600 dark:text-gray-400" />
                                             {{ $latestEvent->start_date->format('M j, Y') }}
                                         </div>
                                         <div class="flex items-center">
-                                            <x-heroicon-o-clock class="w-4 h-4 mr-2 text-blue-500" />
+                                            <x-heroicon-o-clock class="w-4 h-4 mr-2 text-gray-600 dark:text-gray-400" />
                                             {{ $latestEvent->start_date->format('g:i A') }}
                                         </div>
                                         @if($latestEvent->address)
                                             <div class="flex items-center">
-                                                <x-heroicon-o-map-pin class="w-4 h-4 mr-2 text-blue-500" />
+                                                <x-heroicon-o-map-pin class="w-4 h-4 mr-2 text-gray-600 dark:text-gray-400" />
                                                 {{ Str::limit($latestEvent->address, 40) }}
                                             </div>
                                         @endif
                                     </div>
                                     
-                                    <div class="flex items-center mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300">
+                                    <div class="flex items-center mt-3 text-sm font-medium text-gray-900 dark:text-white group-hover:text-black dark:group-hover:text-gray-200">
                                         View Event Details
                                         <x-heroicon-o-arrow-right class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                                     </div>
