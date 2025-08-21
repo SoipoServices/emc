@@ -27,6 +27,18 @@
     </div>
 </div>
 
+<!-- Search Results Info -->
+@if($search)
+    <div class="flex items-center gap-3 p-4 mx-4 mt-4 bg-blue-50 border border-blue-200 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
+        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <span class="text-blue-900 dark:text-blue-300">Showing search results for:</span>
+        <span class="px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/50 dark:text-blue-300">{{ $search }}</span>
+        <a href="{{ route('dashboard') }}" class="ml-auto text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">Clear search</a>
+    </div>
+@endif
+
 {{-- <!-- Quick Actions Card -->
 <div class="p-4 mx-4 mt-4 border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl dark:from-blue-900/20 dark:to-indigo-900/20 dark:border-blue-800">
     <div class="flex items-center justify-between">

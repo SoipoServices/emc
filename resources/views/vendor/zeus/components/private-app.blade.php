@@ -62,9 +62,9 @@
                             <x-heroicon-s-users class="w-6 h-6" />
                             <span class="text-xl font-medium">Members</span>
                         </a>
-                        <a href="{{ route('private.events.create') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
-                            <x-heroicon-s-calendar class="w-6 h-6" />
-                            <span class="text-xl font-medium">Create Event</span>
+                        <a href="{{ route('private.events.list') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                            <x-heroicon-s-calendar-days class="w-6 h-6" />
+                            <span class="text-xl font-medium">Events</span>
                         </a>
                         <a href="{{ route('profile') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
                             <x-heroicon-s-user-circle class="w-6 h-6" />
@@ -147,18 +147,13 @@
                     @endif
 
                     <!-- Quick Actions Card -->
-                    <div class="p-4 border hover:shadow-md group-hover:scale-[1.02] border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl dark:border-blue-800/30">
+                    <div href="{{ route('private.events.create') }}" class="p-4 border hover:shadow-md group-hover:scale-[1.02] border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl dark:border-blue-800/30">
                         <div class="flex items-center justify-between">
-                            <div>
+                            <a href="{{ route('private.events.create') }}">
                                 <h3 class="font-semibold text-blue-900 dark:text-blue-300">Share an Event</h3>
                                 <p class="text-sm text-blue-700 dark:text-blue-400">Create and share upcoming events with the community</p>
-                            </div>
-                            <a href="{{ route('private.events.create') }}" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-800 rounded-full hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-800">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                Create Event
                             </a>
+                           
                         </div>
                     </div>
                     

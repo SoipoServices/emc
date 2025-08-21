@@ -9,11 +9,46 @@ use App\Notifications\NewEventCreated;
 use App\Notifications\NewEventForApproval;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
     use AuthorizesRequests;
+
+    /**
+     * Display a listing of all events separated by member and non-member events.
+     */
+    public function list(Request $request)
+    {
+        $search = $request->input('search');
+        $user = Auth::user();
+
+        // Base query for events user can see
+        $baseQuery = Event::with(['user', 'tags'])
+            ->where(function ($query) use ($user) {
+                $query->where('is_approved', true)
+                    ->orWhere('user_id', $user->id); // Users can see their own events even if not approved
+            })
+            ->orderBy('start_date', 'asc');
+
+        // Apply search if provided
+        if ($search) {
+            $baseQuery->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%");
+            });
+        }
+
+        // Get all events combined and paginated
+        $allEvents = $baseQuery->paginate(15);
+
+        return view('vendor.zeus.themes.zeus.sky.private.events-list', compact(
+            'allEvents',
+            'search'
+        ));
+    }
 
     /**
      * Show the form for creating a new event.
@@ -69,6 +104,6 @@ class EventController extends Controller
             $user->notify(new NewEventCreated($event));
         }
 
-        return redirect()->route('events.list')->with('success', 'Event created successfully and sent for approval!');
+        return redirect()->route('private.events.list')->with('success', 'Event created successfully and sent for approval!');
     }
 }

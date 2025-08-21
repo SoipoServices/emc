@@ -23,6 +23,17 @@
             </div>
         @endif
 
+        @if($errors->any())
+            <div class="p-4 mb-6 text-red-700 bg-red-100 border border-red-400 rounded-2xl dark:bg-red-900 dark:border-red-600 dark:text-red-300">
+                <div class="font-semibold">Please fix the following errors:</div>
+                <ul class="mt-2 list-disc list-inside">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('private.events.store') }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
             @csrf
 
