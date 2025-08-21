@@ -1,17 +1,19 @@
 
 <x-zeus::app :$skyTheme>
 <!-- Twitter-like Feed Header -->
-<div class="sticky px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
+<div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-xl font-bold text-gray-900 dark:text-white">Users</h1>
             <p class="text-sm text-gray-500 dark:text-gray-400">{{ $users->total() }} users</p>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-4">
+        
+            <!-- Search Form -->
             <form method="GET" action="{{ route('users.index') }}" class="flex">
                 <div class="relative">
-                    <input type="text" name="search" value="{{ $search }}" placeholder="Search users..." class="w-64 py-2 pl-12 pr-16 text-sm text-gray-900 bg-gray-100 border-0 rounded-full dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
-                    <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-6">
+                    <input type="text" name="search" value="{{ $search }}" placeholder="Search users..." class="w-64 py-2 pl-4 pr-4 text-sm text-gray-900 bg-gray-100 border-0 rounded-full dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
+                    <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-2">
                         <svg class="w-5 h-5 text-gray-400 hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
@@ -84,6 +86,13 @@
                                 </svg>
                             </a>
                         @endif
+                        
+                        <!-- vCard Download -->
+                        <a href="{{ route('user.vcard', $user->id) }}" class="text-gray-500 transition-colors hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400" title="Download vCard">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
                 <div class="flex-shrink-0">

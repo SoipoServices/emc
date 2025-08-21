@@ -26,7 +26,7 @@ class UserDashboardController extends Controller
             $query = User::inRandomOrder($request->session()->get('session_rand'))->verified()->isVisible()->hasPosition()->with('tags');
         }
 
-        $users = $query->paginate(20);
+        $users = $query->paginate(9);
 
         return view('vendor.zeus.themes.zeus.sky.user-dashboard', [
             'users' => $users,

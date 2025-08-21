@@ -17,6 +17,7 @@
     @livewireStyles
     @filamentStyles
     @stack('styles')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link rel="stylesheet" href="{{ asset('vendor/zeus/frontend.css') }}">
     
@@ -41,7 +42,7 @@
     @endenv
     
 
-    <div class="bg-white  dark:bg-black">
+    <div class="bg-white dark:bg-black">
         @include($skyTheme.'.partial.header')
         
         <!-- Twitter-like Layout -->
@@ -73,7 +74,7 @@
             </div>
 
             <!-- Main Content -->
-            <main class="flex-1 min-h-screen border-gray-200 lg:ml-64 xl:ml-72 lg:mr-80 xl:mr-96 border-x dark:border-gray-800">
+            <main class="flex-1 min-h-screen mb-8 border-gray-200 lg:ml-64 xl:ml-72 lg:mr-80 xl:mr-96 border-x dark:border-gray-800">
                 {{ $slot }}
             </main>
 
