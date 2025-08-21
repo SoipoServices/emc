@@ -19,14 +19,14 @@
         </section>
 
         <!-- Events Content -->
-        <div class="container px-4 mx-auto py-8">
+        <div class="container px-4 py-8 mx-auto">
             <!-- Official Entrepreneur Group Meetings -->
             @if($officialEvents && $officialEvents->count() > 0)
-                <section class="mb-16">
-                    <h2 class="mb-8 text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
+                <section class="mb-20">
+                    <h2 class="mb-12 text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
                         Upcoming Entrepreneur Group Meetings
                     </h2>
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-12">
                         @foreach($officialEvents as $event)
                             <a href="{{ route('public.event.show', $event->slug) }}" class="block transition-transform hover:scale-105">
                                 <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
@@ -79,11 +79,11 @@
 
             <!-- Member Events -->
             @if($memberEvents && $memberEvents->count() > 0)
-                <section class="mb-16">
-                    <h2 class="mb-8 text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
+                <section class="mb-20">
+                    <h2 class="mb-12 text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
                         Upcoming Member Events
                     </h2>
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-12">
                         @foreach($memberEvents as $event)
                             <a href="{{ route('public.event.show', $event->slug) }}" class="block transition-transform hover:scale-105">
                                 <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
@@ -143,9 +143,22 @@
                 </section>
             @endif
 
+            <!-- Pagination -->
+            @if($events && $events->hasPages())
+                <section class="mb-12">
+                    <div class="w-full">
+                        <div class="flex justify-center">
+                            <div class="w-full pagination-wrapper max-w-none">
+                                {{ $events->links() }}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            @endif
+
             <!-- Empty State -->
             @if((!$officialEvents || $officialEvents->count() === 0) && (!$memberEvents || $memberEvents->count() === 0))
-                <section class="text-center py-16">
+                <section class="py-16 text-center">
                     <div class="max-w-md mx-auto">
                         <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -157,4 +170,56 @@
             @endif
         </div>
     </div>
+
+    <style>
+        .pagination-wrapper .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .pagination-wrapper .pagination .page-item {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .pagination-wrapper .pagination .page-link {
+            width: 100%;
+            display: block;
+            padding: 0.75rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .pagination-wrapper .pagination .page-item.active .page-link {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+        
+        .pagination-wrapper .pagination .page-item:not(.active) .page-link {
+            background-color: white;
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+        
+        .pagination-wrapper .pagination .page-item:not(.active) .page-link:hover {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        .dark .pagination-wrapper .pagination .page-item:not(.active) .page-link {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #d1d5db;
+        }
+        
+        .dark .pagination-wrapper .pagination .page-item:not(.active) .page-link:hover {
+            background-color: #4b5563;
+            border-color: #6b7280;
+        }
+    </style>
 </x-zeus::app>

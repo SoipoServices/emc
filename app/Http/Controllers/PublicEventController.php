@@ -10,22 +10,19 @@ class PublicEventController extends Controller
 {
     public function index()
     {
-        // Get approved events separated by type
-        $officialEvents = Event::approved()
+        // Get all approved events with pagination
+        $events = Event::approved()
             ->with(['tags', 'user'])
-            ->where('is_member_event', false)
             ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event', 'user_id')
             ->orderBy('start_date', 'asc')
-            ->get();
+            ->paginate(12);
 
-        $memberEvents = Event::approved()
-            ->with(['tags', 'user'])
-            ->where('is_member_event', true)
-            ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event', 'user_id')
-            ->orderBy('start_date', 'asc')
-            ->get();
+        // Separate events by type for display
+        $officialEvents = $events->where('is_member_event', false);
+        $memberEvents = $events->where('is_member_event', true);
 
         return view('vendor.zeus.themes.zeus.sky.public.events.index', compact(
+            'events',
             'officialEvents',
             'memberEvents'
         ));
