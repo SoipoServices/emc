@@ -27,10 +27,7 @@ class EventController extends Controller
 
         // Base query for events user can see
         $baseQuery = Event::with(['user', 'tags'])
-            ->where(function ($query) use ($user) {
-                $query->where('is_approved', true)
-                    ->orWhere('user_id', $user->id); // Users can see their own events even if not approved
-            })
+            ->where('user_id', $user->id)
             ->orderBy('start_date', 'asc');
 
         // Apply search if provided
@@ -126,7 +123,7 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified event.
      */
-    public function edit(Event $event)
+    public function edit(User $user,Event $event)
     {
         $this->authorize('update', $event);
 

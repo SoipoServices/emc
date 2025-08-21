@@ -46,7 +46,7 @@
                                 @if($business->url)
                                     <a href="{{ $business->url }}" target="_blank" 
                                        class="flex items-center space-x-1 text-gray-600 transition-colors hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
-                                        <x-heroicon-s-globe-alt class="w-5 h-5" />
+                                        <x-heroicon-o-globe-europe-africa class="w-5 h-5" />
                                         <span>Website</span>
                                     </a>
                                 @endif
@@ -54,7 +54,7 @@
                                 @if($business->email)
                                     <a href="mailto:{{ $business->email }}" 
                                        class="flex items-center space-x-1 text-gray-600 transition-colors hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
-                                        <x-heroicon-s-envelope class="w-5 h-5" />
+                                        <x-heroicon-o-envelope class="w-5 h-5" />
                                         <span>{{ $business->email }}</span>
                                     </a>
                                 @endif
@@ -112,7 +112,7 @@
                 @if($business->email)
                     <div class="flex items-start space-x-3">
                         <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-green-100 rounded-lg dark:bg-green-900">
-                            <x-heroicon-s-envelope class="w-5 h-5 text-green-600 dark:text-green-400" />
+                            <x-heroicon-o-envelope class="w-5 h-5 text-green-600 dark:text-green-400" />
                         </div>
                         <div>
                             <h3 class="font-semibold text-gray-900 dark:text-white">Email</h3>
@@ -127,7 +127,7 @@
                 @if($business->url)
                     <div class="flex items-start space-x-3">
                         <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg dark:bg-blue-900">
-                            <x-heroicon-s-globe-alt class="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                            <x-heroicon-o-globe-europe-africa  class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
                             <h3 class="font-semibold text-gray-900 dark:text-white">Website</h3>

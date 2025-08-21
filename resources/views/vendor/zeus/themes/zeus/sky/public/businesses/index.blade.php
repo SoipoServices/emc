@@ -80,13 +80,13 @@
                                     @if($sponsor->url)
                                         <a href="{{ $sponsor->url }}" target="_blank" 
                                            class="text-gray-600 transition-colors hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
-                                            <x-heroicon-s-globe-alt class="w-6 h-6" />
+                                            <x-heroicon-o-globe-europe-africa class="w-6 h-6" />
                                         </a>
                                     @endif
                                     @if($sponsor->email)
                                         <a href="mailto:{{ $sponsor->email }}" 
                                            class="text-gray-600 transition-colors hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200">
-                                            <x-heroicon-s-envelope class="w-6 h-6" />
+                                            <x-heroicon-o-envelope class="w-6 h-6" />
                                         </a>
                                     @endif
                                     @if($sponsor->telephone)

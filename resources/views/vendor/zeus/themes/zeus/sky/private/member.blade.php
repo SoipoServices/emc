@@ -141,15 +141,14 @@
             </a>
 
             <!-- Impersonation Button (Admin Only) -->
-            @if(auth()->user()->canImpersonate() && $user->canBeImpersonated() && auth()->id() !== $user->id)
-                <form action="{{ route('impersonate.start', $user) }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-orange-600 rounded-lg hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-800" onclick="return confirm('Are you sure you want to impersonate this user?')">
+            @canImpersonate($guard = null) 
+                @if(auth()->id() !== $user->id)
+                    <a href="{{ route('impersonate', $user->id) }}" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-orange-600 rounded-lg hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-800" onclick="return confirm('Are you sure you want to impersonate this user?')">
                         <x-heroicon-o-finger-print class="w-4 h-4" />
-                        Impersonate User
-                    </button>
-                </form>
-            @endif
+                        Impersonate this user
+                    </a>
+                @endif
+            @endCanImpersonate
         </div>
     </div>
 

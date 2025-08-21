@@ -29,6 +29,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class);
 
+    Route::impersonate();
     // Member Dashboard
 
     Route::prefix('member')->group(function () {
@@ -56,14 +57,6 @@ Route::middleware([
 
     });
 
-});
-
-// Impersonation routes (admin only)
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::post('/impersonate/{user}', [ImpersonationController::class, 'start'])
-        ->name('impersonate.start');
-    Route::post('/impersonate/stop', [ImpersonationController::class, 'stop'])
-        ->name('impersonate.stop');
 });
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');

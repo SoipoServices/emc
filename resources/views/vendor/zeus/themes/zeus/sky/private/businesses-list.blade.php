@@ -98,36 +98,43 @@
                     <div class="mt-3 space-y-2">
                         <!-- Contact Info -->
                         @if($business->email)
-                            <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                                <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                </svg>
+                            <div class="flex text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">
+                                <x-heroicon-o-envelope class="w-5 h-5 mr-2" />
                                 <span>{{ $business->email }}</span>
                             </div>
                         @endif
                         
                         <!-- Website -->
                         @if($business->url)
-                            <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                                <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2M17 1l4 4m0 0l-4 4m4-4H11"></path>
-                                </svg>
+                            <div class="flex text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">
+                                <x-heroicon-o-globe-europe-africa class="w-5 h-5 mr-2" />
                                 <span>{{ parse_url($business->url, PHP_URL_HOST) }}</span>
                             </div>
+                        @endif
+
+                        @if($business->telephone)
+                            <a href="tel:{{ $business->telephone }}" 
+                                class="flex text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">
+                                <x-heroicon-s-phone class="w-6 h-6" />
+                            </a>
+                        @endif
+
+                        @if($business->linkedin_url)
+                            <a href="{{ $business->linkedin_url }}" target="_blank" 
+                                class="flex text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">
+                                <x-fab-linkedin class="w-6 h-6" />
+                            </a>
                         @endif
                     </div>
                     
                     <!-- Action Links -->
                     <div class="flex items-center gap-4 mt-3">
                         <a href="{{ route('public.business.show', $business->slug) }}" target="_blank" class="text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300" title="View Public Page">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2M17 1l4 4m0 0l-4 4m4-4H11"></path>
-                            </svg>
+                            <x-heroicon-o-arrow-top-right-on-square class="w-5 h-5" />
                         </a>
                         
                         <a href="{{ route('private.businesses.edit', ['user' => $business->user_id, 'business' => $business->id]) }}" class="text-blue-500 transition-colors hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300" title="Edit Business">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            <x-heroicon-o-pencil class="w-5 h-5" />
                             </svg>
                         </a>
                         
@@ -136,9 +143,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500 transition-colors hover:text-red-600 dark:text-red-400 dark:hover:text-red-300" title="Delete Business">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                </svg>
+                                <x-heroicon-o-trash class="w-5 h-5" />
                             </button>
                         </form>
                     </div>

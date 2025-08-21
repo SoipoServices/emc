@@ -92,19 +92,18 @@
                     </a>
                 @endif
 
-                @if($event->is_member_event)
-                    @can('update', $event)
-                        <a href="{{ route('private.events.edit', ['user' => auth()->id(), 'event' => $event->id]) }}" class="transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Edit Event">
-                            <x-heroicon-o-pencil class="w-5 h-5" />
-                        </a>
-                    @endcan
-                    
-                    @can('delete', $event)
-                        <a href="#" class="text-gray-500 transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Delete Event">
-                            <x-heroicon-o-trash class="w-5 h-5" />
-                        </a>
-                    @endcan
-                @endif
+                @can('update', $event)
+                    <a href="{{ route('private.events.edit', ['user' => $event->user_id, 'event' => $event->id]) }}" class="transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Edit Event">
+                        <x-heroicon-o-pencil class="w-5 h-5" />
+                    </a>
+                @endcan
+                
+                {{-- @can('delete', $event)
+                    <a href="#" class="text-gray-500 transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Delete Event">
+                        <x-heroicon-o-trash class="w-5 h-5" />
+                    </a>
+                @endcan --}}
+            
             </div>
         </div>
     </div>
