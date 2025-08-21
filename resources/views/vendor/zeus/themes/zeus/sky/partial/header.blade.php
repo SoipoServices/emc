@@ -77,6 +77,14 @@
                         <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl(auth()->user()) }}" alt="Profile" class="w-8 h-8 rounded-full">
                         <span class="hidden text-sm font-medium text-gray-900 sm:block dark:text-white">{{ auth()->user()->name }}</span>
                     </a>
+                    
+                    <!-- Logout Button -->
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-2 p-2 text-gray-700 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-900" title="Logout">
+                            <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
+                        </button>
+                    </form>
                 @else
                     <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-gray-900 hover:text-black dark:text-white dark:hover:text-gray-300">Log in</a>
                     <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-full hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900">Sign up</a>
@@ -115,6 +123,40 @@
                         @endif
                     @endforeach
                 @endif
+                
+                @auth
+                    <!-- Mobile Auth Section -->
+                    <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
+                        <!-- User Profile -->
+                        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                            <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl(auth()->user()) }}" alt="Profile" class="w-6 h-6 rounded-full">
+                            {{ auth()->user()->name }}
+                        </a>
+                        
+                        @if(auth()->user()->is_admin)
+                            <!-- Admin Panel -->
+                            <a href="{{ url('/admin') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                                <x-heroicon-o-cog-6-tooth class="w-5 h-5" />
+                                Admin Panel
+                            </a>
+                        @endif
+                        
+                        <!-- Logout -->
+                        <form action="{{ route('logout') }}" method="POST" class="w-full">
+                            @csrf
+                            <button type="submit" class="flex items-center w-full gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                                <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <!-- Mobile Guest Section -->
+                    <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
+                        <a href="{{ route('login') }}" class="block px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">Log in</a>
+                        <a href="{{ route('register') }}" class="block px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">Sign up</a>
+                    </div>
+                @endauth
             </div>
         </div>
     </div>
