@@ -79,7 +79,7 @@ class BusinessController extends Controller
 
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->store('business_logos', 'public');
-            $business->logo_path = $path;
+            $business->photo_path = $path;
         }
 
         $business->save();
@@ -90,7 +90,7 @@ class BusinessController extends Controller
             $admin->notify(new NewBusinessForApproval($business));
         }
 
-        return redirect()->route('private.businesses.list')->with('success', 'Business created successfully and sent for approval!');
+        return redirect()->route('private.businesses.list', $business->user_id)->with('success', 'Business created successfully and sent for approval!');
     }
 
     /**
@@ -144,7 +144,7 @@ class BusinessController extends Controller
         }
 
         // Store old logo path for deletion if new one is uploaded
-        $oldLogoPath = $business->logo_path;
+        $oldLogoPath = $business->photo_path;
 
         $business->fill($validated);
         $business->slug = Str::slug($validated['name']);
@@ -156,12 +156,12 @@ class BusinessController extends Controller
             }
 
             $path = $request->file('logo')->store('business_logos', 'public');
-            $business->logo_path = $path;
+            $business->photo_path = $path;
         }
 
         $business->save();
 
-        return redirect()->route('private.businesses.list')->with('success', 'Business updated successfully!');
+        return redirect()->route('private.businesses.list', $business->user_id)->with('success', 'Business updated successfully!');
     }
 
     /**
@@ -172,13 +172,13 @@ class BusinessController extends Controller
         $this->authorize('delete', $business);
 
         // Delete the logo file if it exists
-        if ($business->logo_path && Storage::disk('public')->exists($business->logo_path)) {
-            Storage::disk('public')->delete($business->logo_path);
+        if ($business->photo_path && Storage::disk('public')->exists($business->photo_path)) {
+            Storage::disk('public')->delete($business->photo_path);
         }
 
         $business->delete();
 
-        return redirect()->route('private.businesses.list')->with('success', 'Business deleted successfully!');
+        return redirect()->route('private.businesses.list', $business->user_id)->with('success', 'Business deleted successfully!');
     }
 
     /**

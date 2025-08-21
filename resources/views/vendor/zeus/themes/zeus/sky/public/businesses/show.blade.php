@@ -76,14 +76,14 @@
                                 @endif
                             @else
                                 <!-- Regular Business Contact (Basic) -->
-                                @if($business->contact_email)
+                                @if($business->email)
                                     <span class="flex items-center space-x-1">
                                         <x-heroicon-s-envelope class="w-5 h-5" />
-                                        <span>{{ $business->contact_email }}</span>
+                                        <span>{{ $business->email }}</span>
                                     </span>
                                 @endif
                                 
-                                @if($business->website)
+                                @if($business->url)
                                     <span class="flex items-center space-x-1">
                                         <x-heroicon-s-globe-alt class="w-5 h-5" />
                                         <span>Visit Website</span>
@@ -105,35 +105,35 @@
         </div>
 
         <!-- Contact Information -->
-        @if($business->contact_email || $business->website)
+        @if($business->email || $business->url)
         <div class="p-8 mb-8 bg-white shadow-lg dark:bg-gray-800 rounded-2xl">
             <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Get in Touch</h2>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                @if($business->contact_email)
+                @if($business->email)
                     <div class="flex items-start space-x-3">
                         <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-green-100 rounded-lg dark:bg-green-900">
                             <x-heroicon-s-envelope class="w-5 h-5 text-green-600 dark:text-green-400" />
                         </div>
                         <div>
                             <h3 class="font-semibold text-gray-900 dark:text-white">Email</h3>
-                            <a href="mailto:{{ $business->contact_email }}" 
+                            <a href="mailto:{{ $business->email }}" 
                                class="text-green-600 dark:text-green-400 hover:underline">
-                                {{ $business->contact_email }}
+                                {{ $business->email }}
                             </a>
                         </div>
                     </div>
                 @endif
 
-                @if($business->website)
+                @if($business->url)
                     <div class="flex items-start space-x-3">
                         <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg dark:bg-blue-900">
                             <x-heroicon-s-globe-alt class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
                             <h3 class="font-semibold text-gray-900 dark:text-white">Website</h3>
-                            <a href="{{ $business->website }}" target="_blank" 
+                            <a href="{{ $business->url }}" target="_blank" 
                                class="text-blue-600 dark:text-blue-400 hover:underline">
-                                {{ parse_url($business->website, PHP_URL_HOST) }}
+                                {{ parse_url($business->url, PHP_URL_HOST) }}
                             </a>
                         </div>
                     </div>

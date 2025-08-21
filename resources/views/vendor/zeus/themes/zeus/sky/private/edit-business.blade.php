@@ -42,8 +42,8 @@
             <div class="space-y-2">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Business Logo</label>
                 <div class="flex items-center gap-4">
-                    @if($business->logo_path)
-                        <img src="{{ asset('storage/' . $business->logo_path) }}" alt="Business Logo" class="w-24 h-24 rounded-2xl object-cover border border-gray-300 dark:border-gray-600">
+                    @if($business->photo_path)
+                        <img src="{{ asset('storage/' . $business->photo_path) }}" alt="Business Logo" class="w-24 h-24 rounded-2xl object-cover border border-gray-300 dark:border-gray-600">
                     @else
                         <div class="flex items-center justify-center w-24 h-24 bg-gray-100 border-2 border-gray-300 border-dashed rounded-2xl dark:bg-gray-800 dark:border-gray-600">
                             <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,17 +84,17 @@
 
             <!-- Business Contact Info -->
             <div class="space-y-2">
-                <label for="contact_email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact Email <span class="text-red-500">*</span></label>
-                <input type="email" name="contact_email" id="contact_email" value="{{ old('contact_email', $business->contact_email) }}" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Business contact email">
-                @error('contact_email')
+                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact Email <span class="text-red-500">*</span></label>
+                <input type="email" name="email" id="email" value="{{ old('email', $business->email) }}" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Business contact email">
+                @error('email')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="space-y-2">
-                <label for="website" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Website</label>
-                <input type="url" name="website" id="website" value="{{ old('website', $business->website) }}" class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="https://yourbusiness.com">
-                @error('website')
+                <label for="url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Website</label>
+                <input type="url" name="url" id="url" value="{{ old('url', $business->url) }}" class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="https://yourbusiness.com">
+                @error('url')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                 @enderror
             </div>

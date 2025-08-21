@@ -81,17 +81,17 @@
 
             <!-- Business Contact Info -->
             <div class="space-y-2">
-                <label for="contact_email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact Email <span class="text-red-500">*</span></label>
-                <input type="email" name="contact_email" id="contact_email" value="{{ old('contact_email') }}" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Business contact email">
-                @error('contact_email')
+                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact Email <span class="text-red-500">*</span></label>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Business contact email">
+                @error('email')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="space-y-2">
-                <label for="website" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Website</label>
-                <input type="url" name="website" id="website" value="{{ old('website') }}" class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="https://yourbusiness.com">
-                @error('website')
+                <label for="url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Website</label>
+                <input type="url" name="url" id="url" value="{{ old('url') }}" class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="https://yourbusiness.com">
+                @error('url')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                 @enderror
             </div>
