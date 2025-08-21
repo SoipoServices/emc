@@ -137,23 +137,38 @@
                         </article>
                     @endforeach
                 </div>
+            @else
+                <div class="max-w-2xl mx-auto mt-16 text-center">
+                    <div class="p-8 bg-white shadow-sm rounded-2xl dark:bg-gray-800">
+                        <x-heroicon-o-calendar-days class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500" />
+                        <h3 class="mt-4 text-lg font-semibold text-gray-900 dark:text-white">No Upcoming Events</h3>
+                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                            We're currently planning our next entrepreneur group meeting. Stay tuned for updates!
+                        </p>
+                        <div class="mt-6">
+                            <a href="{{ route('events.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                                View All Events
+                            </a>
+                        </div>
+                    </div>
+                </div>
             @endif
         </div>
     </section>
 
     <!-- Member Events Section -->
-    @if($memberEvents->isNotEmpty())
-        <section class="py-24 bg-white dark:bg-gray-800">
-            <div class="px-6 mx-auto max-w-7xl lg:px-8">
-                <div class="max-w-2xl mx-auto text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-                        Upcoming Member Events
-                    </h2>
-                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-                        Exclusive events for our members. Join us for networking, learning, and growth opportunities.
-                    </p>
-                </div>
-                
+    <section class="py-24 bg-white dark:bg-gray-800">
+        <div class="px-6 mx-auto max-w-7xl lg:px-8">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                    Upcoming Member Events
+                </h2>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                    Exclusive events for our members. Join us for networking, learning, and growth opportunities.
+                </p>
+            </div>
+            
+            @if($memberEvents->isNotEmpty())
                 <div class="grid max-w-2xl grid-cols-1 mx-auto mt-16 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                     @foreach($memberEvents->take(3) as $event)
                         <article class="flex flex-col items-start justify-between p-6 transition-shadow shadow-sm bg-gray-50 dark:bg-gray-900 rounded-2xl hover:shadow-lg">
@@ -201,9 +216,24 @@
                         </article>
                     @endforeach
                 </div>
-            </div>
-        </section>
-    @endif
+            @else
+                <div class="max-w-2xl mx-auto mt-16 text-center">
+                    <div class="p-8 shadow-sm bg-gray-50 rounded-2xl dark:bg-gray-900">
+                        <x-heroicon-o-user-group class="w-12 h-12 mx-auto text-gray-400 dark:text-gray-500" />
+                        <h3 class="mt-4 text-lg font-semibold text-gray-900 dark:text-white">No Upcoming Member Events</h3>
+                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                            We're planning exclusive events for our members. Join our community to get notified!
+                        </p>
+                        <div class="mt-6">
+                            <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+                                Become a Member
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </section>
 
     <!-- CTA Section -->
     <section class="bg-black">

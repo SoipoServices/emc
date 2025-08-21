@@ -31,9 +31,18 @@ class AppViewServiceProvider extends ServiceProvider
         $latestEvent = $upcomingEvents->first();
         View::share('latestEvent', $latestEvent);
         
-        // Share events collection for Zeus Sky template
-        $emcEvents = $upcomingEvents->where('is_member_event', false);
-        $memberEvents = $upcomingEvents->where('is_member_event', true);
+        $events = Event::approved()
+            ->with(['tags','user'])
+            ->select('id', 'title', 'description', 'start_date', 'end_date', 'address', 'slug', 'photo_path', 'is_member_event','user_id')
+            ->orderBy('start_date', 'desc')
+            ->get()
+            ->groupBy('is_member_event')
+            ->map(function ($groupedEvents) {
+                return $groupedEvents->take(3); // Take 3 events from each group
+            });
+
+        $emcEvents = $events[false] ?? collect();
+        $memberEvents = $events[true] ?? collect();
         
         View::share('emcEvents', $emcEvents);
         View::share('memberEvents', $memberEvents);
