@@ -100,10 +100,10 @@
         </div>
         
         <!-- Event Image (if available) -->
-        @if($event->photo_path)
+        {{-- @if($event->photo_path)
             <div class="flex-shrink-0">
                 <img src="{{ Storage::disk('public')->url($event->photo_path) }}" alt="{{ $event->title }}" class="object-cover w-20 h-20 rounded-lg">
             </div>
-        @endif
+        @endif --}}
     </div>
 </div>

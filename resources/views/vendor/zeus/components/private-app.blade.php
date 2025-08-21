@@ -75,7 +75,7 @@
             </div>
 
             <!-- Main Content -->
-            <main class="flex-1 min-h-screen border-gray-200 border-x dark:border-gray-800">
+            <main class="flex-1 min-h-screen border-gray-200 md:max-w-xxl border-x dark:border-gray-800">
                 {{ $slot }}
             </main>
 
