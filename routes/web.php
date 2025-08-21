@@ -10,6 +10,7 @@ use App\Http\Controllers\PublicBusinessController;
 use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserTagController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,9 @@ Route::get('/event/entrepreneurs-meet-cagliari-presents-inside-sardinias-innovat
 Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('event.show');
 Route::get('/companies', [PublicBusinessController::class, 'index'])->name('public.businesses.index');
 Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
+
+// Public User Show Route
+Route::get('/user/{user}', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
 
 Route::middleware([
     'auth:sanctum',
