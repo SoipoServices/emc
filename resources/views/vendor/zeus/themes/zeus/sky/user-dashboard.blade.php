@@ -12,7 +12,7 @@
             <!-- Search Form -->
             <form method="GET" action="{{ route('users.index') }}" class="flex">
                 <div class="relative">
-                    <input type="text" name="search" value="{{ $search }}" placeholder="Search users..." class="w-64 py-2 pl-4 pr-4 text-sm text-gray-900 bg-gray-100 border-0 rounded-full dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-white">
+                    <input type="text" name="search" value="{{ $search }}" placeholder="Search users..." class="w-64 py-2 pl-4 pr-4 text-sm text-gray-900 bg-gray-100 border-0 rounded-full dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-800 dark:text-white">
                     <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-2">
                         <svg class="w-5 h-5 text-gray-400 hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -32,7 +32,7 @@
                 @if($user->profile_photo_path)
                     <img src="{{ Storage::disk('public')->url($user->profile_photo_path) }}" alt="{{ $user->name }}" class="object-cover w-12 h-12 rounded-full">
                 @else
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=0D8ABC&color=fff" alt="{{ $user->name }}" class="w-12 h-12 rounded-full">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=1e40af&color=fff" alt="{{ $user->name }}" class="w-12 h-12 rounded-full">
                 @endif
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2">
@@ -115,8 +115,39 @@
 
 <!-- Pagination -->
 @if($users->hasPages())
-    <div class="p-4 border-t border-gray-200 dark:border-gray-800">
-        {{ $users->withQueryString()->links() }}
+    <div class="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-800">
+        <div class="flex items-center">
+            <p class="text-sm text-gray-700 dark:text-gray-300">
+                Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} results
+            </p>
+        </div>
+        <div class="flex items-center space-x-2">
+            @if ($users->onFirstPage())
+                <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
+                    Previous
+                </span>
+            @else
+                <a href="{{ $users->appends(request()->query())->previousPageUrl() }}" 
+                   class="px-3 py-2 text-sm text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">
+                    Previous
+                </a>
+            @endif
+
+            <span class="px-3 py-2 text-sm text-white bg-blue-800 rounded-lg dark:bg-blue-800 dark:text-white">
+                {{ $users->currentPage() }} of {{ $users->lastPage() }}
+            </span>
+
+            @if ($users->hasMorePages())
+                <a href="{{ $users->appends(request()->query())->nextPageUrl() }}" 
+                   class="px-3 py-2 text-sm text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">
+                    Next
+                </a>
+            @else
+                <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
+                    Next
+                </span>
+            @endif
+        </div>
     </div>
 @endif
 </x-zeus::app>
