@@ -4,8 +4,8 @@
 <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-xl font-bold text-gray-900 dark:text-white">Users</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $users->total() }} users</p>
+            <h1 class="text-xl font-bold text-gray-900 dark:text-white">Members</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $users->total() }} members</p>
         </div>
         <div class="flex items-center gap-4">
         

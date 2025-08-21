@@ -50,23 +50,17 @@
             <!-- Left Sidebar - Navigation -->
             <div class="flex-col hidden h-full pt-4 lg:flex lg:w-54 xl:w-64">
                 <nav class="flex-1 px-4 space-y-2">
-                    <a href="{{ route('home') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-                        </svg>
+                    <a href="{{ route('users.index') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                        <x-heroicon-s-home class="w-6 h-6" />
                         <span class="text-xl font-medium">Home</span>
                     </a>
                     @auth
                         <a href="{{ route('users.index') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <span class="text-xl font-medium">Users</span>
+                            <x-heroicon-s-users class="w-6 h-6" />
+                            <span class="text-xl font-medium">Members</span>
                         </a>
-                        <a href="{{ route('dashboard') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"/>
-                            </svg>
+                        <a href="{{ route('profile.show') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                            <x-heroicon-s-user-circle class="w-6 h-6" />
                             <span class="text-xl font-medium">Profile</span>
                         </a>
                     @endauth
