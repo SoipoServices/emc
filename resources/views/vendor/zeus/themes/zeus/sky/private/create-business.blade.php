@@ -34,7 +34,7 @@
             </div>
         @endif
 
-        <form action="{{ route('private.businesses.store') }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
+        <form action="{{ route('private.businesses.store', ['user' => auth()->user()]) }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
             @csrf
 
             <!-- Business Logo -->
@@ -92,6 +92,18 @@
                 <label for="url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Website</label>
                 <input type="url" name="url" id="url" value="{{ old('url') }}" class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="https://yourbusiness.com">
                 @error('url')
+                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Public Visibility -->
+            <div class="space-y-2">
+                <div class="flex items-center space-x-3">
+                    <input type="checkbox" name="is_public" id="is_public" value="1" {{ old('is_public') ? 'checked' : '' }} class="w-4 h-4 text-blue-600 border border-gray-300 rounded focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                    <label for="is_public" class="text-sm font-medium text-gray-700 dark:text-gray-300">Make this business publicly visible</label>
+                </div>
+                <p class="text-xs text-gray-500 dark:text-gray-400">When checked, your business will be visible to all users in the directory. Uncheck to make it private to your profile only.</p>
+                @error('is_public')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                 @enderror
             </div>
