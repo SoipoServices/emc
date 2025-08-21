@@ -95,11 +95,11 @@
                         </a>
                     </div>
                 </div>
-                <div class="flex-shrink-0">
+                {{-- <div class="flex-shrink-0">
                     <button class="px-4 py-1 text-sm font-bold text-white transition-colors bg-black rounded-full dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200">
                         Follow
                     </button>
-                </div>
+                </div> --}}
             </div>
         </div>
     @empty
@@ -128,7 +128,7 @@
                 </span>
             @else
                 <a href="{{ $users->appends(request()->query())->previousPageUrl() }}" 
-                   class="px-3 py-2 text-sm text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">
+                   class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
                     Previous
                 </a>
             @endif
@@ -139,7 +139,7 @@
 
             @if ($users->hasMorePages())
                 <a href="{{ $users->appends(request()->query())->nextPageUrl() }}" 
-                   class="px-3 py-2 text-sm text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">
+                   class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
                     Next
                 </a>
             @else
