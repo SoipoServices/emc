@@ -40,7 +40,12 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->resources([
+                \App\Filament\Resources\Businesses\BusinessResource::class,
+                \App\Filament\Resources\Events\EventResource::class,
+                \App\Filament\Resources\Users\UserResource::class,
+                \App\Filament\Resources\Navigation\NavigationResource::class,
+            ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Dashboard::class,
@@ -59,7 +64,11 @@ class AdminPanelProvider extends PanelProvider
                     FilamentShortUrlPlugin::make(),
                     SpatieTranslatablePlugin::make()
                      ->defaultLocales(['en' ,'it']),
-                     SkyPlugin::make()->navigationGroupLabel('CMS')
+                     SkyPlugin::make()
+                        ->navigationGroupLabel('CMS')
+                        ->hideResources([
+                            \LaraZeus\Sky\Filament\Resources\NavigationResource::class,
+                        ])
                 ]
             )
             ->middleware([

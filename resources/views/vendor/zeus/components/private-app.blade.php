@@ -79,10 +79,10 @@
             <div class="flex-col hidden h-full pt-4 lg:flex lg:w-64 xl:w-72">
                 <div class="px-4 space-y-4">
                     <!-- What's happening -->
-                    <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl">
+                    <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl hover:shadow-md group-hover:scale-[1.02]">
                         <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">What's happening</h2>
                         <div class="space-y-3">
-                            <div class="p-2 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                            <div class="p-2 rounded cursor-pointer ">
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Trending in Technology</p>
                                 <p class="font-bold text-gray-900 dark:text-white">{{ config('app.name') }}</p>
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Social networking platform</p>
@@ -92,14 +92,14 @@
 
                     <!-- Upcoming Event -->
                     @if(isset($latestEvent) && $latestEvent)
-                    <div class="p-4 border border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl dark:border-blue-800/30">
+                    <div class="p-4 border hover:shadow-md group-hover:scale-[1.02] border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl dark:border-blue-800/30">
                         <h2 class="flex items-center mb-4 text-xl font-bold text-gray-900 dark:text-white">
                             <x-heroicon-o-calendar-days class="w-5 h-5 mr-2 text-blue-600 dark:text-blue-400" />
                             Upcoming Event
                         </h2>
                         
                         <a href="{{ route('event.show', $latestEvent->slug) }}" class="block group">
-                            <div class="transition-all bg-white rounded-lg  hover:shadow-md dark:bg-gray-800 group-hover:scale-[1.02]">
+                            <div class="transition-all bg-white dark:bg-gray-800 ">
                                 @if($latestEvent->photo_path)
                                     <div class="mb-3">
                                         <img src="{{ Storage::disk('public')->url($latestEvent->photo_path) }}" 
