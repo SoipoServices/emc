@@ -20,7 +20,10 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->trustProxies(at: '*');
 
-        //
+        // Register middleware aliases
+        $middleware->alias([
+            'user.ownership' => \App\Http\Middleware\EnsureUserOwnership::class,
+        ]);
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everyMinute();

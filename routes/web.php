@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Private\BusinessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedinController;
+use App\Http\Controllers\Private\BusinessController;
 use App\Http\Controllers\Private\DashboardController;
 use App\Http\Controllers\Private\EventController as PrivateEventController;
 use App\Http\Controllers\Private\MemberController;
@@ -27,33 +27,31 @@ Route::middleware([
 
     // Member Dashboard
 
-    Route::prefix("member")->group(function () {
+    Route::prefix('member')->group(function () {
         // User Profile Routes
         Route::get('/dashboard', DashboardController::class)->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('/users/{user}', MemberController::class)->name('member');
         Route::get('/users{user}/vcard', VcardController::class)->name('member.vcard');
-         // Event Routes
+        // Event Routes
         Route::get('/create-event', [PrivateEventController::class, 'create'])->name('private.events.create');
         Route::post('/create-event', [PrivateEventController::class, 'store'])->name('private.events.store');
-        Route::get('/{user}/events', [PrivateEventController::class, 'list'])->name('private.events.list');
-        Route::get('/{user}/event/{event}', [PrivateEventController::class, 'edit'])->name('private.events.edit');
-        Route::put('/{user}/event/{event}', [PrivateEventController::class, 'update'])->name('private.events.update');
-        
+        Route::get('/{user}/events', [PrivateEventController::class, 'list'])->name('private.events.list')->middleware('user.ownership');
+        Route::get('/{user}/event/{event}', [PrivateEventController::class, 'edit'])->name('private.events.edit')->middleware('user.ownership');
+        Route::put('/{user}/event/{event}', [PrivateEventController::class, 'update'])->name('private.events.update')->middleware('user.ownership');
+
         // Business Routes
-        Route::get('/{user}/hustles', [BusinessController::class, 'index'])->name('private.businesses.list');
-        Route::get('/{user}/hustles/create', [BusinessController::class, 'create'])->name('private.businesses.create');
-        Route::post('/{user}/hustles', [BusinessController::class, 'store'])->name('private.businesses.store');
-        Route::get('/{user}/hustles/{business}', [BusinessController::class, 'show'])->name('private.businesses.show');
-        Route::get('/{user}/hustles/{business}/edit', [BusinessController::class, 'edit'])->name('private.businesses.edit');
-        Route::put('/{user}/hustles/{business}', [BusinessController::class, 'update'])->name('private.businesses.update');
-        Route::delete('/{user}/hustles/{business}', [BusinessController::class, 'destroy'])->name('private.businesses.destroy');
-        
+        Route::get('/{user}/hustles', [BusinessController::class, 'index'])->name('private.businesses.list')->middleware('user.ownership');
+        Route::get('/{user}/hustles/create', [BusinessController::class, 'create'])->name('private.businesses.create')->middleware('user.ownership');
+        Route::post('/{user}/hustles', [BusinessController::class, 'store'])->name('private.businesses.store')->middleware('user.ownership');
+        Route::get('/{user}/hustles/{business}', [BusinessController::class, 'show'])->name('private.businesses.show')->middleware('user.ownership');
+        Route::get('/{user}/hustles/{business}/edit', [BusinessController::class, 'edit'])->name('private.businesses.edit')->middleware('user.ownership');
+        Route::put('/{user}/hustles/{business}', [BusinessController::class, 'update'])->name('private.businesses.update')->middleware('user.ownership');
+        Route::delete('/{user}/hustles/{business}', [BusinessController::class, 'destroy'])->name('private.businesses.destroy')->middleware('user.ownership');
+
     });
 
-
-        
 });
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');
