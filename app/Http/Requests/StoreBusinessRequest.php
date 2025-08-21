@@ -27,6 +27,7 @@ class StoreBusinessRequest extends FormRequest
             'email' => ['required', 'email', 'max:255'],
             'url' => ['nullable', 'url', 'max:255'],
             'logo' => ['nullable', 'image', 'max:1024'], // max 1MB
+            'is_public' => ['nullable', 'boolean'],
         ];
     }
 

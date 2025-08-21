@@ -75,7 +75,7 @@ class BusinessController extends Controller
         $business->user_id = $request->user()->id;
         $business->slug = Str::slug($validated['name']);
         $business->is_approved = false;
-        $business->is_public = true;
+        $business->is_public = $validated['is_public'] ?? true;
 
         if ($request->hasFile('logo')) {
             $path = $request->file('logo')->store('business_logos', 'public');
@@ -96,7 +96,7 @@ class BusinessController extends Controller
     /**
      * Display the specified business.
      */
-    public function show(Business $business)
+    public function show(User $user, Business $business)
     {
         $this->authorize('view', $business);
 
@@ -106,7 +106,7 @@ class BusinessController extends Controller
     /**
      * Show the form for editing the specified business.
      */
-    public function edit(Business $business)
+    public function edit(User $user,Business $business)
     {
         $this->authorize('update', $business);
 
@@ -148,6 +148,7 @@ class BusinessController extends Controller
 
         $business->fill($validated);
         $business->slug = Str::slug($validated['name']);
+        $business->is_public = $validated['is_public'] ?? true;
 
         if ($request->hasFile('logo')) {
             // Delete old logo if it exists
@@ -167,7 +168,7 @@ class BusinessController extends Controller
     /**
      * Remove the specified business from storage.
      */
-    public function destroy(Business $business)
+    public function destroy(User $user,Business $business)
     {
         $this->authorize('delete', $business);
 

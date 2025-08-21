@@ -34,16 +34,18 @@
             </div>
         @endif
 
-        <form action="{{ route('private.businesses.update', $business) }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
-            @csrf
-            @method('PUT')
+        <div class="overflow-hidden bg-white border border-gray-200 shadow-lg dark:bg-gray-800 rounded-2xl dark:border-gray-700">
+            <div class="p-6">
+                <form action="{{ route('private.businesses.update', ['user' => auth()->user(), 'business' => $business]) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    @csrf
+                    @method('PUT')
 
             <!-- Business Logo -->
             <div class="space-y-2">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Business Logo</label>
                 <div class="flex items-center gap-4">
                     @if($business->photo_path)
-                        <img src="{{ asset('storage/' . $business->photo_path) }}" alt="Business Logo" class="w-24 h-24 rounded-2xl object-cover border border-gray-300 dark:border-gray-600">
+                        <img src="{{ asset('storage/' . $business->photo_path) }}" alt="Business Logo" class="object-cover w-24 h-24 border border-gray-300 rounded-2xl dark:border-gray-600">
                     @else
                         <div class="flex items-center justify-center w-24 h-24 bg-gray-100 border-2 border-gray-300 border-dashed rounded-2xl dark:bg-gray-800 dark:border-gray-600">
                             <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,6 +101,18 @@
                 @enderror
             </div>
 
+            <!-- Public Visibility -->
+            <div class="space-y-2">
+                <div class="flex items-center space-x-3">
+                    <input type="checkbox" name="is_public" id="is_public" value="1" {{ old('is_public', $business->is_public) ? 'checked' : '' }} class="w-4 h-4 text-blue-600 border border-gray-300 rounded focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600">
+                    <label for="is_public" class="text-sm font-medium text-gray-700 dark:text-gray-300">Make this business publicly visible</label>
+                </div>
+                <p class="text-xs text-gray-500 dark:text-gray-400">When checked, your business will be visible to all users in the directory. Uncheck to make it private to your profile only.</p>
+                @error('is_public')
+                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Submit Button -->
             <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
@@ -110,6 +124,7 @@
             </div>
         </form>
     </div>
+</div>
 </div>
 
 <!-- Load TinyMCE -->
