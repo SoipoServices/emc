@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Private;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,7 +31,7 @@ class UserDashboardController extends Controller
 
         $users = $query->paginate(9);
 
-        return view('vendor.zeus.themes.zeus.sky.user-dashboard', [
+        return view('vendor.zeus.themes.zeus.sky.private.user-dashboard', [
             'users' => $users,
             'search' => $search,
         ]);

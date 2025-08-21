@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Private;
 
 use App\Http\Controllers\Controller;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class UserController extends Controller
             abort(404);
         }
 
-        return view('zeus::themes.zeus.sky.user-show', [
+        return view('zeus::themes.zeus.sky.private.user-show', [
             'user' => $user,
             'skyTheme' => 'zeus::themes.zeus.sky'
         ]);

@@ -10,8 +10,8 @@ use App\Http\Controllers\PublicBusinessController;
 use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\Private\UserController;
+use App\Http\Controllers\Private\UserDashboardController;
 use App\Http\Controllers\UserTagController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +25,7 @@ Route::get('/companies', [PublicBusinessController::class, 'index'])->name('publ
 Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
 
 // Public User Show Route
-Route::get('/user/{user}', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
+Route::get('/user/{user}', [\App\Http\Controllers\Private\UserController::class, 'show'])->name('user.show');
 
 Route::middleware([
     'auth:sanctum',
@@ -35,11 +35,11 @@ Route::middleware([
     Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class);
     Route::match(['get', 'post'], '/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
     Route::put('user/profile/bio', \App\Http\Controllers\UpdateUserBioInformationController::class)->name('user-bio-information.update');
-    Route::get('user/{user}/vcard', \App\Http\Controllers\VcardController::class)->name('user.vcard');
+    Route::get('user/{user}/vcard', \App\Http\Controllers\Private\VcardController::class)->name('user.vcard');
 
     // User Profile Routes
-    Route::get('/profile', [\App\Http\Controllers\UserProfileController::class, 'show'])->name('user.profile');
-    Route::put('/profile', [\App\Http\Controllers\UserProfileController::class, 'update'])->name('user.profile.update');
+    Route::get('/profile', [\App\Http\Controllers\Private\UserProfileController::class, 'show'])->name('user.profile');
+    Route::put('/profile', [\App\Http\Controllers\Private\UserProfileController::class, 'update'])->name('user.profile.update');
 
     Route::get('/billboard', [PostController::class, 'index'])->name('billboard.index');
     Route::get('/billboard/create', [PostController::class, 'create'])->name('billboard.create');

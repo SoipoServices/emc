@@ -2,7 +2,7 @@
 @use('Illuminate\Support\Facades\Storage')
 @use('Illuminate\Support\Str')
 
-<x-zeus::app :$skyTheme>
+<x-zeus::private-app :$skyTheme>
 <!-- Twitter-like Feed Header -->
 <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
     <div class="flex items-center justify-between">
@@ -162,4 +162,4 @@
         </div>
     </div>
 @endif
-</x-zeus::app>
+</x-zeus::private-app>

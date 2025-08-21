@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Private;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +18,7 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
 
-        return view('zeus::themes.zeus.sky.user-profile', [
+        return view('zeus::themes.zeus.sky.private.user-profile', [
             'user' => $user,
             'skyTheme' => 'zeus::themes.zeus.sky',
         ]);
