@@ -174,6 +174,9 @@ class EventController extends Controller
         $event->fill($validated);
         $event->slug = Str::slug($validated['title']);
 
+        // Reset approval status when event is updated
+        $event->is_approved = false;
+
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($event->photo_path) {
@@ -185,6 +188,12 @@ class EventController extends Controller
 
         $event->save();
 
-        return redirect()->route('private.events.list')->with('success', 'Event updated successfully!');
+        // Notify admin about the updated event
+        $admin = User::where('is_admin', true)->first();
+        if ($admin) {
+            $admin->notify(new NewEventForApproval($event));
+        }
+
+        return redirect()->route('private.events.list')->with('success', 'Event updated successfully and sent for approval!');
     }
 }

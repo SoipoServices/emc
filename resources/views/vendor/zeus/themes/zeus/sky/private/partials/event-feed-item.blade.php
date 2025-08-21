@@ -22,6 +22,14 @@
                 <h3 class="font-bold text-gray-900 truncate dark:text-white">{{ Str::limit(strip_tags($event->title), 100) }}</h3>
                 
             </div>
+            
+            <!-- Event Image (positioned after title) -->
+            @if($event->photo_path)
+                <div class="mt-3 mb-3">
+                    <img src="{{ Storage::disk('public')->url($event->photo_path) }}" alt="{{ $event->title }}" class="object-cover w-full h-48 rounded-lg">
+                </div>
+            @endif
+            
             <div class="flex items-center gap-2">
                 @if(!$event->is_approved)
                     <span class="px-2 py-1 text-xs font-medium text-orange-800 bg-orange-100 rounded-full dark:bg-orange-900/30 dark:text-orange-300">
@@ -99,12 +107,5 @@
                 @endif
             </div>
         </div>
-        
-        <!-- Event Image (if available) -->
-        {{-- @if($event->photo_path)
-            <div class="flex-shrink-0 w-20">
-                <img src="{{ Storage::disk('public')->url($event->photo_path) }}" alt="{{ $event->title }}" class="object-cover w-20 h-20 rounded-lg">
-            </div>
-        @endif --}}
     </div>
 </div>
