@@ -1,4 +1,7 @@
 
+@use('Illuminate\Support\Facades\Storage')
+@use('Illuminate\Support\Str')
+
 <x-zeus::app :$skyTheme>
 <!-- Twitter-like Feed Header -->
 <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
@@ -105,7 +108,7 @@
                     </div>
                 </div>
                 <div class="flex-shrink-0">
-                    <a href="/user/{{ $user->id }}" class="flex items-center justify-center w-10 h-10 text-gray-500 transition-colors rounded-full hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300" title="View Profile">
+                    <a href="{{ route('user.show', $user) }}" class="flex items-center justify-center w-10 h-10 text-gray-500 transition-colors rounded-full hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300" title="View Profile">
                         <x-heroicon-o-eye class="w-5 h-5" />
                     </a>
                 </div>
