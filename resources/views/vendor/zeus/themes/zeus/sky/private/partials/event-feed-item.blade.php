@@ -12,10 +12,8 @@
             @endif
         @else
             <!-- App Logo for non-member events -->
-            <div class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full dark:bg-green-900/30">
-                <div class="flex items-center justify-center w-8 h-8 bg-green-600 rounded-full dark:bg-green-500">
-                    <span class="text-xs font-bold text-white">{{ substr(config('app.name'), 0, 2) }}</span>
-                </div>
+            <div class="flex items-center justify-center w-12 h-12 bg-red-100 rounded-full dark:bg-red-900/30">
+                @include($skyTheme.'.partial.logo', ['classes' => 'w-8 h-8'])
             </div>
         @endif
         
@@ -53,7 +51,7 @@
             <div class="mt-3 space-y-2">
                 <!-- Date and Time -->
                 <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                    <svg class="w-4 h-4 mr-2 {{ $event->is_member_event ? 'text-blue-500' : 'text-green-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 mr-2 {{ $event->is_member_event ? 'text-blue-500' : 'text-red-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                     <span>{{ Carbon::parse($event->start_date)->format('M j, Y') }}</span>
@@ -69,7 +67,7 @@
                 <!-- Location -->
                 @if($event->address)
                     <div class="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                        <svg class="w-4 h-4 mr-2 {{ $event->is_member_event ? 'text-blue-500' : 'text-green-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 mr-2 {{ $event->is_member_event ? 'text-blue-500' : 'text-red-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
@@ -81,16 +79,11 @@
             <!-- Action Links with Color-coded Icons -->
             <div class="flex items-center gap-4 mt-3">
                 @if($event->link)
-                    <a href="{{ $event->link }}" target="_blank" class="transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-green-500 hover:text-green-600 dark:text-green-400 dark:hover:text-green-300' }}" title="Event Link">
+                    <a href="{{ $event->link }}" target="_blank" class="transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Event Link">
                         <x-heroicon-o-arrow-top-right-on-square class="w-5 h-5" />
                     </a>
                 @endif
-                
-                @if(Route::has('event.show'))
-                    <a href="{{ route('event.show', $event->slug) }}" class="transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-green-500 hover:text-green-600 dark:text-green-400 dark:hover:text-green-300' }}" title="View Details">
-                        <x-heroicon-o-eye class="w-5 h-5" />
-                    </a>
-                @endif
+        
                 
                 @can('update', $event)
                     <a href="#" class="text-gray-500 transition-colors hover:text-yellow-600 dark:text-gray-400 dark:hover:text-yellow-400" title="Edit Event">
