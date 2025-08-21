@@ -104,11 +104,11 @@
                         </a>
                     </div>
                 </div>
-                {{-- <div class="flex-shrink-0">
-                    <button class="px-4 py-1 text-sm font-bold text-white transition-colors bg-black rounded-full dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200">
-                        Follow
-                    </button>
-                </div> --}}
+                <div class="flex-shrink-0">
+                    <a href="/user/{{ $user->id }}" class="flex items-center justify-center w-10 h-10 text-gray-500 transition-colors rounded-full hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300" title="View Profile">
+                        <x-heroicon-o-eye class="w-5 h-5" />
+                    </a>
+                </div>
             </div>
         </div>
     @empty
