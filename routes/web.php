@@ -1,19 +1,18 @@
 <?php
 
+use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\PublicBusinessController;
+use App\Http\Controllers\PublicEventController;
 use App\Http\Controllers\ReactionController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use App\Http\Controllers\UserTagController;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\UserTagController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/events', [PublicEventController::class, 'index'])->name('events.index');
@@ -24,16 +23,15 @@ Route::get('/event/{slug}', [PublicEventController::class, 'show'])->name('event
 Route::get('/companies', [PublicBusinessController::class, 'index'])->name('public.businesses.index');
 Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
     Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class);
-    Route::match(['get', 'post'],'/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
-    Route::put('user/profile/bio',\App\Http\Controllers\UpdateUserBioInformationController::class)->name('user-bio-information.update');
-    Route::get('user/{user}/vcard',\App\Http\Controllers\VcardController::class)->name('user.vcard');
+    Route::match(['get', 'post'], '/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
+    Route::put('user/profile/bio', \App\Http\Controllers\UpdateUserBioInformationController::class)->name('user-bio-information.update');
+    Route::get('user/{user}/vcard', \App\Http\Controllers\VcardController::class)->name('user.vcard');
     Route::get('/billboard', [PostController::class, 'index'])->name('billboard.index');
     Route::get('/billboard/create', [PostController::class, 'create'])->name('billboard.create');
     Route::get('/billboard/{post}', [PostController::class, 'show'])->name('billboard.show');
@@ -52,6 +50,7 @@ Route::middleware([
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('/billboard/{post}/edit', [PostController::class, 'edit'])->name('billboard.edit');
     Route::put('/user/tags', [UserTagController::class, 'update'])->name('user-tags.update');
+    Route::get('/users', [UserDashboardController::class, 'index'])->name('users.index');
     Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
     Route::get('/businesses', [BusinessController::class, 'index'])->name('businesses.index');
     Route::get('/businesses/create', [BusinessController::class, 'create'])->name('businesses.create');
