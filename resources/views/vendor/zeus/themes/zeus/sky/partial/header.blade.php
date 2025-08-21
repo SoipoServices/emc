@@ -25,6 +25,14 @@
             <!-- User Actions -->
             <div class="flex items-center gap-4">
                 @auth
+                    {{-- Admin Link --}}
+                    @if(auth()->user()->is_admin)
+                        <a href="{{ url('/admin') }}" class="flex items-center gap-2 p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-900" title="Admin Panel">
+                            <x-heroicon-o-cog-6-tooth class="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                            <span class="hidden text-sm font-medium text-gray-900 sm:block dark:text-white">Admin</span>
+                        </a>
+                    @endif
+                    
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2 p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-900">
                         <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl(auth()->user()) }}" alt="Profile" class="w-8 h-8 rounded-full">
                         <span class="hidden text-sm font-medium text-gray-900 sm:block dark:text-white">{{ auth()->user()->name }}</span>
