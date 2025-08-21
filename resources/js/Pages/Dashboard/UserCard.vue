@@ -51,7 +51,7 @@ defineProps({
                     <div class="flex justify-center pt-5 pb-5 mx-auto text-gray-600 dark:text-white">
 
 
-                        <a :href="route('user.vcard',{'user':user.id})" class="mx-5" >
+                        <a :href="route('member.vcard',{'user':user.id})" class="mx-5" >
                             <div aria-label="Site">
                                 <v-icon name="fa-download" class="w-4 h-4 " animation="wrench" hover/>
                             </div>

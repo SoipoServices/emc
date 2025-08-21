@@ -7,7 +7,7 @@
             <p class="text-sm text-gray-500 dark:text-gray-400">Update your profile information</p>
         </div>
         <div class="flex items-center gap-2">
-            <a href="{{ route('users.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+            <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
                 Back to the dashboard
             </a>
         </div>
@@ -22,7 +22,7 @@
         </div>
     @endif
 
-    <form action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
+    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
         @csrf
         @method('PUT')
 
@@ -340,7 +340,7 @@
 
         <!-- Submit Button -->
         <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <a href="{{ route('users.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+            <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
                 Cancel
             </a>
             <button type="submit" class="px-6 py-2 text-sm font-medium text-white transition-colors bg-blue-800 rounded-lg hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-800">

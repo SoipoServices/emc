@@ -3,7 +3,7 @@
 <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
     <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-            <a href="{{ route('users.index') }}" class="p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="{{ route('dashboard') }}" class="p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
                 <x-heroicon-o-arrow-left class="w-5 h-5 text-gray-700 dark:text-gray-300" />
             </a>
             <div>
@@ -129,7 +129,7 @@
         
         <div class="flex gap-3">
             <!-- Download vCard -->
-            <a href="{{ route('user.vcard', $user->id) }}" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">
+            <a href="{{ route('member.vcard', $user->id) }}" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">
                 <x-heroicon-o-arrow-down-tray class="w-4 h-4" />
                 Download vCard
             </a>

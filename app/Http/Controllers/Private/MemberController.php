@@ -7,19 +7,19 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display the specified user.
      */
-    public function show(User $user)
+    public function __invoke(User $user)
     {
         // Check if user is visible
         if (!$user->is_visible) {
             abort(404);
         }
 
-        return view('zeus::themes.zeus.sky.private.user-show', [
+        return view('zeus::themes.zeus.sky.private.member', [
             'user' => $user,
             'skyTheme' => 'zeus::themes.zeus.sky'
         ]);

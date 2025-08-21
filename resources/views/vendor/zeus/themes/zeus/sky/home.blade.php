@@ -1,7 +1,12 @@
 <div>
     <!-- Hero Section -->
-    <section class="relative py-20 overflow-hidden bg-gradient-to-r from-gray-900 via-black to-gray-900">
-        <div class="absolute inset-0 bg-black opacity-50"></div>
+    <section class="relative py-20 overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="{{ Vite::asset('resources/images/event_pic.jpg') }}" alt="Entrepreneur meetup" class="object-cover w-full h-full opacity-60">
+        </div>
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black opacity-60"></div>
         <div class="relative px-6 mx-auto max-w-7xl lg:px-8">
             <div class="max-w-2xl mx-auto text-center">
                 <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
@@ -19,10 +24,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-        <!-- Background Image -->
-        <div class="absolute inset-0 -z-10">
-            <img src="{{ asset('resources/images/event_pic.jpg') }}" alt="Entrepreneur meetup" class="object-cover w-full h-full opacity-30">
         </div>
     </section>
 

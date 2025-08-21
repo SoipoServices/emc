@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
-class UserProfileController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
@@ -18,7 +18,7 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
 
-        return view('zeus::themes.zeus.sky.private.user-profile', [
+        return view('zeus::themes.zeus.sky.private.profile', [
             'user' => $user,
             'skyTheme' => 'zeus::themes.zeus.sky',
         ]);
@@ -60,6 +60,6 @@ class UserProfileController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('user.profile')->with('success', 'Profile updated successfully!');
+        return redirect()->route('profile')->with('success', 'Profile updated successfully!');
     }
 }

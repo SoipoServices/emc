@@ -53,16 +53,16 @@
             <!-- Left Sidebar - Navigation -->
             <div class="flex-col hidden h-full pt-4 lg:flex lg:w-54 xl:w-64">
                 <nav class="flex-1 px-4 space-y-2">
-                    <a href="{{ route('users.index') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                    <a href="{{ route('home') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
                         <x-heroicon-s-home class="w-6 h-6" />
                         <span class="text-xl font-medium">Home</span>
                     </a>
                     @auth
-                        <a href="{{ route('users.index') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                        <a href="{{ route('dashboard') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
                             <x-heroicon-s-users class="w-6 h-6" />
                             <span class="text-xl font-medium">Members</span>
                         </a>
-                        <a href="{{ route('user.profile') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                        <a href="{{ route('profile') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
                             <x-heroicon-s-user-circle class="w-6 h-6" />
                             <span class="text-xl font-medium">Profile</span>
                         </a>

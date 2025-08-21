@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserDashboardController extends Controller
+class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         $search = $request->input('search');
         
@@ -31,7 +31,7 @@ class UserDashboardController extends Controller
 
         $users = $query->paginate(9);
 
-        return view('vendor.zeus.themes.zeus.sky.private.user-dashboard', [
+        return view('vendor.zeus.themes.zeus.sky.private.dashboard', [
             'users' => $users,
             'search' => $search,
         ]);

@@ -13,7 +13,7 @@
         <div class="flex items-center gap-4">
         
             <!-- Search Form -->
-            <form method="GET" action="{{ route('users.index') }}" class="flex">
+            <form method="GET" action="{{ route('dashboard') }}" class="flex">
                 <div class="relative">
                     <input type="text" name="search" value="{{ $search }}" placeholder="Search users..." class="w-64 py-2 pl-4 pr-4 text-sm text-gray-900 bg-gray-100 border-0 rounded-full dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-800 dark:text-white">
                     <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -102,13 +102,13 @@
                         @endif
                         
                         <!-- vCard Download -->
-                        <a href="{{ route('user.vcard', $user->id) }}" class="text-gray-500 transition-colors hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400" title="Download vCard">
+                        <a href="{{ route('member.vcard', $user->id) }}" class="text-gray-500 transition-colors hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400" title="Download vCard">
                             <x-heroicon-o-arrow-down-tray class="w-5 h-5" />
                         </a>
                     </div>
                 </div>
                 <div class="flex-shrink-0">
-                    <a href="{{ route('user.show', $user) }}" class="flex items-center justify-center w-10 h-10 text-gray-500 transition-colors rounded-full hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300" title="View Profile">
+                    <a href="{{ route('member', $user) }}" class="flex items-center justify-center w-10 h-10 text-gray-500 transition-colors rounded-full hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300" title="View Profile">
                         <x-heroicon-o-eye class="w-5 h-5" />
                     </a>
                 </div>
