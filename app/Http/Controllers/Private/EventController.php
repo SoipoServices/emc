@@ -10,6 +10,7 @@ use App\Notifications\NewEventForApproval;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
@@ -42,7 +43,7 @@ class EventController extends Controller
         }
 
         // Get all events combined and paginated
-        $allEvents = $baseQuery->paginate(15);
+        $allEvents = $baseQuery->paginate(4);
 
         return view('vendor.zeus.themes.zeus.sky.private.events-list', compact(
             'allEvents',
@@ -63,6 +64,13 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        // Check for request size before validation
+        if ($request->server('CONTENT_LENGTH') > (2 * 1024 * 1024)) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['image' => 'The uploaded file is too large. Please choose an image smaller than 1MB.']);
+        }
+
         try {
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
@@ -77,6 +85,14 @@ class EventController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->withErrors(['image' => 'The uploaded file is too large. Please choose an image smaller than 1MB.']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Check if the validation failed due to file size
+            if ($request->hasFile('image') && $request->file('image')->getSize() > (1024 * 1024)) {
+                return redirect()->back()
+                    ->withInput($request->except('image'))
+                    ->withErrors(['image' => 'The uploaded file is too large. Please choose an image smaller than 1MB.']);
+            }
+            throw $e;
         }
 
         $event = new Event($validated);
@@ -105,5 +121,70 @@ class EventController extends Controller
         }
 
         return redirect()->route('private.events.list')->with('success', 'Event created successfully and sent for approval!');
+    }
+
+    /**
+     * Show the form for editing the specified event.
+     */
+    public function edit(Event $event)
+    {
+        $this->authorize('update', $event);
+
+        return view('vendor.zeus.themes.zeus.sky.private.edit-event', compact('event'));
+    }
+
+    /**
+     * Update the specified event in storage.
+     */
+    public function update(Request $request, Event $event)
+    {
+        $this->authorize('update', $event);
+
+        // Check for request size before validation
+        if ($request->server('CONTENT_LENGTH') > (2 * 1024 * 1024)) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['image' => 'The uploaded file is too large. Please choose an image smaller than 1MB.']);
+        }
+
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after:start_date',
+                'address' => 'required|string|max:255',
+                'link' => 'nullable|url|max:255',
+                'image' => 'nullable|image|max:1024', // Allow image upload, max 1MB
+            ]);
+        } catch (\Illuminate\Http\Exceptions\PostTooLargeException $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['image' => 'The uploaded file is too large. Please choose an image smaller than 1MB.']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Check if the validation failed due to file size
+            if ($request->hasFile('image') && $request->file('image')->getSize() > (1024 * 1024)) {
+                return redirect()->back()
+                    ->withInput($request->except('image'))
+                    ->withErrors(['image' => 'The uploaded file is too large. Please choose an image smaller than 1MB.']);
+            }
+            throw $e;
+        }
+
+        $event->fill($validated);
+        $event->slug = Str::slug($validated['title']);
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($event->photo_path) {
+                Storage::disk('public')->delete($event->photo_path);
+            }
+            $path = $request->file('image')->store('event_images', 'public');
+            $event->photo_path = $path;
+        }
+
+        $event->save();
+
+        return redirect()->route('private.events.list')->with('success', 'Event updated successfully!');
     }
 }

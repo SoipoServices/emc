@@ -83,25 +83,26 @@
                         <x-heroicon-o-arrow-top-right-on-square class="w-5 h-5" />
                     </a>
                 @endif
-        
-                
-                @can('update', $event)
-                    <a href="#" class="text-gray-500 transition-colors hover:text-yellow-600 dark:text-gray-400 dark:hover:text-yellow-400" title="Edit Event">
-                        <x-heroicon-o-pencil class="w-5 h-5" />
-                    </a>
-                @endcan
-                
-                @can('delete', $event)
-                    <a href="#" class="text-gray-500 transition-colors hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400" title="Delete Event">
-                        <x-heroicon-o-trash class="w-5 h-5" />
-                    </a>
-                @endcan
+
+                @if($event->is_member_event)
+                    @can('update', $event)
+                        <a href="{{ route('private.events.edit', $event) }}" class="transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Edit Event">
+                            <x-heroicon-o-pencil class="w-5 h-5" />
+                        </a>
+                    @endcan
+                    
+                    @can('delete', $event)
+                        <a href="#" class="text-gray-500 transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Delete Event">
+                            <x-heroicon-o-trash class="w-5 h-5" />
+                        </a>
+                    @endcan
+                @endif
             </div>
         </div>
         
         <!-- Event Image (if available) -->
         {{-- @if($event->photo_path)
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0 w-20">
                 <img src="{{ Storage::disk('public')->url($event->photo_path) }}" alt="{{ $event->title }}" class="object-cover w-20 h-20 rounded-lg">
             </div>
         @endif --}}

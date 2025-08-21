@@ -39,6 +39,8 @@ Route::middleware([
     Route::get('/create-event', [PrivateEventController::class, 'create'])->name('private.events.create');
     Route::post('/create-event', [PrivateEventController::class, 'store'])->name('private.events.store');
     Route::get('/my-events', [PrivateEventController::class, 'list'])->name('private.events.list');
+    Route::get('/edit-event/{event}', [PrivateEventController::class, 'edit'])->name('private.events.edit');
+    Route::put('/edit-event/{event}', [PrivateEventController::class, 'update'])->name('private.events.update');
 
     Route::get('/events/list', [EventController::class, 'list'])->name('events.list');
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
