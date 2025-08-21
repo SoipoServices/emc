@@ -37,13 +37,10 @@ Route::middleware([
          // Event Routes
         Route::get('/create-event', [PrivateEventController::class, 'create'])->name('private.events.create');
         Route::post('/create-event', [PrivateEventController::class, 'store'])->name('private.events.store');
-        Route::get('/events', [PrivateEventController::class, 'list'])->name('private.events.list');
-        Route::get('/event/{event}', [PrivateEventController::class, 'edit'])->name('private.events.edit');
-        Route::put('/event/{event}', [PrivateEventController::class, 'update'])->name('private.events.update');
-
-    });
-
-
+        Route::get('/{user}/events', [PrivateEventController::class, 'list'])->name('private.events.list');
+        Route::get('/{user}/event/{event}', [PrivateEventController::class, 'edit'])->name('private.events.edit');
+        Route::put('/{user}/event/{event}', [PrivateEventController::class, 'update'])->name('private.events.update');
+        
         // Business Routes
         Route::get('/businesses', [BusinessController::class, 'index'])->name('private.businesses.list');
         Route::get('/businesses/create', [BusinessController::class, 'create'])->name('private.businesses.create');
@@ -52,9 +49,11 @@ Route::middleware([
         Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('private.businesses.edit');
         Route::put('/businesses/{business}', [BusinessController::class, 'update'])->name('private.businesses.update');
         Route::delete('/businesses/{business}', [BusinessController::class, 'destroy'])->name('private.businesses.destroy');
-        Route::patch('/businesses/{business}/toggle-approval', [BusinessController::class, 'toggleApproval'])->name('private.businesses.toggle-approval');
-        Route::patch('/businesses/{business}/toggle-sponsor', [BusinessController::class, 'toggleSponsor'])->name('private.businesses.toggle-sponsor');
-        Route::patch('/businesses/{business}/toggle-public', [BusinessController::class, 'togglePublic'])->name('private.businesses.toggle-public');
+        
+    });
+
+
+        
 });
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');

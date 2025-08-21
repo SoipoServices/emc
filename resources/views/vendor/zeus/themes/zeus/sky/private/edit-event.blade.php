@@ -8,7 +8,7 @@
                 <p class="text-sm text-gray-500 dark:text-gray-400">Update your event details</p>
             </div>
             <div class="flex items-center gap-2">
-                <a href="{{ route('private.events.list') }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                <a href="{{ route('private.events.list', ['user' => auth()->id()]) }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
                     Back to Events
                 </a>
             </div>
@@ -34,7 +34,7 @@
             </div>
         @endif
 
-        <form action="{{ route('private.events.update', $event) }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
+        <form action="{{ route('private.events.update', ['user' => auth()->id(), 'event' => $event->id]) }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
             @csrf
             @method('PUT')
 

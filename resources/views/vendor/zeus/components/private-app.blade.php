@@ -62,9 +62,13 @@
                             <x-heroicon-s-users class="w-6 h-6" />
                             <span class="text-xl font-medium">Members</span>
                         </a>
-                        <a href="{{ route('private.events.list') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                        <a href="{{ route('private.events.list', ['user' => auth()->id()]) }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
                             <x-heroicon-s-calendar-days class="w-6 h-6" />
-                            <span class="text-xl font-medium">Events</span>
+                            <span class="text-xl font-medium">My Events</span>
+                        </a>
+                        <a href="{{ route('private.businesses.list') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                            <x-tabler-beach  class="w-6 h-6" />
+                            <span class="text-xl font-medium">Businesses</span>
                         </a>
                         <a href="{{ route('profile') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
                             <x-heroicon-s-user-circle class="w-6 h-6" />
