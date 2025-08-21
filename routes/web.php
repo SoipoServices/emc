@@ -5,11 +5,12 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\Private\DashboardController;
+use App\Http\Controllers\Private\EventController as PrivateEventController;
 use App\Http\Controllers\Private\MemberController;
 use App\Http\Controllers\Private\ProfileController;
+use App\Http\Controllers\Private\VcardController;
 use App\Http\Controllers\PublicBusinessController;
 use App\Http\Controllers\PublicEventController;
-use App\Http\Controllers\Private\VcardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -34,6 +35,9 @@ Route::middleware([
     Route::get('/member/{user}', MemberController::class)->name('member');
     Route::get('/member/{user}/vcard', VcardController::class)->name('member.vcard');
 
+    // Private Event Routes
+    Route::get('/create-event', [PrivateEventController::class, 'create'])->name('private.events.create');
+    Route::post('/create-event', [PrivateEventController::class, 'store'])->name('private.events.store');
 
     Route::get('/events/list', [EventController::class, 'list'])->name('events.list');
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');

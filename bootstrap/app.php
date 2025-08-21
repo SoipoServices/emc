@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Console\Scheduling\Schedule;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,15 +16,21 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-            \App\Http\Middleware\LogoutDisabledUsers::class
+            \App\Http\Middleware\LogoutDisabledUsers::class,
         ]);
         $middleware->trustProxies(at: '*');
 
         //
     })
-    ->withSchedule(function (Schedule$schedule){
+    ->withSchedule(function (Schedule $schedule) {
         $schedule->command(\Spatie\Health\Commands\RunHealthChecksCommand::class)->everyMinute();
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
+            if ($e->getStatusCode() === 413) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['image' => 'The uploaded file is too large. Please choose an image smaller than 1MB.']);
+            }
+        });
     })->create();
