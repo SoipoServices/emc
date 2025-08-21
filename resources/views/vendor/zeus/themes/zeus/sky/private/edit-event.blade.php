@@ -1,7 +1,7 @@
 <x-zeus::private-app :$skyTheme>
 <div>
     <!-- Twitter-like Profile Header -->
-    <div class="sticky px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
+    <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-xl font-bold text-gray-900 dark:text-white">Edit Event</h1>
@@ -78,9 +78,9 @@
             <!-- Event Description -->
             <div class="space-y-2">
                 <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Event Description</label>
-                <div class="relative">
-                    <textarea name="description" id="description" rows="4" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600 dark:text-white resize-none"
+                <div class="relative tinymce-wrapper">
+                    <textarea name="description" id="description" rows="8" required
+                        class="w-full px-4 py-3 border border-gray-300 resize-none rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:border-gray-600 dark:text-white"
                         placeholder="Tell us about your event...">{{ old('description', $event->description) }}</textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -140,7 +140,7 @@
                     </svg>
                     Your event will be reviewed before being published
                 </div>
-                <button type="submit" class="flex items-center gap-2 px-6 py-3 text-white bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                <button type="submit" class="flex items-center gap-2 px-6 py-3 text-white transition-colors bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
@@ -151,8 +151,64 @@
     </div>
 </div>
 
+<!-- Load TinyMCE -->
+<script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_API_KEY') }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- TinyMCE Styling -->
+<style>
+.tinymce-wrapper .tox-tinymce {
+    border-radius: 1rem !important;
+    border-color: #d1d5db !important;
+}
+
+.dark .tinymce-wrapper .tox-tinymce {
+    border-color: #4b5563 !important;
+}
+
+.tinymce-wrapper .tox-toolbar-overlord {
+    border-top-left-radius: 1rem !important;
+    border-top-right-radius: 1rem !important;
+}
+
+.tinymce-wrapper .tox-edit-area {
+    border-bottom-left-radius: 1rem !important;
+    border-bottom-right-radius: 1rem !important;
+}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize TinyMCE
+    tinymce.init({
+        selector: '#description',
+        height: 300,
+        menubar: false,
+        plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview',
+            'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'table', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'link table | removeformat code | help',
+        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; line-height: 1.6; }',
+        skin: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'oxide-dark' : 'oxide',
+        content_css: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
+        branding: false,
+        elementpath: false,
+        statusbar: false,
+        block_formats: 'Paragraph=p; Header 3=h3; Header 4=h4; Header 5=h5; Header 6=h6;',
+        valid_elements: 'p,br,strong,em,h3,h4,h5,h6,ul,ol,li,a[href],table,thead,tbody,tr,td,th',
+        forced_root_block: 'p',
+        setup: function (editor) {
+            editor.on('change', function () {
+                editor.save();
+            });
+        }
+    });
+
+    // File input validation
     const fileInput = document.getElementById('event-image');
     const fileSizeError = document.getElementById('file-size-error');
     const submitButton = document.querySelector('button[type="submit"]');
@@ -185,6 +241,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Handle form submission
+    document.querySelector('form').addEventListener('submit', function(e) {
+        // Make sure TinyMCE content is saved to textarea
+        tinymce.triggerSave();
+    });
 });
 </script>
 </x-zeus::private-app>

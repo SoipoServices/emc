@@ -1,7 +1,7 @@
 <x-zeus::private-app :$skyTheme>
 <div>
     <!-- Twitter-like Profile Header -->
-    <div class="sticky px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
+    <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-xl font-bold text-gray-900 dark:text-white">Create Event</h1>
@@ -71,7 +71,9 @@
             <!-- Event Description -->
             <div class="space-y-2">
                 <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description <span class="text-red-500">*</span></label>
-                <textarea name="description" id="description" rows="4" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Describe your event in detail...">{{ old('description') }}</textarea>
+                <div class="tinymce-wrapper">
+                    <textarea name="description" id="description" rows="8" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Describe your event in detail...">{{ old('description') }}</textarea>
+                </div>
                 @error('description')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                 @enderror
@@ -116,9 +118,9 @@
             </div>
 
             <!-- Event Guidelines -->
-            <div class="p-4 bg-blue-50 border border-blue-200 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
+            <div class="p-4 border border-blue-200 bg-blue-50 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
                 <h4 class="font-medium text-blue-900 dark:text-blue-300">Event Guidelines</h4>
-                <ul class="mt-2 text-sm text-blue-800 dark:text-blue-400 list-disc list-inside space-y-1">
+                <ul class="mt-2 space-y-1 text-sm text-blue-800 list-disc list-inside dark:text-blue-400">
                     <li>Events will be reviewed before being published</li>
                     <li>Only member events are allowed through this form</li>
                     <li>Make sure to provide accurate date and location information</li>
@@ -139,8 +141,64 @@
     </div>
 </div>
 
+<!-- Load TinyMCE -->
+<script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_API_KEY') }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- TinyMCE Styling -->
+<style>
+.tinymce-wrapper .tox-tinymce {
+    border-radius: 0.5rem !important;
+    border-color: #d1d5db !important;
+}
+
+.dark .tinymce-wrapper .tox-tinymce {
+    border-color: #4b5563 !important;
+}
+
+.tinymce-wrapper .tox-toolbar-overlord {
+    border-top-left-radius: 0.5rem !important;
+    border-top-right-radius: 0.5rem !important;
+}
+
+.tinymce-wrapper .tox-edit-area {
+    border-bottom-left-radius: 0.5rem !important;
+    border-bottom-right-radius: 0.5rem !important;
+}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize TinyMCE
+    tinymce.init({
+        selector: '#description',
+        height: 300,
+        menubar: false,
+        plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview',
+            'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'table', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'link table | removeformat code | help',
+        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; line-height: 1.6; }',
+        skin: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'oxide-dark' : 'oxide',
+        content_css: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
+        branding: false,
+        elementpath: false,
+        statusbar: false,
+        block_formats: 'Paragraph=p; Header 3=h3; Header 4=h4; Header 5=h5; Header 6=h6;',
+        valid_elements: 'p,br,strong,em,h3,h4,h5,h6,ul,ol,li,a[href],table,thead,tbody,tr,td,th',
+        forced_root_block: 'p',
+        setup: function (editor) {
+            editor.on('change', function () {
+                editor.save();
+            });
+        }
+    });
+
+    // File input validation
     const fileInput = document.getElementById('event-image');
     const submitButton = document.querySelector('button[type="submit"]');
     const errorDiv = document.getElementById('file-size-error');
@@ -161,6 +219,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
             }
         }
+    });
+
+    // Handle form submission
+    document.querySelector('form').addEventListener('submit', function(e) {
+        // Make sure TinyMCE content is saved to textarea
+        tinymce.triggerSave();
     });
 });
 </script>
