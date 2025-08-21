@@ -59,7 +59,7 @@
                             <x-heroicon-s-users class="w-6 h-6" />
                             <span class="text-xl font-medium">Members</span>
                         </a>
-                        <a href="{{ route('profile.show') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                        <a href="{{ route('user.profile') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
                             <x-heroicon-s-user-circle class="w-6 h-6" />
                             <span class="text-xl font-medium">Profile</span>
                         </a>

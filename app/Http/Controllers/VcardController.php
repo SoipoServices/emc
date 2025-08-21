@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use JeroenDesloovere\VCard\VCard;
-use Stringable;
 
 class VcardController extends Controller
 {
@@ -17,13 +16,13 @@ class VcardController extends Controller
     {
 
         // define vcard
-        $vcard = new VCard();
+        $vcard = new VCard;
 
-        $name = explode(" ",$user->name);
+        $name = explode(' ', $user->name);
         // define variables
         $lastname = $name[0];
-        $firstname = "";
-        if(count($name) > 1){
+        $firstname = '';
+        if (count($name) > 1) {
             $firstname = $name[1];
         }
 
@@ -36,22 +35,35 @@ class VcardController extends Controller
 
         // add work data
         // $vcard->addCompany('Siesqo');
-        if($user->position){
+        if ($user->position) {
             $vcard->addJobtitle($user->position);
         }
         // $vcard->addRole('Data Protection Officer');
         $vcard->addEmail($user->email);
         // $vcard->addPhoneNumber(1234121212, 'PREF;WORK');
-        if($user->telephone){
+        if ($user->telephone) {
             $vcard->addPhoneNumber($user->telephone, 'WORK');
+        }
+
+        // Add address with city and country if available
+        if ($user->city || $user->country) {
+            $vcard->addAddress(
+                null, // post office box
+                null, // extended address
+                null, // street
+                $user->city, // city
+                null, // region
+                null, // postal code
+                $user->country // country
+            );
         }
         // $vcard->addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium');
         // $vcard->addLabel('street, worktown, workpostcode Belgium');
-        if($user->site_url){
+        if ($user->site_url) {
             $vcard->addURL($user->site_url);
         }
 
-        if($user->profile_photo_path){
+        if ($user->profile_photo_path) {
             try {
                 $photo = Storage::disk('public')->url($user->profile_photo_path);
                 $vcard->addPhoto($photo);
@@ -61,10 +73,10 @@ class VcardController extends Controller
             }
         }
 
-            // return vcard as a string
-            //return $vcard->getOutput();
+        // return vcard as a string
+        // return $vcard->getOutput();
 
-            // return vcard as a download
+        // return vcard as a download
         return $vcard->download();
     }
 }

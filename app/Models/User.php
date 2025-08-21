@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,17 +16,16 @@ use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
 use Spatie\Tags\HasTags;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
-    use Notifiable;
-    use TwoFactorAuthenticatable;
     use HasTags;
+    use Notifiable;
     use Searchable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The relationships that should always be loaded.
@@ -46,6 +46,8 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'is_admin',
         'telephone',
         'position',
+        'city',
+        'country',
         'bio',
         'site_url',
         'linkedin_profile_url',
@@ -58,7 +60,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'feedback_submitted_at',
         'is_disabled',
         'profile_photo_path',
-        'is_visible'
+        'is_visible',
     ];
 
     /**
@@ -93,7 +95,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
-            'is_disabled' => 'boolean'
+            'is_disabled' => 'boolean',
         ];
     }
 
@@ -107,7 +109,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
      *
      * @return array<string, mixed>
      */
-    #[SearchUsingPrefix(['name', 'email','telephone','position'])]
+    #[SearchUsingPrefix(['name', 'email', 'telephone', 'position'])]
     #[SearchUsingFullText(['bio'])]
     public function toSearchableArray(): array
     {
@@ -136,21 +138,20 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function scopeIsVisible($query)
     {
-        return $query->where('is_visible',true);
+        return $query->where('is_visible', true);
     }
-    
 
     protected function hasBio(): Attribute
     {
         return Attribute::make(
-            get: fn () => !empty($this->bio),
+            get: fn () => ! empty($this->bio),
         );
     }
 
     protected function isVerified(): Attribute
     {
         return Attribute::make(
-            get: fn () => !empty($this->email_verified_at),
+            get: fn () => ! empty($this->email_verified_at),
         );
     }
 

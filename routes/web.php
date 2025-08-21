@@ -32,6 +32,11 @@ Route::middleware([
     Route::match(['get', 'post'], '/dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
     Route::put('user/profile/bio', \App\Http\Controllers\UpdateUserBioInformationController::class)->name('user-bio-information.update');
     Route::get('user/{user}/vcard', \App\Http\Controllers\VcardController::class)->name('user.vcard');
+
+    // User Profile Routes
+    Route::get('/profile', [\App\Http\Controllers\UserProfileController::class, 'show'])->name('user.profile');
+    Route::put('/profile', [\App\Http\Controllers\UserProfileController::class, 'update'])->name('user.profile.update');
+
     Route::get('/billboard', [PostController::class, 'index'])->name('billboard.index');
     Route::get('/billboard/create', [PostController::class, 'create'])->name('billboard.create');
     Route::get('/billboard/{post}', [PostController::class, 'show'])->name('billboard.show');
