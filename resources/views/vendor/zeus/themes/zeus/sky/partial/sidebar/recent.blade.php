@@ -1,14 +1,31 @@
 @unless($recent->isEmpty())
-    <div class="my-4">
-        <h4 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-200">{{ __('Recent Post') }}</h4>
-        <div class="flex flex-col max-w-sm px-4 py-6 mx-auto bg-white dark:bg-gray-800 rounded-[2rem] ltr:rounded-br-none rtl:rounded-bl-none shadow-md">
+    <div class="p-6 bg-white border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700 rounded-2xl">
+        <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Recent Posts</h3>
+        <div class="space-y-4">
             @foreach($recent as $post)
-                <a href="{{ route('post',$post->slug) }}" class="border-b border-t border-white hover:border-primary-600 transition duration-300 px-1 py-4">
-                    <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                <a href="{{ route('post',$post->slug) }}" class="block group">
+                    <div class="flex gap-3">
                         @if($post->image() !== null)
-                            <img alt="{{ $post->title }}" src="{{ $post->image() }}" class="h-6 w-6 shadow-md rounded-[2rem] rounded-bl-none z-0 object-cover"/>
+                            <div class="flex-shrink-0">
+                                <img alt="{{ $post->title }}" 
+                                     src="{{ $post->image() }}" 
+                                     class="object-cover w-12 h-12 rounded-lg"/>
+                            </div>
+                        @else
+                            <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-gray-100 rounded-lg dark:bg-gray-700">
+                                <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
                         @endif
-                        <div class="w-full text-lg">{{ $post->title ?? '' }}</div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-medium text-gray-900 transition-colors dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-2">
+                                {{ $post->title ?? 'Untitled' }}
+                            </h4>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                {{ optional($post->published_at)->diffForHumans() }}
+                            </p>
+                        </div>
                     </div>
                 </a>
             @endforeach
