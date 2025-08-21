@@ -87,7 +87,7 @@
             <!-- Action Links with Color-coded Icons -->
             <div class="flex items-center gap-4 mt-3">
                 @if($event->link)
-                    <a href="{{ $event->link }}" target="_blank" class="transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Event Link">
+                    <a href="{{ route('public.event.show', $event->slug) }}" target="_blank" class="transition-colors {{ $event->is_member_event ? 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300' }}" title="Event Link">
                         <x-heroicon-o-arrow-top-right-on-square class="w-5 h-5" />
                     </a>
                 @endif

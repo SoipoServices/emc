@@ -111,7 +111,7 @@
 
                             <!-- Event Description -->
                             <div class="prose prose-lg max-w-none dark:prose-invert">
-                                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">About This Event</h2>
+                                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">About This Event</h2>
                                 <div class="text-gray-700 dark:text-gray-200">
                                     {!! $event->description !!}
                                 </div>
@@ -149,10 +149,23 @@
                                     <div class="mb-4">
                                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Duration</p>
                                         <p class="text-gray-900 dark:text-white">
-                                            @if($event->start_date === $event->end_date)
-                                                Single Day Event
+                                            @php
+                                                $startDate = $event->start_date;
+                                                $endDate = $event->end_date;
+                                               
+                                                $daysDiff = $startDate->diffInDays($endDate);
+                                            @endphp
+                                            @if($daysDiff > 1)
+                                                {{ $daysDiff + 1 }} Days
                                             @else
-                                                {{ Carbon::parse($event->start_date)->diffInDays(Carbon::parse($event->end_date)) + 1 }} Days
+                                                @php
+                                                    $hoursDiff = $startDate->diffInHours($endDate);
+                                                @endphp
+                                                @if($hoursDiff <= 1)
+                                                    {{ $startDate->diffInMinutes($endDate) }} Minutes
+                                                @else
+                                                    {{ $hoursDiff }} Hours
+                                                @endif
                                             @endif
                                         </p>
                                     </div>
@@ -181,12 +194,12 @@
                                 </div>
 
                                 <!-- Join EMC Call-to-Action -->
-                                <div class="p-6 mt-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
-                                    <h3 class="mb-2 text-lg font-semibold text-white">Join Our Community</h3>
-                                    <p class="mb-4 text-sm text-blue-100">
+                                <div class="p-6 mt-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                                    <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Join Our Community</h3>
+                                    <p class="mb-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
                                         Connect with entrepreneurs in Cagliari and never miss an event.
                                     </p>
-                                    <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-white rounded-md hover:bg-gray-50 transition-colors">
+                                    <a href="{{ route('register') }}" class="inline-flex items-center px-6 py-2 text-sm font-semibold text-white transition-all duration-200 transform bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 hover:scale-105">
                                         Join EMC
                                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

@@ -102,7 +102,7 @@
                             Upcoming Event
                         </h2>
                         
-                        <a href="{{ route('event.show', $latestEvent->slug) }}" class="block group">
+                        <a href="{{ route('public.event.show', $latestEvent->slug) }}" class="block group">
                             <div class="transition-all bg-white dark:bg-gray-800 ">
                                 @if($latestEvent->photo_path)
                                     <div class="mb-3">
