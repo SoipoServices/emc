@@ -43,7 +43,10 @@ class AppViewServiceProvider extends ServiceProvider
 
         $emcEvents = $events[false] ?? collect();
         $memberEvents = $events[true] ?? collect();
-        
+
+        $mainNav = \LaraZeus\Sky\SkyPlugin::get()->getModel('Navigation')::fromHandle('main-nav');
+
+        View::share('mainNav', $mainNav);
         View::share('emcEvents', $emcEvents);
         View::share('memberEvents', $memberEvents);
     }

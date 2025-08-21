@@ -71,7 +71,6 @@ class NavigationResource extends Resource
                                     ->required(),
                                 TextInput::make('url')
                                     ->label('URL')
-                                    ->url()
                                     ->visible(fn ($get) => $get('type') === 'external-link'),
                                 TextInput::make('route')
                                     ->label('Route')
