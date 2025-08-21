@@ -48,6 +48,22 @@
     <div class="bg-white dark:bg-black">
         @include($skyTheme.'.partial.header')
         
+        <!-- Impersonation Banner -->
+        @if(auth()->user()->isImpersonated())
+            <div class="bg-orange-600 text-white px-4 py-2 text-center text-sm">
+                <div class="flex items-center justify-center gap-2">
+                    <x-heroicon-o-finger-print class="w-4 h-4" />
+                    <span>You are currently impersonating <strong>{{ auth()->user()->name }}</strong></span>
+                    <form action="{{ route('impersonate.stop') }}" method="POST" class="inline ml-4">
+                        @csrf
+                        <button type="submit" class="text-white underline hover:no-underline text-sm">
+                            Stop Impersonation
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @endif
+        
         <!-- Layout -->
         <div class="flex mx-auto max-w-7xl">
             <!-- Left Sidebar - Navigation -->

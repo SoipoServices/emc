@@ -74,17 +74,32 @@
                     @endif
                     
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2 p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-900">
-                        <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl(auth()->user()) }}" alt="Profile" class="w-8 h-8 rounded-full">
+                        @if(auth()->user()->profile_photo_path)
+                            <img src="{{ Storage::disk('public')->url(auth()->user()->profile_photo_path) }}" alt="{{ auth()->user()->name }}" class="object-cover w-8 h-8 rounded-full ring-4 ring-white dark:ring-gray-800">
+                        @else
+                            <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl(auth()->user()) }}" alt="{{ auth()->user()->name }}" class="w-8 h-8 rounded-full ring-4 ring-white dark:ring-gray-800">
+                        @endif
                         <span class="hidden text-sm font-medium text-gray-900 sm:block dark:text-white">{{ auth()->user()->name }}</span>
                     </a>
                     
                     <!-- Logout Button -->
-                    <form action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="flex items-center gap-2 p-2 text-gray-700 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-900" title="Logout">
-                            <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
-                        </button>
-                    </form>
+                    @if(auth()->user()->isImpersonated())
+                        <!-- Stop Impersonation Button -->
+                        <form action="{{ route('impersonate.stop') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="flex items-center gap-2 p-2 text-white transition-colors bg-orange-600 rounded-full hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-800" title="Stop Impersonation">
+                                <x-heroicon-o-finger-print class="w-5 h-5" />
+                            </button>
+                        </form>
+                    @else
+                        <!-- Regular Logout Button -->
+                        <form action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="flex items-center gap-2 p-2 text-gray-700 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-900" title="Logout">
+                                <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
+                            </button>
+                        </form>
+                    @endif
                 @else
                     <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-gray-900 hover:text-black dark:text-white dark:hover:text-gray-300">Log in</a>
                     <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-full hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900">Sign up</a>
@@ -142,13 +157,25 @@
                         @endif
                         
                         <!-- Logout -->
-                        <form action="{{ route('logout') }}" method="POST" class="w-full">
-                            @csrf
-                            <button type="submit" class="flex items-center w-full gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
-                                <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
-                                Logout
-                            </button>
-                        </form>
+                        @if(auth()->user()->isImpersonated())
+                            <!-- Stop Impersonation Button -->
+                            <form action="{{ route('impersonate.stop') }}" method="POST" class="w-full">
+                                @csrf
+                                <button type="submit" class="flex items-center w-full gap-3 px-3 py-2 text-sm font-medium text-white transition-colors bg-orange-600 rounded-md hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-800">
+                                    <x-heroicon-o-finger-print class="w-5 h-5" />
+                                    Stop Impersonation
+                                </button>
+                            </form>
+                        @else
+                            <!-- Regular Logout -->
+                            <form action="{{ route('logout') }}" method="POST" class="w-full">
+                                @csrf
+                                <button type="submit" class="flex items-center w-full gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                                    <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
+                                    Logout
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 @else
                     <!-- Mobile Guest Section -->

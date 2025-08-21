@@ -24,7 +24,7 @@
                 @if($user->profile_photo_path)
                     <img src="{{ Storage::disk('public')->url($user->profile_photo_path) }}" alt="{{ $user->name }}" class="object-cover w-32 h-32 rounded-full ring-4 ring-white dark:ring-gray-800">
                 @else
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=1e40af&color=fff&size=128" alt="{{ $user->name }}" class="w-32 h-32 rounded-full ring-4 ring-white dark:ring-gray-800">
+                    <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl($user) }}" alt="{{ $user->name }}" class="w-32 h-32 rounded-full ring-4 ring-white dark:ring-gray-800">
                 @endif
             </div>
 
@@ -139,6 +139,17 @@
                 <x-heroicon-o-envelope class="w-4 h-4" />
                 Send Email
             </a>
+
+            <!-- Impersonation Button (Admin Only) -->
+            @if(auth()->user()->canImpersonate() && $user->canBeImpersonated() && auth()->id() !== $user->id)
+                <form action="{{ route('impersonate.start', $user) }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-orange-600 rounded-lg hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-800" onclick="return confirm('Are you sure you want to impersonate this user?')">
+                        <x-heroicon-o-finger-print class="w-4 h-4" />
+                        Impersonate User
+                    </button>
+                </form>
+            @endif
         </div>
     </div>
 

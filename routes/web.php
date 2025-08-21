@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImpersonationController;
 use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\Private\BusinessController;
 use App\Http\Controllers\Private\DashboardController;
@@ -55,6 +56,14 @@ Route::middleware([
 
     });
 
+});
+
+// Impersonation routes (admin only)
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::post('/impersonate/{user}', [ImpersonationController::class, 'start'])
+        ->name('impersonate.start');
+    Route::post('/impersonate/stop', [ImpersonationController::class, 'stop'])
+        ->name('impersonate.stop');
 });
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');

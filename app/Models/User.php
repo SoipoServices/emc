@@ -15,6 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
+use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Tags\HasTags;
 
 class User extends Authenticatable implements FilamentUser, MustVerifyEmail
@@ -23,6 +24,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     use HasFactory;
     use HasPhoto;
     use HasTags;
+    use Impersonate;
     use Notifiable;
     use Searchable;
     use TwoFactorAuthenticatable;
@@ -168,5 +170,23 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function businesses()
     {
         return $this->hasMany(Business::class);
+    }
+
+    /**
+     * Check if this user can impersonate other users.
+     * Only admins can impersonate.
+     */
+    public function canImpersonate(): bool
+    {
+        return $this->is_admin;
+    }
+
+    /**
+     * Check if this user can be impersonated.
+     * All users can be impersonated except disabled ones.
+     */
+    public function canBeImpersonated(): bool
+    {
+        return !$this->is_disabled;
     }
 }

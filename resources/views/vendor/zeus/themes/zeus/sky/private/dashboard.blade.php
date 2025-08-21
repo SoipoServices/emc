@@ -29,7 +29,7 @@
 
 <!-- Search Results Info -->
 @if($search)
-    <div class="flex items-center gap-3 p-4 mx-4 mt-4 bg-blue-50 border border-blue-200 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
+    <div class="flex items-center gap-3 p-4 mx-4 mt-4 border border-blue-200 bg-blue-50 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
         <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
@@ -63,7 +63,7 @@
                 @if($user->profile_photo_path)
                     <img src="{{ Storage::disk('public')->url($user->profile_photo_path) }}" alt="{{ $user->name }}" class="object-cover w-12 h-12 rounded-full">
                 @else
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=1e40af&color=fff" alt="{{ $user->name }}" class="w-12 h-12 rounded-full">
+                    <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl($user) }}" alt="{{ $user->name }}" class="w-12 h-12 rounded-full">
                 @endif
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2">
