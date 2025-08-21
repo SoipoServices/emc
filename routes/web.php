@@ -24,7 +24,6 @@ Route::view('/privacy', 'legal.privacy')->name('privacy.show');
 
 Route::middleware([
     'auth:sanctum',
-    config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
     Route::get('health', \Spatie\Health\Http\Controllers\HealthCheckResultsController::class);
