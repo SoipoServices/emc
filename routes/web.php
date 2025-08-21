@@ -32,14 +32,14 @@ Route::middleware([
         Route::get('/dashboard', DashboardController::class)->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::get('/{user}', MemberController::class)->name('member');
-        Route::get('/{user}/vcard', VcardController::class)->name('member.vcard');
+        Route::get('/users/{user}', MemberController::class)->name('member');
+        Route::get('/users{user}/vcard', VcardController::class)->name('member.vcard');
          // Event Routes
         Route::get('/create-event', [PrivateEventController::class, 'create'])->name('private.events.create');
         Route::post('/create-event', [PrivateEventController::class, 'store'])->name('private.events.store');
         Route::get('/events', [PrivateEventController::class, 'list'])->name('private.events.list');
         Route::get('/event/{event}', [PrivateEventController::class, 'edit'])->name('private.events.edit');
-        Route::put('/{event}', [PrivateEventController::class, 'update'])->name('private.events.update');
+        Route::put('/event/{event}', [PrivateEventController::class, 'update'])->name('private.events.update');
 
     });
 
