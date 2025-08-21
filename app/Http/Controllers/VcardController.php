@@ -52,8 +52,13 @@ class VcardController extends Controller
         }
 
         if($user->profile_photo_path){
-            $photo = Storage::disk('public')->url($user->profile_photo_path);
-            $vcard->addPhoto($photo);
+            try {
+                $photo = Storage::disk('public')->url($user->profile_photo_path);
+                $vcard->addPhoto($photo);
+            } catch (\Exception $e) {
+                // If photo can't be read, skip adding it to vCard
+                // This prevents the vCard generation from failing
+            }
         }
 
             // return vcard as a string
