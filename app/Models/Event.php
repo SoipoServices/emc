@@ -128,6 +128,6 @@ class Event extends Model implements Sitemapable
     public function toSitemapTag(): Url | string | array
     {
         // Simple return:
-        return route('event.show',['slug'=>$this->slug] );
+        return route('public.event.show',['slug'=>$this->slug] );
     }
 }

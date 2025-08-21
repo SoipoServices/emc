@@ -79,7 +79,7 @@ class BusinessController extends Controller
             $admin->notify(new NewBusinessForApproval($business));
         }
 
-        return redirect()->route('businesses.index')->with('success', 'Business created successfully. It will be visible after approval.');
+        return redirect()->route('public.businesses.index')->with('success', 'Business created successfully. It will be visible after approval.');
     }
 
     public function show(Business $business)
@@ -124,7 +124,7 @@ class BusinessController extends Controller
 
         $business->update($validatedData);
 
-        return redirect()->route('businesses.index')->with('success', 'Business updated successfully.');
+        return redirect()->route('public.businesses.index')->with('success', 'Business updated successfully.');
     }
 
     public function destroy(Business $business)
@@ -134,6 +134,6 @@ class BusinessController extends Controller
         Storage::disk('public')->delete($business->photo_path);
         $business->delete();
 
-        return redirect()->route('businesses.index')->with('success', 'Business deleted successfully.');
+        return redirect()->route('public.businesses.index')->with('success', 'Business deleted successfully.');
     }
 }

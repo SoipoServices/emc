@@ -3,56 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use Illuminate\Http\Request;
 use RalphJSmit\Laravel\SEO\Facades\SEOManager;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class PublicBusinessController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of all approved businesses.
+     */
+    public function index(Request $request)
     {
-        $businesses = Business::approved()
-            // ->with('tags')
+        $search = $request->input('search');
+        
+        // Get sponsors separately for featured section
+        $sponsors = Business::approved()
             ->public()
-            ->select('id', 'name', 'description', 'slug', 'photo_path')
-            ->orderByDesc('priority')
-            ->orderByDesc('is_sponsor')
+            ->where('is_sponsor', true)
+            ->orderBy('name')
             ->get();
 
-        return Inertia::render('Businesses', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'businesses' => $businesses,
-            'title' => "Entrepreneur Meet Cagliari",
-            'phpVersion' => PHP_VERSION,
-        ]);
+        // Get all businesses excluding sponsors for main listing
+        $businessesQuery = Business::approved()
+            ->public()
+            ->where('is_sponsor', false)
+            ->when($search, function ($query) use ($search) {
+                return $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            })
+            ->orderBy('name');
+
+        $businesses = $businessesQuery->paginate(12);
+
+        return view('vendor.zeus.themes.zeus.sky.public.businesses.index', compact(
+            'businesses',
+            'sponsors',
+            'search'
+        ));
     }
 
+    /**
+     * Display the specified business.
+     */
     public function show(string $slug)
     {
-        $business = Business::approved()->public()
-        ->where('slug', $slug)
-        // ->with('tags')
-        ->firstOrFail();
+        $business = Business::approved()
+            ->public()
+            ->where('slug', $slug)
+            ->firstOrFail();
 
-        SEOManager::SEODataTransformer(function (SEOData $SEOData) use($business) : SEOData  {
-                        $businessSEOData = $business->getDynamicSEOData();
-                        $SEOData->title =  $businessSEOData->title;
-                        $SEOData->description =  $businessSEOData->description;
-                        $SEOData->image =  $businessSEOData->image;
+        // Set up SEO data
+        SEOManager::SEODataTransformer(function (SEOData $SEOData) use ($business): SEOData {
+            $businessSEOData = $business->getDynamicSEOData();
+            $SEOData->title = $businessSEOData->title;
+            $SEOData->description = $businessSEOData->description;
+            $SEOData->image = $businessSEOData->image;
             return $SEOData;
         });
 
-        return Inertia::render('Business', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'business' => $business,
-            'title' => $business->title,
-            'phpVersion' => PHP_VERSION,
-        ]);
+        return view('vendor.zeus.themes.zeus.sky.public.businesses.show', compact('business'));
     }
 }

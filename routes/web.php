@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\Private\BusinessController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\Private\DashboardController;
@@ -44,13 +44,17 @@ Route::middleware([
     });
 
 
-    // Business Routes
-    Route::get('/businesses', [BusinessController::class, 'index'])->name('businesses.index');
-    Route::get('/businesses/create', [BusinessController::class, 'create'])->name('businesses.create');
-    Route::post('/businesses', [BusinessController::class, 'store'])->name('businesses.store');
-    Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('businesses.edit');
-    Route::put('/businesses/{business}', [BusinessController::class, 'update'])->name('businesses.update');
-    Route::delete('/businesses/{business}', [BusinessController::class, 'destroy'])->name('businesses.destroy');
+        // Business Routes
+        Route::get('/businesses', [BusinessController::class, 'index'])->name('private.businesses.list');
+        Route::get('/businesses/create', [BusinessController::class, 'create'])->name('private.businesses.create');
+        Route::post('/businesses', [BusinessController::class, 'store'])->name('private.businesses.store');
+        Route::get('/businesses/{business}', [BusinessController::class, 'show'])->name('private.businesses.show');
+        Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('private.businesses.edit');
+        Route::put('/businesses/{business}', [BusinessController::class, 'update'])->name('private.businesses.update');
+        Route::delete('/businesses/{business}', [BusinessController::class, 'destroy'])->name('private.businesses.destroy');
+        Route::patch('/businesses/{business}/toggle-approval', [BusinessController::class, 'toggleApproval'])->name('private.businesses.toggle-approval');
+        Route::patch('/businesses/{business}/toggle-sponsor', [BusinessController::class, 'toggleSponsor'])->name('private.businesses.toggle-sponsor');
+        Route::patch('/businesses/{business}/toggle-public', [BusinessController::class, 'togglePublic'])->name('private.businesses.toggle-public');
 });
 
 Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect'])->name('linkedin.auth');

@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="relative group">
                                     <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300">
-                                        <a href="{{ route('event.show', $event->slug) }}">
+                                        <a href="{{ route('public.event.show', $event->slug) }}">
                                             <span class="absolute inset-0"></span>
                                             {{ $event->title }}
                                         </a>
@@ -131,7 +131,7 @@
                                     </div>
                                 @endif
                                 <div class="mt-6">
-                                    <a href="{{ route('event.show', $event->slug) }}" class="text-sm font-semibold text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300">
+                                    <a href="{{ route('public.event.show', $event->slug) }}" class="text-sm font-semibold text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300">
                                         Read More <span aria-hidden="true">→</span>
                                     </a>
                                 </div>
@@ -194,7 +194,7 @@
                                 </div>
                                 <div class="relative group">
                                     <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300">
-                                        <a href="{{ route('event.show', $event->slug) }}">
+                                        <a href="{{ route('public.event.show', $event->slug) }}">
                                             <span class="absolute inset-0"></span>
                                             {{ $event->title }}
                                         </a>
@@ -210,7 +210,7 @@
                                     </div>
                                 @endif
                                 <div class="mt-6">
-                                    <a href="{{ route('event.show', $event->slug) }}" class="text-sm font-semibold text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300">
+                                    <a href="{{ route('public.event.show', $event->slug) }}" class="text-sm font-semibold text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300">
                                         Read More <span aria-hidden="true">→</span>
                                     </a>
                                 </div>
