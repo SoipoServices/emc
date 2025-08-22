@@ -11,16 +11,28 @@ class LibraryController extends Controller
     /**
      * Display the user's saved library items.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $savedLibraryItems = $user->savedLibraryItems()
-            ->orderBy('user_library.created_at', 'desc')
-            ->get();
+        $search = $request->get('search');
+        
+        $query = $user->savedLibraryItems()
+            ->orderBy('user_library.created_at', 'desc');
+            
+        // Apply search filter if provided
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        
+        $savedLibraryItems = $query->paginate(10)->appends($request->query());
 
         return view('vendor.zeus.themes.zeus.sky.private.library.index', [
             'savedLibraryItems' => $savedLibraryItems,
-            'user' => $user
+            'user' => $user,
+            'search' => $search
         ]);
     }
 

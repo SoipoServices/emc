@@ -1,133 +1,162 @@
 <x-zeus::private-app title="{{ __('My Library') }}">
-<div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
-
-    <!-- Header Section -->
-    <div class="mb-8">
-        <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3">
-        
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('My Library') }}</h1>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        {{ __('Your saved library items') }} ({{ $savedLibraryItems->count() }} {{ Str::plural('item', $savedLibraryItems->count()) }})
-                    </p>
-                </div>
+    <!-- Twitter-like Feed Header -->
+    <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">My Library</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{{ $savedLibraryItems->total() }} {{ Str::plural('item', $savedLibraryItems->total()) }}</p>
             </div>
-            
-            <!-- Back to Libraries Link -->
-            <a href="{{ route('library') }}" 
-               class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 transition-colors rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800">
-                <x-heroicon-o-arrow-left class="w-4 h-4 mr-2" />
-                {{ __('Browse Library') }}
-            </a>
+            <div class="flex items-center gap-4">
+                <!-- Search Form -->
+                <form method="GET" action="{{ route('private.library.index', ['user' => auth()->id()]) }}" class="flex">
+                    <div class="relative">
+                        <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search library items..." class="w-64 py-2 pl-4 pr-4 text-sm text-gray-900 bg-gray-100 border-0 rounded-full dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-800 dark:text-white">
+                        <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-2">
+                            <svg class="w-5 h-5 text-gray-400 hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- Library Items Grid -->
-    @if($savedLibraryItems->count() > 0)
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            @foreach($savedLibraryItems as $library)
-                <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 group">
-                    <!-- Library Type Badge/Image Area -->
-                    <div class="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700">
-                        <a href="{{ route('library.item', $library->slug) }}" class="block h-full">
-                            <div class="absolute inset-0 flex items-center justify-center transition-transform group-hover:scale-105">
-                                @if($library->type === 'IMAGE')
-                                    <div class="text-center">
-                                        <x-heroicon-o-photo class="w-16 h-16 text-blue-500" />
-                                        <div class="mt-2 text-sm font-medium text-blue-600 dark:text-blue-400">Image</div>
-                                    </div>
-                                @endif
+    @if(session('success'))
+        <div class="p-4 mx-4 mt-4 text-green-700 bg-green-100 border border-green-400 rounded-2xl dark:bg-green-900 dark:border-green-600 dark:text-green-300">
+            {{ session('success') }}
+        </div>
+    @endif
 
-                                @if($library->type === 'FILE')
-                                    <div class="text-center">
-                                        <x-heroicon-o-document class="w-16 h-16 text-green-500" />
-                                        <div class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">Document</div>
-                                    </div>
-                                @endif
+    <!-- Search Results Info -->
+    @if(isset($search) && $search)
+        <div class="flex items-center gap-3 p-4 mx-4 mt-4 border border-blue-200 bg-blue-50 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
+            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <span class="text-blue-900 dark:text-blue-300">Showing search results for:</span>
+            <span class="px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/50 dark:text-blue-300">{{ $search }}</span>
+            <a href="{{ route('private.library.index', ['user' => auth()->id()]) }}" class="ml-auto text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">Clear search</a>
+        </div>
+    @endif
 
-                                @if($library->type === 'VIDEO')
-                                    <div class="text-center">
-                                        <x-heroicon-o-film class="w-16 h-16 text-purple-500" />
-                                        <div class="mt-2 text-sm font-medium text-purple-600 dark:text-purple-400">Video</div>
-                                    </div>
-                                @endif
-                            </div>
-                        </a>
-                        
-                        <!-- Remove Button -->
-                        <div class="absolute top-3 right-3">
-                            <button onclick="removeFromLibrary({{ $library->id }})" 
-                                    class="flex items-center justify-center w-8 h-8 text-red-600 transition-all bg-white rounded-full shadow-md hover:bg-red-50 hover:text-red-700 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-red-900 dark:hover:text-red-300">
-                                <x-heroicon-s-trash class="w-4 h-4" />
-                            </button>
-                        </div>
-
-                        <!-- Type Badge -->
-                        <div class="absolute bottom-3 left-3">
+    <!-- Library Items Feed -->
+    <div class="divide-y divide-gray-200 dark:divide-gray-800">
+        @forelse ($savedLibraryItems as $library)
+            <div class="p-4 transition-colors hover:bg-gray-50 dark:hover:bg-gray-950">
+                <div class="flex items-start gap-3">
+                    <!-- Library Type Icon -->
+                    <div class="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full dark:bg-gray-800">
+                        @if($library->type === 'IMAGE')
+                            <x-heroicon-o-photo class="w-6 h-6 text-blue-500" />
+                        @elseif($library->type === 'FILE')
+                            <x-heroicon-o-document class="w-6 h-6 text-green-500" />
+                        @elseif($library->type === 'VIDEO')
+                            <x-heroicon-o-film class="w-6 h-6 text-purple-500" />
+                        @else
+                            <x-heroicon-o-book-open class="w-6 h-6 text-gray-500" />
+                        @endif
+                    </div>
+                    
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-gray-900 truncate dark:text-white">
+                                <a href="{{ route('library.item', $library->slug) }}" class="hover:text-blue-600 dark:hover:text-blue-400">
+                                    {{ $library->title ?? 'Untitled' }}
+                                </a>
+                            </h3>
+                            
+                            <!-- Type Badge -->
                             @if($library->type === 'IMAGE')
-                                <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-200">
-                                    <x-heroicon-o-photo class="w-3 h-3 mr-1" />
+                                <span class="px-2 py-1 text-xs font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/30 dark:text-blue-300">
                                     Image
                                 </span>
-                            @endif
-
-                            @if($library->type === 'FILE')
-                                <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-200">
-                                    <x-heroicon-o-document class="w-3 h-3 mr-1" />
+                            @elseif($library->type === 'FILE')
+                                <span class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-900/30 dark:text-green-300">
                                     File
                                 </span>
-                            @endif
-
-                            @if($library->type === 'VIDEO')
-                                <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-purple-800 bg-purple-100 rounded-full dark:bg-purple-900 dark:text-purple-200">
-                                    <x-heroicon-o-film class="w-3 h-3 mr-1" />
+                            @elseif($library->type === 'VIDEO')
+                                <span class="px-2 py-1 text-xs font-medium text-purple-800 bg-purple-100 rounded-full dark:bg-purple-900/30 dark:text-purple-300">
                                     Video
                                 </span>
                             @endif
                         </div>
-                    </div>
-                    
-                    <!-- Content -->
-                    <div class="p-4">
-                        <h3 class="mb-2 text-lg font-semibold text-gray-800 dark:text-white line-clamp-2">
-                            <a href="{{ route('library.item', $library->slug) }}" class="hover:text-blue-600 dark:hover:text-blue-400">
-                                {{ $library->title ?? '' }}
-                            </a>
-                        </h3>
                         
-                        <!-- Description -->
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Saved</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">·</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ $library->pivot->created_at->diffForHumans() }}</span>
+                        </div>
+                        
+                        <!-- Library Description -->
                         @if($library->description)
-                            <p class="mb-3 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
-                                {{ Str::limit($library->description, 100) }}
-                            </p>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-900 dark:text-white">{!! Str::limit(strip_tags($library->description), 200) !!}</p>
+                            </div>
                         @endif
                         
-                        <!-- Saved Date -->
-                        <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                            <div class="flex items-center">
-                                <x-heroicon-o-calendar class="w-3 h-3 mr-1" />
-                                <span>{{ __('Saved') }}: {{ $library->pivot->created_at->format('M j, Y') }}</span>
-                            </div>
+                        <!-- Library Actions -->
+                        <div class="flex items-center gap-4 mt-3">
+                            <a href="{{ route('library.item', $library->slug) }}" 
+                               class="inline-flex items-center gap-1 text-sm text-gray-500 transition-colors hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
+                                <x-heroicon-o-eye class="w-4 h-4" />
+                                View
+                            </a>
+                            
+                            <button onclick="removeFromLibrary({{ $library->id }})" 
+                                    class="inline-flex items-center gap-1 text-sm text-gray-500 transition-colors hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400">
+                                <x-heroicon-o-trash class="w-4 h-4" />
+                                Remove
+                            </button>
                         </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
-    @else
-        <!-- Empty State -->
-        <div class="py-16 text-center">
-            <div class="max-w-md mx-auto">
+            </div>
+        @empty
+            <div class="py-16 text-center">
                 <x-heroicon-o-heart class="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                <h3 class="mb-4 text-xl font-semibold text-gray-800 dark:text-white">{{ __('No Saved Items') }}</h3>
-                <p class="mb-6 text-gray-600 dark:text-gray-300">
-                    {{ __('You haven\'t saved any library items yet. Browse our library to start building your collection!') }}
+                <h3 class="mb-2 text-lg font-medium text-gray-900 dark:text-white">No library items found</h3>
+                <p class="text-gray-500 dark:text-gray-400">
+                    {{ isset($search) && $search ? 'Try adjusting your search to find what you\'re looking for.' : 'You haven\'t saved any library items yet. Browse our library to start building your collection!' }}
                 </p>
-                <a href="{{ route('library') }}" 
-                   class="inline-flex items-center px-6 py-3 text-base font-medium text-white transition-colors bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    <x-heroicon-o-book-open class="w-5 h-5 mr-2" />
-                    {{ __('Browse Library') }}
-                </a>
+            </div>
+        @endforelse
+    </div>
+
+    <!-- Pagination -->
+    @if($savedLibraryItems->hasPages())
+        <div class="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-800">
+            <div class="flex items-center">
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                    Showing {{ $savedLibraryItems->firstItem() }} to {{ $savedLibraryItems->lastItem() }} of {{ $savedLibraryItems->total() }} results
+                </p>
+            </div>
+            <div class="flex items-center space-x-2">
+                @if ($savedLibraryItems->onFirstPage())
+                    <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
+                        Previous
+                    </span>
+                @else
+                    <a href="{{ $savedLibraryItems->appends(request()->query())->previousPageUrl() }}" 
+                       class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                        Previous
+                    </a>
+                @endif
+
+                <span class="px-3 py-2 text-sm text-white bg-blue-800 rounded-lg dark:bg-blue-800 dark:text-white">
+                    {{ $savedLibraryItems->currentPage() }} of {{ $savedLibraryItems->lastPage() }}
+                </span>
+
+                @if ($savedLibraryItems->hasMorePages())
+                    <a href="{{ $savedLibraryItems->appends(request()->query())->nextPageUrl() }}" 
+                       class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                        Next
+                    </a>
+                @else
+                    <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
+                        Next
+                    </span>
+                @endif
             </div>
         </div>
     @endif
@@ -190,5 +219,5 @@
         }
     </script>
     @endpush
-</div>
+
 </x-zeus::private-app>
