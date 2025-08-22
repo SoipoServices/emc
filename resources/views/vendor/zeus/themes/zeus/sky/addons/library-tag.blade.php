@@ -1,4 +1,3 @@
-<x-zeus::app :$skyTheme>
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
         <!-- Header Section -->
         <section class="w-full py-8 bg-white shadow-sm dark:bg-gray-800 md:py-16">
@@ -139,4 +138,3 @@
             @endif
         </div>
     </div>
-</x-zeus::app>

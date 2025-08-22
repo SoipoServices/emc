@@ -1,4 +1,4 @@
-<x-zeus::app :$skyTheme>
+
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
         <!-- Header Section -->
         <section class="w-full py-8 bg-white shadow-sm dark:bg-gray-800 md:py-16">
@@ -22,7 +22,7 @@
                     <h2 class="mb-12 text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
                         {{ $category->name }}
                         @if($category->description)
-                            <span class="block text-sm font-normal text-gray-600 dark:text-gray-400 mt-2">{{ $category->description }}</span>
+                            <span class="block mt-2 text-sm font-normal text-gray-600 dark:text-gray-400">{{ $category->description }}</span>
                         @endif
                     </h2>
                     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-12">
@@ -114,7 +114,7 @@
                     <!-- View All Link for Category -->
                     @if($category->library->count() > 6)
                         <div class="mt-8 text-center">
-                            <a href="{{ route('library.tag', $category->slug) }}" class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-primary-600 border border-transparent rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                            <a href="{{ route('library.tag', $category->slug) }}" class="inline-flex items-center px-6 py-3 text-base font-medium text-white border border-transparent rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                                 View All {{ $category->name }} Items
                                 @svg('heroicon-o-arrow-right','w-5 h-5 ml-2')
                             </a>
@@ -231,4 +231,4 @@
             @endforelse
         </div>
     </div>
-</x-zeus::app>
+
