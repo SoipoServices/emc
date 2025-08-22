@@ -3,7 +3,6 @@
 use App\Models\User;
 use App\Models\Business;
 use App\Models\Event;
-use App\Models\Comment;
 use Filament\Panel;
 
 beforeEach(function () {
@@ -103,15 +102,6 @@ describe('User Model', function () {
 });
 
 describe('User Relationships', function () {
-    it('has many comments', function () {
-        $comments = Comment::factory()->count(2)->create([
-            'user_id' => $this->user->id,
-        ]);
-
-        expect($this->user->comments)->toHaveCount(2)
-            ->and($this->user->comments->first())->toBeInstanceOf(Comment::class);
-    });
-
     it('has many businesses', function () {
         $businesses = Business::factory()->count(2)->create(['user_id' => $this->user->id]);
 

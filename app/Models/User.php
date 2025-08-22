@@ -149,18 +149,14 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $query->where('is_visible', true);
     }
 
-    protected function hasBio(): Attribute
+    protected function getHasBioAttribute(): bool
     {
-        return Attribute::get(
-            fn () => ! empty($this->bio)
-        );
+        return ! empty($this->bio);
     }
 
-    protected function isVerified(): Attribute
+    protected function getIsVerifiedAttribute(): bool
     {
-        return Attribute::get(
-            fn () => ! empty($this->email_verified_at)
-        );
+        return ! empty($this->email_verified_at);
     }
 
     public function posts()
