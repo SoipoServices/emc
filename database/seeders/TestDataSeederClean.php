@@ -475,6 +475,11 @@ class TestDataSeederClean extends Seeder
                     'label' => 'FAQ',
                     'type' => 'route',
                     'route' => 'faq',
+                ],
+                [
+                    'label' => 'Companies',
+                    'type' => 'route',
+                    'route' => 'public.businesses.index',
                 ]
             ],
             'created_at' => Carbon::now(),
