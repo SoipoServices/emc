@@ -24,6 +24,7 @@ class EventFactory extends Factory
             'start_date' => fake()->dateTime(),
             'end_date' => fake()->dateTime(),
             'is_approved' => fake()->boolean(),
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }

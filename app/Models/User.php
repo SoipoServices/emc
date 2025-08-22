@@ -84,6 +84,8 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
      */
     protected $appends = [
         'profile_photo_url',
+        'has_bio',
+        'is_verified',
     ];
 
     /**
@@ -97,6 +99,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
+            'is_visible' => 'boolean',
             'is_disabled' => 'boolean',
         ];
     }
@@ -119,6 +122,9 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'position' => $this->position,
+            'city' => $this->city,
+            'country' => $this->country,
             'bio' => $this->bio,
         ];
     }
@@ -145,26 +151,31 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     protected function hasBio(): Attribute
     {
-        return Attribute::make(
-            get: fn () => ! empty($this->bio),
+        return Attribute::get(
+            fn () => ! empty($this->bio)
         );
     }
 
     protected function isVerified(): Attribute
     {
-        return Attribute::make(
-            get: fn () => ! empty($this->email_verified_at),
+        return Attribute::get(
+            fn () => ! empty($this->email_verified_at)
         );
     }
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(\LaraZeus\Sky\Models\Post::class);
     }
 
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 
     public function businesses()

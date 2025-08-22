@@ -89,6 +89,11 @@ class Business extends Model implements Sitemapable
         return $query->where('is_public', true);
     }
 
+    public function scopeSponsor($query)
+    {
+        return $query->where('is_sponsor', true);
+    }
+
     public function getDynamicSEOData(): SEOData
     {
         return new SEOData(
