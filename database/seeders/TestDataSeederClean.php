@@ -9,6 +9,7 @@ use LaraZeus\Sky\Models\Library;
 use LaraZeus\Sky\Models\Navigation;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Business;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -51,8 +52,8 @@ class TestDataSeederClean extends Seeder
         // Create events for test users
         $this->createEvents($testUsers);
 
-        // Attach library items to users
-        $this->attachLibrariesToUsers($testUsers);
+        // Create businesses for business users
+        $this->createBusinessesForUsers($businessUsers);
 
         // Create navigation menu
         $this->createNavigation();
@@ -442,7 +443,7 @@ class TestDataSeederClean extends Seeder
     {
         Navigation::create([
             'name' => 'Main Navigation',
-            'handle' => 'main-nav',
+            'handle' => 'main',
             'items' => [
                 [
                     'label' => 'Home',
@@ -491,5 +492,46 @@ class TestDataSeederClean extends Seeder
         ]);
 
         $this->command->info('Created main navigation menu');
+    }
+
+    private function createBusinessesForUsers($users)
+    {
+        $this->command->info('Creating businesses for users...');
+        
+        $libraries = Library::all();
+        
+        foreach ($users as $user) {
+            // Create 1-3 businesses per user
+            $businessCount = rand(1, 3);
+            
+            for ($i = 0; $i < $businessCount; $i++) {
+                $companyName = fake()->company();
+                $business = Business::create([
+                    'name' => $companyName,
+                    'slug' => Str::slug($companyName),
+                    'description' => fake()->paragraph(3),
+                    'email' => fake()->companyEmail(),
+                    'telephone' => fake()->phoneNumber(),
+                    'url' => fake()->url(),
+                    'linkedin_url' => fake()->url(),
+                    'priority' => rand(0, 10),
+                    'user_id' => $user->id,
+                    'is_approved' => rand(0, 1) === 1,
+                    'is_public' => rand(0, 1) === 1,
+                    'is_sponsor' => rand(0, 1) === 1,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                
+                $this->command->info("Created business: {$business->name} for user: {$user->name}");
+            }
+            
+            // Make user like some libraries (2-5 random libraries)
+            if ($libraries->count() > 0) {
+                $librariesToLike = $libraries->random(min(rand(2, 5), $libraries->count()));
+                $user->savedLibraryItems()->sync($librariesToLike->pluck('id')->toArray());
+                $this->command->info("User {$user->name} liked {$librariesToLike->count()} libraries");
+            }
+        }
     }
 }
