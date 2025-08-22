@@ -6,7 +6,7 @@ use App\Models\Event;
 use RalphJSmit\Laravel\SEO\Facades\SEOManager;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 
-class PublicEventController extends Controller
+class EventController extends Controller
 {
     public function index()
     {

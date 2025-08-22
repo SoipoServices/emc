@@ -10,8 +10,8 @@ use App\Http\Controllers\Private\LibraryController;
 use App\Http\Controllers\Private\MemberController;
 use App\Http\Controllers\Private\ProfileController;
 use App\Http\Controllers\Private\VcardController;
-use App\Http\Controllers\PublicBusinessController;
-use App\Http\Controllers\PublicEventController;
+use App\Http\Controllers\BusinessController as PublicBusinessController;
+use App\Http\Controllers\EventController as PublicEventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -21,8 +21,8 @@ Route::get('/companies', [PublicBusinessController::class, 'index'])->name('publ
 Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
 
 // Legal Pages
-Route::view('/terms', 'zeus::themes.zeus.sky.public.legal.terms')->name('terms.show');
-Route::view('/privacy', 'zeus::themes.zeus.sky.public.legal.privacy')->name('privacy.show');
+Route::view('/terms', 'theme::legal.terms')->name('terms.show');
+Route::view('/privacy', 'theme::legal.privacy')->name('privacy.show');
 
 Route::middleware([
     'auth:sanctum',

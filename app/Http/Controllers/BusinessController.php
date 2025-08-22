@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use RalphJSmit\Laravel\SEO\Facades\SEOManager;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 
-class PublicBusinessController extends Controller
+class BusinessController extends Controller
 {
     /**
      * Display a listing of all approved businesses.
