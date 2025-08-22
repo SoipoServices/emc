@@ -47,7 +47,7 @@ class TestDataSeederClean extends Seeder
         $this->createPages($user);
 
         // Create libraries
-        $this->createLibraries();
+        $this->createLibraries($testUsers);
 
         // Create events for test users
         $this->createEvents($testUsers);
@@ -264,7 +264,7 @@ class TestDataSeederClean extends Seeder
         $this->command->info('Created 10 pages');
     }
 
-    private function createLibraries(): void
+    private function createLibraries($testUsers): void
     {
         $libraries = [
             [
@@ -330,6 +330,12 @@ class TestDataSeederClean extends Seeder
                 'file_path' => null, // Not setting actual file paths in this seeder
                 'created_at' => Carbon::now()->subDays(rand(1, 60)),
             ]);
+
+            //Attach random users
+            $randomUsers = $testUsers->random(rand(1, 2));
+            foreach ($randomUsers as $user) {
+                $user->savedLibraryItems()->attach($library);
+            }
 
             // Attach random tags to library items
             if ($libraryTags->isNotEmpty()) {

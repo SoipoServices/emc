@@ -3,7 +3,7 @@
 <x-zeus::app :$skyTheme>
     <x-slot name="title">Business Directory</x-slot>
 
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto my-20">
         <!-- Header -->
         <div class="mb-8 text-center">
             <h1 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">Business Directory</h1>
