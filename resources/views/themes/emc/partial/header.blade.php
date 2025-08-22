@@ -10,8 +10,8 @@
                 </a>
             </div>
 
-            <!-- Main Navigation -->
-            <nav class="flex gap-4 justify-middle">
+            <!-- Main Navigation - Hidden on mobile -->
+            <nav class="hidden gap-4 md:flex justify-middle">
                 @if($mainNav && $mainNav->items)
                     @foreach($mainNav->items as $item)
                         @if($item['type'] === 'external-link')
@@ -55,16 +55,17 @@
             </div> --}}
 
             <!-- User Actions -->
-            <div class="items-center hidden gap-4 md:flex">
+            <div class="flex items-center gap-2 md:gap-4">
                 @auth
-                    {{-- Admin Link --}}
+                    {{-- Admin Link - Hidden on mobile, visible on desktop --}}
                     @if(auth()->user()->is_admin)
-                        <a href="{{ url('/admin') }}" class="flex items-center gap-2 p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-900" title="Admin Panel">
+                        <a href="{{ url('/admin') }}" class="items-center hidden gap-2 p-2 transition-colors rounded-full md:flex hover:bg-gray-100 dark:hover:bg-gray-900" title="Admin Panel">
                             <x-heroicon-o-cog-6-tooth class="w-5 h-5 text-gray-700 dark:text-gray-300" />
                             <span class="hidden text-sm font-medium text-gray-900 sm:block dark:text-white">Admin</span>
                         </a>
                     @endif
                     
+                    {{-- User Profile - Always visible --}}
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2 p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-900">
                         @if(auth()->user()->profile_photo_path)
                             <img src="{{ Storage::disk('public')->url(auth()->user()->profile_photo_path) }}" alt="{{ auth()->user()->name }}" class="object-cover w-8 h-8 rounded-full ring-4 ring-white dark:ring-gray-800">
@@ -74,17 +75,17 @@
                         <span class="hidden text-sm font-medium text-gray-900 sm:block dark:text-white">{{ auth()->user()->name }}</span>
                     </a>
                     
-                 
-                        <!-- Regular Logout Button -->
-                        <form action="{{ route('logout') }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="flex items-center gap-2 p-2 text-gray-700 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-900" title="Logout">
-                                <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
-                            </button>
-                        </form>
+                    {{-- Logout Button - Always visible --}}
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-2 p-2 text-gray-700 transition-colors rounded-full hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-900" title="Logout">
+                            <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
+                        </button>
+                    </form>
                 @else
-                    <a href="{{ route('login') }}" class="px-4 py-2 text-sm font-medium text-gray-900 hover:text-black dark:text-white dark:hover:text-gray-300">Log in</a>
-                    <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-full hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900">Sign up</a>
+                    {{-- Guest Actions - Always visible --}}
+                    <a href="{{ route('login') }}" class="px-2 py-1 text-sm font-medium text-gray-900 md:px-4 md:py-2 hover:text-black dark:text-white dark:hover:text-gray-300">Log in</a>
+                    <a href="{{ route('register') }}" class="px-2 py-1 text-sm font-medium text-white transition-colors bg-black rounded-full md:px-4 md:py-2 hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900">Sign up</a>
                 @endauth
             </div>
 
@@ -102,6 +103,7 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden border-t border-gray-200 md:hidden dark:border-gray-800">
             <div class="py-3 space-y-2">
+                <!-- Main Navigation Items -->
                 @php $menu = \LaraZeus\Sky\SkyPlugin::get()->getModel('Navigation')::fromHandle('main-nav'); @endphp
                 @if($menu && $menu->items)
                     @foreach($menu->items as $item)
@@ -132,46 +134,62 @@
                 @endif
                 
                 @auth
-                    <!-- Mobile Auth Section -->
-                    <div class="">
-                        <!-- User Profile -->
-                        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
-                            <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl(auth()->user()) }}" alt="Profile" class="w-6 h-6 rounded-full">
-                            {{ auth()->user()->name }}
+                    <!-- Sub Navigation Section (from left sidebar) -->
+                    <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
+                        <div class="px-3 mb-2 text-xs font-semibold tracking-wider text-gray-500 uppercase dark:text-gray-400">
+                            Quick Access
+                        </div>
+                        
+                        <a href="{{ route('home') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                            <x-heroicon-s-home class="w-5 h-5" />
+                            Home
                         </a>
                         
-                        @if(auth()->user()->is_admin)
-                            <!-- Admin Panel -->
+                        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                            <x-heroicon-s-users class="w-5 h-5" />
+                            Members
+                        </a>
+                        
+                        <a href="{{ route('private.events.list', ['user' => auth()->id()]) }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                            <x-heroicon-s-calendar-days class="w-5 h-5" />
+                            My Events
+                        </a>
+                        
+                        <a href="{{ route('private.businesses.list', ['user' => auth()->id()]) }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                            <x-tabler-beach class="w-5 h-5" />
+                            My Hustles
+                        </a>
+                        
+                        <a href="{{ route('private.library.index', ['user' => auth()->id()]) }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                            <x-heroicon-s-heart class="w-5 h-5" />
+                            My Library
+                        </a>
+                        
+                        <a href="{{ route('profile') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+                            <x-heroicon-s-user-circle class="w-5 h-5" />
+                            Profile
+                        </a>
+                    </div>
+                    
+                    @if(auth()->user()->is_admin)
+                        <!-- Admin Panel (only in mobile menu) -->
+                        <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
                             <a href="{{ url('/admin') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
                                 <x-heroicon-o-cog-6-tooth class="w-5 h-5" />
                                 Admin Panel
                             </a>
-                        @endif
-                        
-                        <!-- Logout -->
-                        @impersonating($guard = null)
+                        </div>
+                    @endif
+                    
+                    @impersonating($guard = null)
+                        <!-- Impersonation (only in mobile menu) -->
+                        <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
                             <a href="{{ route('impersonate.leave') }}" class="flex items-center w-full gap-3 px-3 py-2 text-sm font-medium text-white transition-colors bg-orange-600 rounded-md hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-800">
                                 <x-heroicon-o-finger-print class="w-5 h-5" />
-                                    Stop Impersonation
+                                Stop Impersonation
                             </a>
-                        @endImpersonating
-                       
-                            <!-- Regular Logout -->
-                            <form action="{{ route('logout') }}" method="POST" class="w-full">
-                                @csrf
-                                <button type="submit" class="flex items-center w-full gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
-                                    <x-heroicon-o-arrow-right-on-rectangle class="w-5 h-5" />
-                                    Logout
-                                </button>
-                            </form>
-                     
-                    </div>
-                @else
-                    <!-- Mobile Guest Section -->
-                    <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
-                        <a href="{{ route('login') }}" class="block px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">Log in</a>
-                        <a href="{{ route('register') }}" class="block px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">Sign up</a>
-                    </div>
+                        </div>
+                    @endImpersonating
                 @endauth
             </div>
         </div>

@@ -63,7 +63,7 @@
         
         <!-- Layout -->
         <div class="flex mx-auto max-w-7xl">
-            <!-- Left Sidebar - Navigation -->
+            <!-- Left Sidebar - Navigation (Hidden on mobile) -->
             <div class="flex-col hidden h-full pt-4 lg:flex lg:w-54 xl:w-64">
                 <nav class="flex-1 px-4 space-y-2">
                     <a href="{{ route('home') }}" class="flex items-center gap-4 px-4 py-3 text-gray-900 transition-colors rounded-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
@@ -95,13 +95,13 @@
                 </nav>
             </div>
 
-            <!-- Main Content -->
-            <main class="flex-1 min-h-screen border-gray-200 md:max-w-xxl border-x dark:border-gray-800">
+            <!-- Main Content - Full width on mobile, constrained on desktop -->
+            <main class="flex-1 min-h-screen border-gray-200 lg:max-w-xxl lg:border-x dark:border-gray-800">
                 {{ $slot }}
             </main>
 
-            <!-- Right Sidebar - Trends/Suggestions -->
-            <div class="flex-col hidden h-full pt-4 lg:flex lg:w-64 xl:w-72">
+            <!-- Right Sidebar - Trends/Suggestions (Hidden on mobile and tablets) -->
+            <div class="flex-col hidden h-full pt-4 xl:flex xl:w-72">
                 <div class="px-4 space-y-4">
                     <!-- What's happening -->
                     <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl hover:shadow-md group-hover:scale-[1.02]">
