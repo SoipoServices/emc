@@ -455,43 +455,26 @@ class TestDataSeederClean extends Seeder
                     'label' => 'Home',
                     'type' => 'route',
                     'route' => 'home',
-                    'url' => null
                 ],
                 [
                     'label' => 'Blog',
                     'type' => 'route', 
-                    'route' => 'sky.post.index',
-                    'url' => null
+                    'route' => 'blogs',
                 ],
                 [
                     'label' => 'Events',
                     'type' => 'route',
-                    'route' => 'events.index',
-                    'url' => null
+                    'route' => 'public.events.index',
                 ],
                 [
                     'label' => 'Library',
                     'type' => 'route',
-                    'route' => 'sky.library.index', 
-                    'url' => null
+                    'route' => 'library', 
                 ],
                 [
                     'label' => 'FAQ',
                     'type' => 'route',
-                    'route' => 'sky.faq.index',
-                    'url' => null
-                ],
-                [
-                    'label' => 'About',
-                    'type' => 'route',
-                    'route' => 'sky.post.show',
-                    'url' => null
-                ],
-                [
-                    'label' => 'Contact',
-                    'type' => 'route', 
-                    'route' => 'sky.post.show',
-                    'url' => null
+                    'route' => 'faq',
                 ]
             ],
             'created_at' => Carbon::now(),
