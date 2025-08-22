@@ -33,6 +33,9 @@ class TestDataSeederClean extends Seeder
         // Create 10 test users
         $testUsers = User::factory(10)->create();
 
+        // Create 100 additional users with businesses
+        $businessUsers = User::factory(100)->create();
+
         // Create tags (categories and regular tags)
         $this->createTags();
 
@@ -439,8 +442,8 @@ class TestDataSeederClean extends Seeder
     {
         Navigation::create([
             'name' => 'Main Navigation',
-            'handle' => 'main-navigation',
-            'items' => json_encode([
+            'handle' => 'main-nav',
+            'items' => [
                 [
                     'label' => 'Home',
                     'type' => 'route',
@@ -483,7 +486,7 @@ class TestDataSeederClean extends Seeder
                     'route' => 'sky.post.show',
                     'url' => null
                 ]
-            ]),
+            ],
             'created_at' => Carbon::now(),
         ]);
 
