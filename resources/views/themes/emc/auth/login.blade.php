@@ -7,7 +7,7 @@
                     <!-- Logo and Header -->
                     <div class="text-center">
                         <div class="flex justify-center mx-auto">
-                            <x-application-mark class="w-16 h-16" />
+                            @include('theme::partial.logo', ['classes' => "w-12 h-12"])
                         </div>
                         <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                             {{ __('Welcome back') }}
