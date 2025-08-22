@@ -125,65 +125,17 @@
         </form>
     </div>
 </div>
-</div>
 
-<!-- Load TinyMCE -->
-<script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_API_KEY') }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<!-- Include TinyMCE Editor Component with custom border radius -->
+<x-tinymce-editor 
+    selector="#description" 
+    placeholder="Describe your business in detail..." 
+    :extraConfig="['border_radius' => '0.5rem']"
+/>
 
-<!-- TinyMCE Styling -->
-<style>
-.tinymce-wrapper .tox-tinymce {
-    border-radius: 0.5rem !important;
-    border-color: #d1d5db !important;
-}
-
-.dark .tinymce-wrapper .tox-tinymce {
-    border-color: #4b5563 !important;
-}
-
-.tinymce-wrapper .tox-toolbar-overlord {
-    border-top-left-radius: 0.5rem !important;
-    border-top-right-radius: 0.5rem !important;
-}
-
-.tinymce-wrapper .tox-edit-area {
-    border-bottom-left-radius: 0.5rem !important;
-    border-bottom-right-radius: 0.5rem !important;
-}
-</style>
-
+<!-- File validation script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize TinyMCE
-    tinymce.init({
-        selector: '#description',
-        height: 300,
-        menubar: false,
-        plugins: [
-            'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview',
-            'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'table', 'help', 'wordcount'
-        ],
-        toolbar: 'undo redo | blocks | ' +
-                'bold italic forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'link table | removeformat code | help',
-        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; line-height: 1.6; }',
-        skin: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'oxide-dark' : 'oxide',
-        content_css: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
-        branding: false,
-        elementpath: false,
-        statusbar: false,
-        block_formats: 'Paragraph=p; Header 3=h3; Header 4=h4; Header 5=h5; Header 6=h6;',
-        valid_elements: 'p,br,strong,em,h3,h4,h5,h6,ul,ol,li,a[href],table,thead,tbody,tr,td,th',
-        forced_root_block: 'p',
-        setup: function (editor) {
-            editor.on('change', function () {
-                editor.save();
-            });
-        }
-    });
-
     // File input validation
     const fileInput = document.getElementById('business-logo');
     const submitButton = document.querySelector('button[type="submit"]');
@@ -205,12 +157,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
             }
         }
-    });
-
-    // Handle form submission
-    document.querySelector('form').addEventListener('submit', function(e) {
-        // Make sure TinyMCE content is saved to textarea
-        tinymce.triggerSave();
     });
 });
 </script>
