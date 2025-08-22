@@ -17,9 +17,9 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        return view('zeus::themes.zeus.sky.private.profile', [
+        return view(app('skyTheme').'private.profile', [
             'user' => $user,
-            'skyTheme' => 'zeus::themes.zeus.sky',
+            'skyTheme' => 'app('skyTheme')',
         ]);
     }
 

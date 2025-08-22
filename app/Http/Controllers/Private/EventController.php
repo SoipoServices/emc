@@ -42,7 +42,7 @@ class EventController extends Controller
         // Get all events combined and paginated
         $allEvents = $baseQuery->paginate(4);
 
-        return view('zeus::themes.zeus.sky.private.events-list', compact(
+        return view(app('skyTheme').'private.events-list', compact(
             'allEvents',
             'search'
         ));
@@ -53,7 +53,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('zeus::themes.zeus.sky.private.create-event');
+        return view(app('skyTheme').'private.create-event');
     }
 
     /**
@@ -127,7 +127,7 @@ class EventController extends Controller
     {
         $this->authorize('update', $event);
 
-        return view('zeus::themes.zeus.sky.private.edit-event', compact('event'));
+        return view(app('skyTheme').'private.edit-event', compact('event'));
     }
 
     /**
