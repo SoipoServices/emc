@@ -1,3 +1,4 @@
+<x-zeus::app :$skyTheme>
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
         <!-- Header Section -->
         <section class="w-full py-8 bg-white shadow-sm dark:bg-gray-800 md:py-16">
@@ -21,7 +22,7 @@
                 <nav class="flex justify-center" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-3">
                         <li class="inline-flex items-center">
-                            <a href="{{ route('library') }}" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors duration-200">
+                            <a href="{{ route('library') }}" class="transition-colors duration-200 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                                 {{ __('Libraries') }}
                             </a>
                         </li>
@@ -138,3 +139,4 @@
             @endif
         </div>
     </div>
+</x-zeus::app>

@@ -1,25 +1,65 @@
-    <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <!-- Header Section -->
-        <section class="w-full py-8 bg-white shadow-sm dark:bg-gray-800 md:py-16">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <!-- Header Section -->
+    <section class="w-full py-8 bg-white shadow-sm dark:bg-gray-800 md:py-16">
             <div class="container px-4 mx-auto">
                 <div class="flex flex-col items-center justify-center mb-8 space-y-4 text-center">
                     <h1 class="text-2xl font-bold tracking-tighter text-gray-900 sm:text-3xl md:text-4xl lg:text-5xl dark:text-white">
-                        Category Posts
+                        @if($tag)
+                            {{ is_string($tag->name) ? $tag->name : (json_decode($tag->name, true)['en'] ?? $tag->name) }}
+                        @else
+                            {{ ucfirst($type) }}
+                        @endif
                     </h1>
                     <p class="max-w-2xl text-sm text-gray-600 dark:text-gray-300 md:text-base lg:text-lg">
-                        @if($posts->count() > 0)
-                            Explore {{ $posts->count() }} {{ $posts->count() === 1 ? 'post' : 'posts' }} in this category.
+                        @if($tag)
+                            @if($posts->count() > 0)
+                                Explore {{ $posts->count() }} {{ $posts->count() === 1 ? 'post' : 'posts' }} in this {{ $type === 'category' ? 'category' : 'tag' }}.
+                            @else
+                                No posts found in this {{ $type === 'category' ? 'category' : 'tag' }}.
+                            @endif
                         @else
-                            No posts found in this category.
+                            Browse all posts by {{ $type === 'category' ? 'category' : 'tag' }}.
                         @endif
                     </p>
                 </div>
+                
+                <!-- Breadcrumb -->
+                <nav class="flex justify-center" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                        <li class="inline-flex items-center">
+                            <a href="{{ route('blogs') }}" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors duration-200">
+                                {{ __('Blog') }}
+                            </a>
+                        </li>
+                        @if($tag)
+                            <li>
+                                <div class="flex items-center">
+                                    @svg('heroicon-s-arrow-small-right','w-4 h-4 text-gray-400 dark:text-gray-500')
+                                    <span class="ml-1 text-gray-500 dark:text-gray-400 md:ml-2">{{ ucfirst($type) }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center">
+                                    @svg('heroicon-s-arrow-small-right','w-4 h-4 text-gray-400 dark:text-gray-500')
+                                    <span class="ml-1 text-gray-500 dark:text-gray-400 md:ml-2">{{ is_string($tag->name) ? $tag->name : (json_decode($tag->name, true)['en'] ?? $tag->name) }}</span>
+                                </div>
+                            </li>
+                        @else
+                            <li>
+                                <div class="flex items-center">
+                                    @svg('heroicon-s-arrow-small-right','w-4 h-4 text-gray-400 dark:text-gray-500')
+                                    <span class="ml-1 text-gray-500 dark:text-gray-400 md:ml-2">{{ ucfirst($type) }}</span>
+                                </div>
+                            </li>
+                        @endif
+                    </ol>
+                </nav>
             </div>
         </section>
 
         <!-- Posts Content -->
         <div class="container px-4 py-8 mx-auto">
-            @unless($posts->isEmpty())
+            @if($posts->count() > 0)
                 <section class="mb-20">
                     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-12">
                         @foreach($posts as $post)
@@ -111,16 +151,90 @@
                         @endforeach
                     </div>
                 </section>
+
+                <!-- Pagination -->
+                @if($posts->hasPages())
+                    <section class="mb-12">
+                        <div class="w-full">
+                            <div class="flex justify-center">
+                                <div class="w-full pagination-wrapper max-w-none">
+                                    {{ $posts->links() }}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                @endif
             @else
                 <!-- Empty State -->
                 <section class="py-16 text-center">
                     <div class="max-w-md mx-auto">
-                        @svg('heroicon-o-folder-open','w-16 h-16 mx-auto mb-4 text-gray-400')
+                        @if($type === 'category')
+                            @svg('heroicon-o-folder-open','w-16 h-16 mx-auto mb-4 text-gray-400')
+                        @else
+                            @svg('heroicon-o-tag','w-16 h-16 mx-auto mb-4 text-gray-400')
+                        @endif
                         <h3 class="mb-4 text-xl font-semibold text-gray-800 dark:text-white">No Posts Found</h3>
-                        <p class="text-gray-600 dark:text-gray-300">This category doesn't contain any posts yet. Check back soon for new content!</p>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            @if($tag)
+                                This {{ $type === 'category' ? 'category' : 'tag' }} doesn't contain any posts yet. Check back soon for new content!
+                            @else
+                                No posts have been tagged with this {{ $type === 'category' ? 'category' : 'tag' }} yet.
+                            @endif
+                        </p>
                     </div>
                 </section>
-            @endunless
+            @endif
         </div>
     </div>
 
+    <style>
+        .pagination-wrapper .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .pagination-wrapper .pagination .page-item {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .pagination-wrapper .pagination .page-link {
+            width: 100%;
+            display: block;
+            padding: 0.75rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .pagination-wrapper .pagination .page-item.active .page-link {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+        
+        .pagination-wrapper .pagination .page-item:not(.active) .page-link {
+            background-color: white;
+            border: 1px solid #d1d5db;
+            color: #374151;
+        }
+        
+        .pagination-wrapper .pagination .page-item:not(.active) .page-link:hover {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        .dark .pagination-wrapper .pagination .page-item:not(.active) .page-link {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #d1d5db;
+        }
+        
+        .dark .pagination-wrapper .pagination .page-item:not(.active) .page-link:hover {
+            background-color: #4b5563;
+            border-color: #6b7280;
+        }
+    </style>

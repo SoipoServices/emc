@@ -1,3 +1,4 @@
+<x-zeus::app :$skyTheme>
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
         <!-- Header Section -->
         <section class="w-full py-8 bg-white shadow-sm dark:bg-gray-800 md:py-16">
@@ -17,7 +18,7 @@
                 <nav class="flex justify-center" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-3">
                         <li class="inline-flex items-center">
-                            <a href="{{ route('library') }}" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors duration-200">
+                            <a href="{{ route('library') }}" class="transition-colors duration-200 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                                 {{ __('Libraries') }}
                             </a>
                         </li>
@@ -36,27 +37,27 @@
         <div class="container px-4 py-8 mx-auto">
             <div class="max-w-4xl mx-auto">
                 <!-- Item Info Card -->
-                <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700 mb-8">
+                <div class="mb-8 overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex-1">
                                 <!-- Type Badge -->
                                 @if($item->type === 'IMAGE')
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 mb-4">
+                                    <span class="inline-flex items-center px-3 py-1 mb-4 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-200">
                                         @svg('heroicon-o-photo','w-4 h-4 mr-2')
                                         Image
                                     </span>
                                 @endif
 
                                 @if($item->type === 'FILE')
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 mb-4">
+                                    <span class="inline-flex items-center px-3 py-1 mb-4 text-sm font-medium text-green-800 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-200">
                                         @svg('heroicon-o-document','w-4 h-4 mr-2')
                                         Document
                                     </span>
                                 @endif
 
                                 @if($item->type === 'VIDEO')
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 mb-4">
+                                    <span class="inline-flex items-center px-3 py-1 mb-4 text-sm font-medium text-purple-800 bg-purple-100 rounded-full dark:bg-purple-900 dark:text-purple-200">
                                         @svg('heroicon-o-film','w-4 h-4 mr-2')
                                         Video
                                     </span>
@@ -66,15 +67,15 @@
 
                         <!-- Description -->
                         @if($item->description)
-                            <div class="prose prose-gray dark:prose-invert max-w-none mb-6">
-                                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            <div class="mb-6 prose prose-gray dark:prose-invert max-w-none">
+                                <p class="leading-relaxed text-gray-600 dark:text-gray-300">
                                     {{ $item->description }}
                                 </p>
                             </div>
                         @endif
 
                         <!-- Metadata -->
-                        <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-4">
+                        <div class="flex items-center gap-4 pt-4 text-sm text-gray-500 border-t border-gray-100 dark:text-gray-400 dark:border-gray-700">
                             <div class="flex items-center gap-1">
                                 @svg('heroicon-o-clock','w-4 h-4')
                                 <span>{{ __('Created') }}: {{ $item->created_at->format('M j, Y \a\t g:i A') }}</span>
@@ -91,7 +92,7 @@
                         @else
                             <div class="grid grid-cols-1 @if($item->getFiles()->count() > 1) sm:grid-cols-2 lg:grid-cols-3 @endif gap-6">
                                 @foreach($item->getFiles() as $file)
-                                    <div class="bg-gray-50 dark:bg-gray-600 rounded-xl p-6 border border-gray-200 dark:border-gray-500">
+                                    <div class="p-6 border border-gray-200 bg-gray-50 dark:bg-gray-600 rounded-xl dark:border-gray-500">
                                         @include($skyTheme.'.addons.library-types.'.strtolower($item->type))
                                     </div>
                                 @endforeach
@@ -102,3 +103,4 @@
             </div>
         </div>
     </div>
+</x-zeus::app>
