@@ -11,6 +11,6 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('vendor.zeus.themes.zeus.sky.welcome');
+        return view('zeus::themes.zeus.sky.welcome');
     }
 }

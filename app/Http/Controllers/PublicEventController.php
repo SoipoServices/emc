@@ -21,7 +21,7 @@ class PublicEventController extends Controller
         $officialEvents = $events->where('is_member_event', false);
         $memberEvents = $events->where('is_member_event', true);
 
-        return view('vendor.zeus.themes.zeus.sky.public.events.index', compact(
+        return view('zeus::themes.zeus.sky.public.events.index', compact(
             'events',
             'officialEvents',
             'memberEvents'
@@ -41,6 +41,6 @@ class PublicEventController extends Controller
             return $SEOData;
         });
 
-        return view('vendor.zeus.themes.zeus.sky.public.events.show', compact('event'));
+        return view('zeus::themes.zeus.sky.public.events.show', compact('event'));
     }
 }

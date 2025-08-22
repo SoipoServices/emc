@@ -35,31 +35,31 @@ class FortifyServiceProvider extends ServiceProvider
 
         // Register custom views for authentication
         Fortify::loginView(function () {
-            return view('auth.login');
+            return view('zeus::themes.zeus.sky.public.auth.login');
         });
 
         Fortify::registerView(function () {
-            return view('auth.register');
+            return view('zeus::themes.zeus.sky.public.auth.register');
         });
 
         Fortify::requestPasswordResetLinkView(function () {
-            return view('auth.forgot-password');
+            return view('zeus::themes.zeus.sky.public.auth.forgot-password');
         });
 
         Fortify::resetPasswordView(function (Request $request) {
-            return view('auth.reset-password', ['request' => $request]);
+            return view('zeus::themes.zeus.sky.public.auth.reset-password', ['request' => $request]);
         });
 
         Fortify::verifyEmailView(function () {
-            return view('auth.verify-email');
+            return view('zeus::themes.zeus.sky.public.auth.verify-email');
         });
 
         Fortify::twoFactorChallengeView(function () {
-            return view('auth.two-factor-challenge');
+            return view('zeus::themes.zeus.sky.public.auth.two-factor-challenge');
         });
 
         Fortify::confirmPasswordView(function () {
-            return view('auth.confirm-password');
+            return view('zeus::themes.zeus.sky.public.auth.confirm-password');
         });
 
         RateLimiter::for('login', function (Request $request) {

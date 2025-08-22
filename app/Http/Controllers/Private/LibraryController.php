@@ -29,7 +29,7 @@ class LibraryController extends Controller
         
         $savedLibraryItems = $query->paginate(10)->appends($request->query());
 
-        return view('vendor.zeus.themes.zeus.sky.private.library.index', [
+        return view('zeus::themes.zeus.sky.private.library.index', [
             'savedLibraryItems' => $savedLibraryItems,
             'user' => $user,
             'search' => $search

@@ -21,8 +21,8 @@ Route::get('/companies', [PublicBusinessController::class, 'index'])->name('publ
 Route::get('/company/{slug}', [PublicBusinessController::class, 'show'])->name('public.business.show');
 
 // Legal Pages
-Route::view('/terms', 'legal.terms')->name('terms.show');
-Route::view('/privacy', 'legal.privacy')->name('privacy.show');
+Route::view('/terms', 'zeus::themes.zeus.sky.public.legal.terms')->name('terms.show');
+Route::view('/privacy', 'zeus::themes.zeus.sky.public.legal.privacy')->name('privacy.show');
 
 Route::middleware([
     'auth:sanctum',

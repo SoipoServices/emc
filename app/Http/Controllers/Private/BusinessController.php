@@ -32,7 +32,7 @@ class BusinessController extends Controller
             ->orderBy('name')
             ->paginate(12);
 
-        return view('vendor.zeus.themes.zeus.sky.private.businesses-list', compact('businesses', 'search'));
+        return view('zeus::themes.zeus.sky.private.businesses-list', compact('businesses', 'search'));
     }
 
     /**
@@ -40,7 +40,7 @@ class BusinessController extends Controller
      */
     public function create()
     {
-        return view('vendor.zeus.themes.zeus.sky.private.create-business');
+        return view('zeus::themes.zeus.sky..private.create-business');
     }
 
     /**
@@ -100,7 +100,7 @@ class BusinessController extends Controller
     {
         $this->authorize('view', $business);
 
-        return view('vendor.zeus.themes.zeus.sky.private.view-business', compact('business'));
+        return view('zeus::themes.zeus.sky..private.view-business', compact('business'));
     }
 
     /**
@@ -110,7 +110,7 @@ class BusinessController extends Controller
     {
         $this->authorize('update', $business);
 
-        return view('vendor.zeus.themes.zeus.sky.private.edit-business', compact('business'));
+        return view('zeus::themes.zeus.sky.private.edit-business', compact('business'));
     }
 
     /**

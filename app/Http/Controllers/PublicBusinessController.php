@@ -35,7 +35,7 @@ class PublicBusinessController extends Controller
 
         $businesses = $businessesQuery->paginate(12);
 
-        return view('vendor.zeus.themes.zeus.sky.public.businesses.index', compact(
+        return view('zeus::themes.zeus.sky.public.businesses.index', compact(
             'businesses',
             'sponsors',
             'search'
