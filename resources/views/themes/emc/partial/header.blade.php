@@ -1,7 +1,7 @@
 <!-- Twitter-like Top Navigation -->
 <header class="sticky top-0 z-50 border-b border-gray-200 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
     <div class="px-4 mx-auto max-w-7xl">
-        <div class="grid grid-cols-4 md:grid-cols-3 items-center h-16">
+        <div class="grid items-center h-16 grid-cols-4 md:grid-cols-3">
             <!-- Logo -->
             <div class="flex items-center justify-start">
                 <a href="{{ url('/') }}" class="flex items-center gap-3 p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-900">
@@ -11,7 +11,7 @@
             </div>
 
             <!-- Main Navigation - Hidden on mobile, centered on desktop -->
-            <nav class="hidden gap-6 md:flex justify-center md:col-span-1">
+            <nav class="justify-center hidden gap-6 md:flex md:col-span-1">
                 @if($mainNav && $mainNav->items)
                     @foreach($mainNav->items as $item)
                         @if($item['type'] === 'external-link')
@@ -58,7 +58,7 @@
             </div> --}}
 
             <!-- User Actions -->
-            <div class="flex items-center gap-2 justify-end md:gap-4 col-span-2 md:col-span-1">
+            <div class="flex items-center justify-end col-span-2 gap-2 md:gap-4 md:col-span-1">
                 @auth
                     {{-- Admin Link - Hidden on mobile, visible on desktop --}}
                     @if(auth()->user()->is_admin)
@@ -104,12 +104,11 @@
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden border-t border-gray-200 md:hidden dark:border-gray-800">
+        <div id="mobile-menu" class="hidden border-t border-gray-200 md:hidden dark:border-gray-800 max-h-[calc(100vh-4rem)] overflow-y-auto">
             <div class="py-3 space-y-2">
                 <!-- Main Navigation Items -->
-                @php $menu = \LaraZeus\Sky\SkyPlugin::get()->getModel('Navigation')::fromHandle('main-nav'); @endphp
-                @if($menu && $menu->items)
-                    @foreach($menu->items as $item)
+                @if($mainNav && $mainNav->items)
+                    @foreach($mainNav->items as $item)
                         @if($item['type'] === 'external-link')
                             <a href="{{ $item['url'] }}" 
                                class="block px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900"
