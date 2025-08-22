@@ -1,0 +1,179 @@
+<x-theme::private-app>
+<div>
+    <!-- Twitter-like Profile Header -->
+    <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">Create Event</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Share an upcoming event with the community</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-full hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Creation Form -->
+    <div class="p-6">
+        @if(session('success'))
+            <div class="p-4 mb-6 text-green-700 bg-green-100 border border-green-400 rounded-2xl dark:bg-green-900 dark:border-green-600 dark:text-green-300">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="p-4 mb-6 text-red-700 bg-red-100 border border-red-400 rounded-2xl dark:bg-red-900 dark:border-red-600 dark:text-red-300">
+                <div class="font-semibold">Please fix the following errors:</div>
+                <ul class="mt-2 list-disc list-inside">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('private.events.store') }}" method="POST" enctype="multipart/form-data" class="max-w-2xl space-y-6">
+            @csrf
+
+            <!-- Event Image -->
+            <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Event Image</label>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center justify-center w-24 h-24 bg-gray-100 border-2 border-gray-300 border-dashed rounded-2xl dark:bg-gray-800 dark:border-gray-600">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <input type="file" name="image" accept="image/*" id="event-image" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900 dark:file:text-blue-300">
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF up to 1MB</p>
+                        <div id="file-size-error" class="hidden mt-1 text-sm text-red-600 dark:text-red-400">
+                            File size must be less than 1MB. Please choose a smaller image.
+                        </div>
+                        @error('image')
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Title -->
+            <div class="space-y-2">
+                <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Event Title <span class="text-red-500">*</span></label>
+                <input type="text" name="title" id="title" value="{{ old('title') }}" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Enter event title">
+                @error('title')
+                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Event Description -->
+            <div class="space-y-2">
+                <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description <span class="text-red-500">*</span></label>
+                <div class="tinymce-wrapper">
+                    <textarea name="description" id="description" rows="8" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Describe your event in detail...">{{ old('description') }}</textarea>
+                </div>
+                @error('description')
+                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Event Dates -->
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="space-y-2">
+                    <label for="start_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date & Time <span class="text-red-500">*</span></label>
+                    <input type="datetime-local" name="start_date" id="start_date" value="{{ old('start_date') }}" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                    @error('start_date')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="space-y-2">
+                    <label for="end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date & Time <span class="text-red-500">*</span></label>
+                    <input type="datetime-local" name="end_date" id="end_date" value="{{ old('end_date') }}" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
+                    @error('end_date')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Location and Link -->
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="space-y-2">
+                    <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Location/Address <span class="text-red-500">*</span></label>
+                    <input type="text" name="address" id="address" value="{{ old('address') }}" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Event venue or address">
+                    @error('address')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="space-y-2">
+                    <label for="link" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Event Link</label>
+                    <input type="url" name="link" id="link" value="{{ old('link') }}" class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="https://event-registration-link.com">
+                    @error('link')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Event Guidelines -->
+            <div class="p-4 border border-blue-200 bg-blue-50 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
+                <h4 class="font-medium text-blue-900 dark:text-blue-300">Event Guidelines</h4>
+                <ul class="mt-2 space-y-1 text-sm text-blue-800 list-disc list-inside dark:text-blue-400">
+                    <li>Events will be reviewed before being published</li>
+                    <li>Only member events are allowed through this form</li>
+                    <li>Make sure to provide accurate date and location information</li>
+                    <li>Include relevant contact or registration links if applicable</li>
+                </ul>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <a href="{{ route('dashboard') }}" class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                    Cancel
+                </a>
+                <button type="submit" class="px-6 py-2 text-sm font-medium text-white transition-colors bg-blue-800 rounded-lg hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-800">
+                    Create Event
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Include TinyMCE Editor Component -->
+<x-theme:tinymce-editor
+    selector="#description" 
+    placeholder="Describe your event in detail..." 
+/>
+
+<!-- File validation script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // File input validation
+    const fileInput = document.getElementById('event-image');
+    const submitButton = document.querySelector('button[type="submit"]');
+    const errorDiv = document.getElementById('file-size-error');
+    const maxSize = 1024 * 1024; // 1MB in bytes
+
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            
+            if (file) {
+                if (file.size > maxSize) {
+                    errorDiv.classList.remove('hidden');
+                    fileInput.value = ''; // Clear the input
+                    submitButton.disabled = true;
+                    submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    errorDiv.classList.add('hidden');
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+        });
+    }
+});
+</script>
+</x-theme::private-app>

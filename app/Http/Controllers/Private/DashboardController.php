@@ -29,7 +29,7 @@ class DashboardController extends Controller
 
         $users = $query->paginate(9);
 
-        return view(app('skyTheme').'private.dashboard', [
+        return view('theme::private.dashboard', [
             'users' => $users,
             'search' => $search,
         ]);

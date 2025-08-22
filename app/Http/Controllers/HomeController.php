@@ -11,6 +11,6 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view(app('skyTheme').'welcome');
+        return view('theme::welcome');
     }
 }

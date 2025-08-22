@@ -17,9 +17,9 @@ class MemberController extends Controller
             abort(404);
         }
 
-        return view(app('skyTheme').'private.member', [
+        return view('theme::private.member', [
             'user' => $user,
-            'skyTheme' => app('skyTheme'),
+            'theme' => app('theme'),
         ]);
     }
 }

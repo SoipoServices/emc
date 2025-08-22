@@ -19,7 +19,7 @@ class ProfileController extends Controller
 
         return view(app('skyTheme').'private.profile', [
             'user' => $user,
-            'skyTheme' => 'app('skyTheme')',
+            'skyTheme' => app('skyTheme'),
         ]);
     }
 

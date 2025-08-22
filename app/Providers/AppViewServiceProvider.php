@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class AppViewServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,7 @@ class AppViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        
         // Only execute database queries if we can connect and tables exist
         try {
             // Check if we can access the database
@@ -70,5 +72,24 @@ class AppViewServiceProvider extends ServiceProvider
         View::share('mainNav', $mainNav);
         View::share('emcEvents', $emcEvents);
         View::share('memberEvents', $memberEvents);
+        
+        
+        View::share('theme',  config('emc.theme'));
+         $this->app->singleton('theme', function () {
+            return config('emc.theme');
+        });
+
+        // Override Zeus Sky theme to use our EMC theme
+        View::share('skyTheme',  config('emc.theme'));
+        $this->app->singleton('skyTheme', function () {
+            return config('emc.theme');
+        });
+       
+        //transform 'themes.emc' int themes/emc
+        $themePath = Str::of(config('emc.theme'))->replace('.', '/')->__toString();
+
+         // Register theme namespace for cleaner component syntax
+        View::addNamespace('theme', resource_path("/views/".$themePath));
+
     }
 }

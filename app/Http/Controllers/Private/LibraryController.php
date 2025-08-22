@@ -29,7 +29,7 @@ class LibraryController extends Controller
         
         $savedLibraryItems = $query->paginate(10)->appends($request->query());
 
-        return view(app('skyTheme').'private.library.index', [
+        return view('theme::private.library.index', [
             'savedLibraryItems' => $savedLibraryItems,
             'user' => $user,
             'search' => $search

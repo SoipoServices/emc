@@ -32,7 +32,7 @@ class BusinessController extends Controller
             ->orderBy('name')
             ->paginate(12);
 
-        return view(app('skyTheme').'private.businesses-list', compact('businesses', 'search'));
+        return view('theme::private.businesses-list', compact('businesses', 'search'));
     }
 
     /**
@@ -40,7 +40,7 @@ class BusinessController extends Controller
      */
     public function create()
     {
-        return view(app('skyTheme').'.private.create-business');
+        return view('theme::private.create-business');
     }
 
     /**
@@ -100,7 +100,7 @@ class BusinessController extends Controller
     {
         $this->authorize('view', $business);
 
-        return view(app('skyTheme').'.private.view-business', compact('business'));
+        return view('theme::private.view-business', compact('business'));
     }
 
     /**
@@ -110,7 +110,7 @@ class BusinessController extends Controller
     {
         $this->authorize('update', $business);
 
-        return view(app('skyTheme').'private.edit-business', compact('business'));
+        return view('theme::private.edit-business', compact('business'));
     }
 
     /**

@@ -21,7 +21,7 @@ class PublicEventController extends Controller
         $officialEvents = $events->where('is_member_event', false);
         $memberEvents = $events->where('is_member_event', true);
 
-        return view(app('skyTheme').'public.events.index', compact(
+        return view('theme::events.index', compact(
             'events',
             'officialEvents',
             'memberEvents'
@@ -41,6 +41,6 @@ class PublicEventController extends Controller
             return $SEOData;
         });
 
-        return view(app('skyTheme').'public.events.show', compact('event'));
+        return view('theme::events.show', compact('event'));
     }
 }

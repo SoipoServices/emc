@@ -14,7 +14,6 @@ class PublicBusinessController extends Controller
      */
     public function index(Request $request)
     {
-        dd(app('skyTheme'));
         $search = $request->input('search');
 
         // Get sponsors separately for featured section
@@ -36,7 +35,7 @@ class PublicBusinessController extends Controller
 
         $businesses = $businessesQuery->paginate(12);
 
-        return view(app('skyTheme').'public.businesses.index', compact(
+        return view('theme::businesses.index', compact(
             'businesses',
             'sponsors',
             'search'
@@ -63,6 +62,6 @@ class PublicBusinessController extends Controller
             return $SEOData;
         });
 
-        return view('vendor.zeus.themes.zeus.sky.public.businesses.show', compact('business'));
+        return view('theme::businesses.show', compact('business'));
     }
 }

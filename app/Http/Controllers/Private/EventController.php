@@ -42,7 +42,7 @@ class EventController extends Controller
         // Get all events combined and paginated
         $allEvents = $baseQuery->paginate(4);
 
-        return view(app('skyTheme').'private.events-list', compact(
+        return view('theme::private.events-list', compact(
             'allEvents',
             'search'
         ));
@@ -53,7 +53,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view(app('skyTheme').'private.create-event');
+        return view('theme::private.create-event');
     }
 
     /**
