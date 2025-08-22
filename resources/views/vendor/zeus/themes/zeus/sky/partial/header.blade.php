@@ -11,7 +11,7 @@
             </div>
 
             <!-- Main Navigation -->
-            <nav class="space-x-8 md:flex">
+            <nav class="flex gap-4 justify-middle">
                 @if($mainNav && $mainNav->items)
                     @foreach($mainNav->items as $item)
                         @if($item['type'] === 'external-link')
@@ -41,15 +41,7 @@
                 @endif
             </nav>
 
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden">
-                <button type="button" class="p-2 text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900" 
-                        onclick="toggleMobileMenu()" aria-label="Toggle menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
+            
             {{-- <!-- Search Bar (Hidden on mobile) -->
             <div class="flex-1 hidden max-w-md mx-8 md:flex">
                 <div class="relative w-full">
@@ -63,7 +55,7 @@
             </div> --}}
 
             <!-- User Actions -->
-            <div class="flex items-center gap-4">
+            <div class="items-center hidden gap-4 md:flex">
                 @auth
                     {{-- Admin Link --}}
                     @if(auth()->user()->is_admin)
@@ -95,11 +87,21 @@
                     <a href="{{ route('register') }}" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-black rounded-full hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900">Sign up</a>
                 @endauth
             </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button type="button" class="p-2 text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900" 
+                        onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
         
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden border-t border-gray-200 md:hidden dark:border-gray-800">
-            <div class="px-4 py-3 space-y-2">
+            <div class="py-3 space-y-2">
                 @php $menu = \LaraZeus\Sky\SkyPlugin::get()->getModel('Navigation')::fromHandle('main-nav'); @endphp
                 @if($menu && $menu->items)
                     @foreach($menu->items as $item)
@@ -131,7 +133,7 @@
                 
                 @auth
                     <!-- Mobile Auth Section -->
-                    <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-700">
+                    <div class="">
                         <!-- User Profile -->
                         <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
                             <img src="{{ \Filament\Facades\Filament::getUserAvatarUrl(auth()->user()) }}" alt="Profile" class="w-6 h-6 rounded-full">
