@@ -77,7 +77,7 @@
             <div class="space-y-2">
                 <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description <span class="text-red-500">*</span></label>
                 <div class="tinymce-wrapper">
-                    <textarea name="description" id="description" rows="8" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Describe your business in detail...">{{ old('description', $business->description) }}</textarea>
+                    <textarea name="description" id="description" rows="8" required class="block w-full px-3 py-2 text-sm border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:text-white" placeholder="Describe your business in detail...">{{ old('description', $business->description) }}</textarea>
                 </div>
                 @error('description')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -126,38 +126,10 @@
     </div>
 </div>
 
-<!-- Include TinyMCE Editor Component with custom border radius -->
-<x-theme:tinymce-editor
-    selector="#description" 
-    placeholder="Describe your business in detail..." 
-    :extraConfig="['border_radius' => '0.5rem']"
-/>
+@include("theme::partial.tinymce-editor", [
+    'selector' => '#description',
+    'placeholder' => 'Describe your business in detail...',
+])
 
-<!-- File validation script -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // File input validation
-    const fileInput = document.getElementById('business-logo');
-    const submitButton = document.querySelector('button[type="submit"]');
-    const errorDiv = document.getElementById('file-size-error');
-    const maxSize = 1024 * 1024; // 1MB in bytes
-
-    fileInput.addEventListener('change', function() {
-        const file = this.files[0];
-        
-        if (file) {
-            if (file.size > maxSize) {
-                errorDiv.classList.remove('hidden');
-                fileInput.value = ''; // Clear the input
-                submitButton.disabled = true;
-                submitButton.classList.add('opacity-50', 'cursor-not-allowed');
-            } else {
-                errorDiv.classList.add('hidden');
-                submitButton.disabled = false;
-                submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
-            }
-        }
-    });
-});
-</script>
+@include("theme::partial.file-validator")
 </x-theme::private-app>
