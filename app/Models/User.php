@@ -172,6 +172,16 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $this->hasMany(Business::class);
     }
 
+    public function savedLibraryItems()
+    {
+        return $this->belongsToMany(
+            config('zeus-sky.models.Library'),
+            'user_library',
+            'user_id',
+            'library_id'
+        )->withTimestamps();
+    }
+
     /**
      * Check if this user can impersonate other users.
      * Only admins can impersonate.

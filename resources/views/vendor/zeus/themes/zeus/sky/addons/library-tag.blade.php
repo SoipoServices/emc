@@ -42,8 +42,21 @@
                 <section class="mb-20">
                     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-12">
                         @foreach($libraryTag->library as $lib)
-                            <a href="{{ route('library.item', $lib->slug) }}" class="block transition-transform hover:scale-105">
-                                <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700">
+                            <div class="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-700 group relative">
+                                <!-- Heart Button -->
+                                @auth
+                                    @php
+                                        $isSaved = auth()->user()->savedLibraryItems()->where('library_id', $lib->id)->exists();
+                                    @endphp
+                                    <button onclick="toggleLibraryItem({{ $lib->id }}, this)" 
+                                            class="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 transition-all bg-white rounded-full shadow-md hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-gray-800"
+                                            data-library-id="{{ $lib->id }}"
+                                            data-saved="{{ $isSaved ? 'true' : 'false' }}">
+                                        <x-heroicon-s-heart class="w-5 h-5 {{ $isSaved ? 'text-red-500' : 'text-gray-400 hover:text-red-500' }}" />
+                                    </button>
+                                @endauth
+
+                                <a href="{{ route('library.item', $lib->slug) }}" class="block transition-transform group-hover:scale-105">
                                     <!-- Library Type Badge/Image Area -->
                                     <div class="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700">
                                         <div class="absolute inset-0 flex items-center justify-center">
@@ -121,8 +134,8 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         @endforeach
                     </div>
                 </section>
@@ -138,3 +151,79 @@
             @endif
         </div>
     </div>
+
+    @auth
+    @push('scripts')
+    <script>
+        function toggleLibraryItem(libraryId, button) {
+            const heartIcon = button.querySelector('svg');
+            const isSaved = button.dataset.saved === 'true';
+            
+            // Disable button during request
+            button.disabled = true;
+
+            const url = isSaved ? '{{ route("private.library.destroy") }}' : '{{ route("private.library.store") }}';
+            const method = isSaved ? 'DELETE' : 'POST';
+
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    library_id: libraryId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update button state
+                    const newSavedState = !isSaved;
+                    button.dataset.saved = newSavedState.toString();
+                    
+                    // Update heart icon appearance
+                    if (newSavedState) {
+                        heartIcon.className = 'w-5 h-5 text-red-500';
+                    } else {
+                        heartIcon.className = 'w-5 h-5 text-gray-400 hover:text-red-500';
+                    }
+                    
+                    // Show success message
+                    showNotification(data.message, 'success');
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('An error occurred. Please try again.', 'error');
+            })
+            .finally(() => {
+                button.disabled = false;
+            });
+        }
+
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            }`;
+            notification.textContent = message;
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+    @endpush
+    @endauth

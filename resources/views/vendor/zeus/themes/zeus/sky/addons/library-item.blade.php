@@ -62,6 +62,21 @@
                                     </span>
                                 @endif
                             </div>
+
+                            <!-- Save/Unsave Button -->
+                            @auth
+                                @php
+                                    $isSaved = auth()->user()->savedLibraryItems()->where('library_id', $item->id)->exists();
+                                @endphp
+                                <div class="ml-4">
+                                    <button id="save-button" 
+                                            onclick="toggleLibraryItem({{ $item->id }})" 
+                                            class="flex items-center px-4 py-2 text-sm font-medium transition-colors border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 {{ $isSaved ? 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100 focus:ring-red-500 dark:bg-red-900 dark:text-red-300 dark:border-red-700 dark:hover:bg-red-800' : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 focus:ring-blue-500 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-700 dark:hover:bg-blue-800' }}">
+                                        <x-heroicon-s-heart id="heart-icon" class="w-4 h-4 mr-2 {{ $isSaved ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400' }}" />
+                                        <span id="button-text">{{ $isSaved ? __('Remove from Library') : __('Save to Library') }}</span>
+                                    </button>
+                                </div>
+                            @endauth
                         </div>
 
                         <!-- Description -->
@@ -102,3 +117,96 @@
             </div>
         </div>
     </div>
+
+    @auth
+    @push('scripts')
+    <script>
+        let isSaved = {{ auth()->user()->savedLibraryItems()->where('library_id', $item->id)->exists() ? 'true' : 'false' }};
+
+        function toggleLibraryItem(libraryId) {
+            const button = document.getElementById('save-button');
+            const buttonText = document.getElementById('button-text');
+            const heartIcon = document.getElementById('heart-icon');
+            
+            // Disable button during request
+            button.disabled = true;
+            buttonText.textContent = 'Processing...';
+
+            const url = isSaved ? '{{ route("private.library.destroy") }}' : '{{ route("private.library.store") }}';
+            const method = isSaved ? 'DELETE' : 'POST';
+
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    library_id: libraryId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Toggle state
+                    isSaved = !isSaved;
+                    
+                    // Update button appearance
+                    updateButtonAppearance();
+                    
+                    // Show success message
+                    showNotification(data.message, 'success');
+                } else {
+                    showNotification(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('An error occurred. Please try again.', 'error');
+            })
+            .finally(() => {
+                button.disabled = false;
+            });
+        }
+
+        function updateButtonAppearance() {
+            const button = document.getElementById('save-button');
+            const buttonText = document.getElementById('button-text');
+            const heartIcon = document.getElementById('heart-icon');
+
+            if (isSaved) {
+                // Saved state - red styling
+                button.className = 'flex items-center px-4 py-2 text-sm font-medium transition-colors border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 bg-red-50 text-red-700 border-red-200 hover:bg-red-100 focus:ring-red-500 dark:bg-red-900 dark:text-red-300 dark:border-red-700 dark:hover:bg-red-800';
+                heartIcon.className = 'w-4 h-4 mr-2 text-red-600 dark:text-red-400';
+                buttonText.textContent = 'Remove from Library';
+            } else {
+                // Unsaved state - blue styling
+                button.className = 'flex items-center px-4 py-2 text-sm font-medium transition-colors border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 focus:ring-blue-500 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-700 dark:hover:bg-blue-800';
+                heartIcon.className = 'w-4 h-4 mr-2 text-blue-600 dark:text-blue-400';
+                buttonText.textContent = 'Save to Library';
+            }
+        }
+
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            }`;
+            notification.textContent = message;
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+    @endpush
+    @endauth

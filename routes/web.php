@@ -6,6 +6,7 @@ use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\Private\BusinessController;
 use App\Http\Controllers\Private\DashboardController;
 use App\Http\Controllers\Private\EventController as PrivateEventController;
+use App\Http\Controllers\Private\LibraryController;
 use App\Http\Controllers\Private\MemberController;
 use App\Http\Controllers\Private\ProfileController;
 use App\Http\Controllers\Private\VcardController;
@@ -54,6 +55,11 @@ Route::middleware([
         Route::get('/{user}/hustles/{business}/edit', [BusinessController::class, 'edit'])->name('private.businesses.edit')->middleware('user.ownership');
         Route::put('/{user}/hustles/{business}', [BusinessController::class, 'update'])->name('private.businesses.update')->middleware('user.ownership');
         Route::delete('/{user}/hustles/{business}', [BusinessController::class, 'destroy'])->name('private.businesses.destroy')->middleware('user.ownership');
+
+        // Library Routes
+        Route::get('/{user}/library', [LibraryController::class, 'index'])->name('private.library.index')->middleware('user.ownership');
+        Route::post('/library/save', [LibraryController::class, 'store'])->name('private.library.store');
+        Route::delete('/library/remove', [LibraryController::class, 'destroy'])->name('private.library.destroy');
 
     });
 
