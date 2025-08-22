@@ -1,7 +1,6 @@
 <?php
 
 use Laravel\Fortify\Features;
-use Laravel\Jetstream\Jetstream;
 
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');
@@ -25,7 +24,8 @@ test('new users can register', function () {
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
-        'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
+        'position' => 'Developer', // Required field
+        'terms' => true, // Required field
     ]);
 
     $this->assertAuthenticated();

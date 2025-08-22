@@ -3,7 +3,7 @@
         <div class="w-full max-w-md space-y-8">
             <div>
                 <div class="flex justify-center w-auto h-12 mx-auto">
-                    <x-application-mark class="w-12 h-12" />
+                    @include('theme::partial.logo', ['classes' => "w-12 h-12"])
                 </div>
                 <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 dark:text-white">
                     Two Factor Authentication

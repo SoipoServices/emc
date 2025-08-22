@@ -8,7 +8,10 @@ test('profile information can be updated', function () {
     $response = $this->put('/user/profile-information', [
         'name' => 'Test Name',
         'email' => 'test@example.com',
+        'telephone' => '1234567890', // Required field
     ]);
+
+    $response->assertSessionHasNoErrors();
 
     expect($user->fresh())
         ->name->toEqual('Test Name')
