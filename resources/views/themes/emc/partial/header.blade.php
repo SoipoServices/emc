@@ -1,17 +1,17 @@
 <!-- Twitter-like Top Navigation -->
 <header class="sticky top-0 z-50 border-b border-gray-200 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
     <div class="px-4 mx-auto max-w-7xl">
-        <div class="flex items-center justify-between h-16">
+        <div class="grid grid-cols-4 md:grid-cols-3 items-center h-16">
             <!-- Logo -->
-            <div class="flex items-center">
+            <div class="flex items-center justify-start">
                 <a href="{{ url('/') }}" class="flex items-center gap-3 p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-900">
                     @include($skyTheme.'.partial.logo', ['classes' => 'w-8 h-8'])
                     {{-- <span class="hidden text-xl font-bold text-gray-900 sm:block dark:text-white">{{ config('app.name') }}</span> --}}
                 </a>
             </div>
 
-            <!-- Main Navigation - Hidden on mobile -->
-            <nav class="hidden gap-4 md:flex justify-middle">
+            <!-- Main Navigation - Hidden on mobile, centered on desktop -->
+            <nav class="hidden gap-6 md:flex justify-center md:col-span-1">
                 @if($mainNav && $mainNav->items)
                     @foreach($mainNav->items as $item)
                         @if($item['type'] === 'external-link')
@@ -41,6 +41,9 @@
                 @endif
             </nav>
 
+            <!-- Empty spacer for mobile layout -->
+            <div class="md:hidden"></div>
+
             
             {{-- <!-- Search Bar (Hidden on mobile) -->
             <div class="flex-1 hidden max-w-md mx-8 md:flex">
@@ -55,7 +58,7 @@
             </div> --}}
 
             <!-- User Actions -->
-            <div class="flex items-center gap-2 md:gap-4">
+            <div class="flex items-center gap-2 justify-end md:gap-4 col-span-2 md:col-span-1">
                 @auth
                     {{-- Admin Link - Hidden on mobile, visible on desktop --}}
                     @if(auth()->user()->is_admin)
@@ -87,16 +90,16 @@
                     <a href="{{ route('login') }}" class="px-2 py-1 text-sm font-medium text-gray-900 md:px-4 md:py-2 hover:text-black dark:text-white dark:hover:text-gray-300">Log in</a>
                     <a href="{{ route('register') }}" class="px-2 py-1 text-sm font-medium text-white transition-colors bg-black rounded-full md:px-4 md:py-2 hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-900">Sign up</a>
                 @endauth
-            </div>
 
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden">
-                <button type="button" class="p-2 text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900" 
-                        onclick="toggleMobileMenu()" aria-label="Toggle menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button type="button" class="p-2 text-gray-900 transition-colors rounded-md hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900" 
+                            onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
         
