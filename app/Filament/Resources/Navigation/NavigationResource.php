@@ -20,6 +20,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use GuzzleHttp\Promise\Create;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use LaraZeus\Sky\Models\Navigation;
 
@@ -34,6 +35,101 @@ class NavigationResource extends Resource
     protected static ?int $navigationSort = 99;
 
     protected static bool $showTimestamps = true;
+
+    /**
+     * Route patterns to exclude from the navigation dropdown
+     *
+     * To customize this list, you can:
+     * 1. Override the $excludedRoutePatterns property in a child class
+     * 2. Call addExcludedRoutePatterns(['pattern1', 'pattern2']) to add more patterns
+     * 3. Call removeExcludedRoutePatterns(['pattern1']) to remove patterns
+     * 4. Override getExcludedRoutePatterns() method for complete custom logic
+     */
+    protected static array $excludedRoutePatterns = [
+        'filament',
+        'ignition',
+        '_boost',
+        'verification',
+        'password',
+        'logout',
+        'two-factor',
+        'sanctum',
+        'pulse',
+        '.store',
+        '.create',
+        '.destroy',
+        '.update',
+        'boost',
+        'livewire',
+        'impersonate',
+    ];
+
+    /**
+     * Get the excluded route patterns
+     * Override this method to customize which routes are excluded
+     */
+    protected static function getExcludedRoutePatterns(): array
+    {
+        return static::$excludedRoutePatterns;
+    }
+
+    /**
+     * Add additional route patterns to exclude
+     */
+    public static function addExcludedRoutePatterns(array $patterns): void
+    {
+        static::$excludedRoutePatterns = array_merge(static::$excludedRoutePatterns, $patterns);
+    }
+
+    /**
+     * Remove route patterns from exclusion
+     */
+    public static function removeExcludedRoutePatterns(array $patterns): void
+    {
+        static::$excludedRoutePatterns = array_diff(static::$excludedRoutePatterns, $patterns);
+    }
+
+    /**
+     * Get all available named routes for the select dropdown
+     */
+    protected static function getAvailableRoutes(): array
+    {
+        $routes = [];
+        $routeCollection = Route::getRoutes();
+
+        foreach ($routeCollection as $route) {
+            $name = $route->getName();
+
+            // Skip routes without names
+            if (! $name) {
+                continue;
+            }
+
+            // Check if route should be excluded based on patterns
+            $shouldExclude = false;
+            foreach (static::getExcludedRoutePatterns() as $pattern) {
+                if (str_contains($name, $pattern)) {
+                    $shouldExclude = true;
+                    break;
+                }
+            }
+
+            if ($shouldExclude) {
+                continue;
+            }
+
+            // Get route description
+            $uri = $route->uri();
+            $methods = implode('|', $route->methods());
+
+            $routes[$name] = "{$name} ({$methods} {$uri})";
+        }
+
+        // Sort by route name
+        ksort($routes);
+
+        return $routes;
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -68,12 +164,20 @@ class NavigationResource extends Resource
                                         'route' => 'Route',
                                     ])
                                     ->default('external-link')
+                                    ->reactive()
                                     ->required(),
                                 TextInput::make('url')
                                     ->label('URL')
+                                    ->url()
+                                    ->placeholder('https://example.com')
+                                    ->required(fn ($get) => $get('type') === 'external-link')
                                     ->visible(fn ($get) => $get('type') === 'external-link'),
-                                TextInput::make('route')
+                                Select::make('route')
                                     ->label('Route')
+                                    ->options(static::getAvailableRoutes())
+                                    ->searchable()
+                                    ->placeholder('Select a route...')
+                                    ->required(fn ($get) => $get('type') === 'route')
                                     ->visible(fn ($get) => $get('type') === 'route'),
                             ])
                             ->collapsible()

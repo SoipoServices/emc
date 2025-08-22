@@ -22,7 +22,7 @@
             @endif
         </div>
 
-        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+        <div class="hidden sm:flex sm:items-center sm:justify-between">
             <div>
                 <p class="pr-2 text-sm leading-5 text-gray-700 dark:text-gray-400">
                     {!! __('Showing') !!}
