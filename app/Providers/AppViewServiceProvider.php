@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Event;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -90,6 +91,10 @@ class AppViewServiceProvider extends ServiceProvider
 
          // Register theme namespace for cleaner component syntax
         View::addNamespace('theme', resource_path("/views/".$themePath));
+        // Configure pagination to use Tailwind view
+        Paginator::defaultView('theme::pagination.tailwind');
+        Paginator::defaultSimpleView('theme::pagination.simple-tailwind');
+
 
     }
 }

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Checks\MailCheck;
 use App\Models\User;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;

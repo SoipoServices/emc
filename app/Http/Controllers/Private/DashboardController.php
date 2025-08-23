@@ -27,7 +27,7 @@ class DashboardController extends Controller
             $query = User::inRandomOrder($request->session()->get('session_rand'))->verified()->isVisible()->hasPosition()->with('tags');
         }
 
-        $users = $query->paginate(9);
+        $users = $query->paginate(20);
 
         return view('theme::private.dashboard', [
             'users' => $users,

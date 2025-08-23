@@ -16,7 +16,7 @@
             </a>
             
             <!-- Search Form -->
-            <form method="GET" action="{{ route('private.businesses.list', ['user' => auth()->id()]) }}" class="flex">
+            <form method="GET" action="{{ route('private.businesses.list', ['user' => auth()->id()]) }}" class="hidden md:flex">
                 <div class="relative">
                     <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search businesses..." class="w-64 py-2 pl-4 pr-4 text-sm text-gray-900 bg-gray-100 border-0 rounded-full dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-800 dark:text-white">
                     <button type="submit" class="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -171,39 +171,8 @@
 
 <!-- Pagination -->
 @if($businesses->hasPages())
-    <div class="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-800">
-        <div class="flex items-center">
-            <p class="text-sm text-gray-700 dark:text-gray-300">
-                Showing {{ $businesses->firstItem() }} to {{ $businesses->lastItem() }} of {{ $businesses->total() }} results
-            </p>
-        </div>
-        <div class="flex items-center space-x-2">
-            @if ($businesses->onFirstPage())
-                <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-                    Previous
-                </span>
-            @else
-                <a href="{{ $businesses->appends(request()->query())->previousPageUrl() }}" 
-                   class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                    Previous
-                </a>
-            @endif
-
-            <span class="px-3 py-2 text-sm text-white bg-blue-800 rounded-lg dark:bg-blue-800 dark:text-white">
-                {{ $businesses->currentPage() }} of {{ $businesses->lastPage() }}
-            </span>
-
-            @if ($businesses->hasMorePages())
-                <a href="{{ $businesses->appends(request()->query())->nextPageUrl() }}" 
-                   class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                    Next
-                </a>
-            @else
-                <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-                    Next
-                </span>
-            @endif
-        </div>
+    <div class="flex items-center justify-center p-4 border-t border-gray-200 md:justify-between dark:border-gray-800">
+        {{ $businesses->links() }}
     </div>
 @endif
 </x-theme::private-app>

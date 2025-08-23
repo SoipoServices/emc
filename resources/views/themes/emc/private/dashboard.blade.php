@@ -153,41 +153,11 @@
     @endforelse
 </div>
 
+
 <!-- Pagination -->
 @if($users->hasPages())
-    <div class="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-800">
-        <div class="flex items-center">
-            <p class="text-sm text-gray-700 dark:text-gray-300">
-                Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} results
-            </p>
-        </div>
-        <div class="flex items-center space-x-2">
-            @if ($users->onFirstPage())
-                <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-                    Previous
-                </span>
-            @else
-                <a href="{{ $users->appends(request()->query())->previousPageUrl() }}" 
-                   class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                    Previous
-                </a>
-            @endif
-
-            <span class="px-3 py-2 text-sm text-white bg-blue-800 rounded-lg dark:bg-blue-800 dark:text-white">
-                {{ $users->currentPage() }} of {{ $users->lastPage() }}
-            </span>
-
-            @if ($users->hasMorePages())
-                <a href="{{ $users->appends(request()->query())->nextPageUrl() }}" 
-                   class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                    Next
-                </a>
-            @else
-                <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-                    Next
-                </span>
-            @endif
-        </div>
+    <div class="flex items-center justify-center p-4 border-t border-gray-200 md:justify-between dark:border-gray-800">
+        {{ $users->links() }}
     </div>
 @endif
 </x-theme::private-app>

@@ -1,4 +1,4 @@
-<x-zeus::private-app title="{{ __('My Library') }}">
+<x-theme::private-app title="{{ __('My Library') }}">
     <!-- Twitter-like Feed Header -->
     <div class="px-4 py-3 border-b border-gray-200 top-16 bg-white/80 dark:bg-black/80 backdrop-blur-md dark:border-gray-800">
         <div class="flex items-center justify-between">
@@ -30,7 +30,7 @@
 
     <!-- Search Results Info -->
     @if(isset($search) && $search)
-        <div class="flex items-center gap-3 p-4 mx-4 mt-4 border border-blue-200 bg-blue-50 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800">
+        <div class="flex items-center gap-3 p-4 mx-4 mt-4 border border-blue-200 bg-blue-50 rounded-2xl dark:bg-blue-900/20 dark:border-blue-800 ">
             <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
@@ -125,39 +125,8 @@
 
     <!-- Pagination -->
     @if($savedLibraryItems->hasPages())
-        <div class="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-800">
-            <div class="flex items-center">
-                <p class="text-sm text-gray-700 dark:text-gray-300">
-                    Showing {{ $savedLibraryItems->firstItem() }} to {{ $savedLibraryItems->lastItem() }} of {{ $savedLibraryItems->total() }} results
-                </p>
-            </div>
-            <div class="flex items-center space-x-2">
-                @if ($savedLibraryItems->onFirstPage())
-                    <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-                        Previous
-                    </span>
-                @else
-                    <a href="{{ $savedLibraryItems->appends(request()->query())->previousPageUrl() }}" 
-                       class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                        Previous
-                    </a>
-                @endif
-
-                <span class="px-3 py-2 text-sm text-white bg-blue-800 rounded-lg dark:bg-blue-800 dark:text-white">
-                    {{ $savedLibraryItems->currentPage() }} of {{ $savedLibraryItems->lastPage() }}
-                </span>
-
-                @if ($savedLibraryItems->hasMorePages())
-                    <a href="{{ $savedLibraryItems->appends(request()->query())->nextPageUrl() }}" 
-                       class="px-3 py-2 text-sm text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-                        Next
-                    </a>
-                @else
-                    <span class="px-3 py-2 text-sm text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed dark:bg-gray-800 dark:text-gray-600">
-                        Next
-                    </span>
-                @endif
-            </div>
+        <div class="flex items-center justify-center p-4 border-t border-gray-200 md:justify-between dark:border-gray-800">
+            {{ $savedLibraryItems->links() }}
         </div>
     @endif
 
@@ -220,4 +189,4 @@
     </script>
     @endpush
 
-</x-zeus::private-app>
+</x-theme::private-app>
