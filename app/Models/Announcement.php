@@ -34,26 +34,12 @@ class Announcement extends Model
     }
 
     /**
-     * Scope to get announcements that are scheduled for today or earlier.
+     * Scope to get announcements that are scheduled for today or earlier,
+     * ordered by scheduled_at descending (most recent first).
      */
     public function scopeScheduled($query)
     {
-        return $query->where('scheduled_at', '<=', now());
-    }
-
-    /**
-     * Scope to get announcements ordered by scheduled date (latest first).
-     */
-    public function scopeLatestBySchedule($query)
-    {
-        return $query->orderBy('scheduled_at', 'desc');
-    }
-
-    /**
-     * Scope to get the latest scheduled announcement.
-     */
-    public function scopeLatestScheduled($query)
-    {
-        return $query->scheduled()->latestBySchedule();
+        return $query->where('scheduled_at', '<=', now())
+            ->orderBy('scheduled_at', 'desc');
     }
 }

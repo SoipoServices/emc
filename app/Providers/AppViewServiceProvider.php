@@ -55,8 +55,7 @@ class AppViewServiceProvider extends ServiceProvider
             $memberEvents = $events[true] ?? collect();
 
             // Get the latest scheduled announcement (scheduled_at <= now, ordered by scheduled_at desc)
-            $latestAnnouncement = Announcement::latestScheduled()
-                ->first();
+            $latestAnnouncement = Announcement::scheduled()->first();
 
         } catch (\Exception $e) {
             // If database queries fail, set default values
