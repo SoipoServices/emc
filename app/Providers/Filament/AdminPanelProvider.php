@@ -39,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->resources([
+                \App\Filament\Resources\Announcements\AnnouncementResource::class,
                 \App\Filament\Resources\Businesses\BusinessResource::class,
                 \App\Filament\Resources\Events\EventResource::class,
                 \App\Filament\Resources\Users\UserResource::class,

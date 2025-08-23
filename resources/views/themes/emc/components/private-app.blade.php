@@ -104,16 +104,21 @@
             <div class="flex-col hidden h-full pt-4 xl:flex xl:w-72">
                 <div class="px-4 space-y-4">
                     <!-- What's happening -->
-                    <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl hover:shadow-md group-hover:scale-[1.02]">
-                        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">What's happening</h2>
-                        <div class="space-y-3">
-                            <div class="p-2 rounded cursor-pointer ">
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Trending in Technology</p>
-                                <p class="font-bold text-gray-900 dark:text-white">{{ config('app.name') }}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Social networking platform</p>
-                            </div>
-                        </div>
-                    </div>
+                     @if(isset($latestAnnouncement) && $latestAnnouncement)
+                                <div class="items-center justify-center p-3 border border-blue-200 rounded-lg bg-blue-50 dark:bg-blue-900/20 dark:border-blue-800">
+                                    <div class="flex items-start space-x-2">
+                                        <x-heroicon-o-megaphone class="w-5 h-5 mt-0.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                                        <div class="flex-1 min-w-0">
+                                            <h3 class="mb-1 text-sm font-semibold text-blue-900 dark:text-blue-100">{{ $latestAnnouncement->title }}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <div class="text-xs prose-sm prose text-blue-700 dark:text-blue-300 max-w-none prose-p:mb-2">
+                                            {!! $latestAnnouncement->content !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
 
                     <!-- Upcoming Event -->
                     @if(isset($latestEvent) && $latestEvent)

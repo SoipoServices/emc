@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Announcement;
 use App\Models\Event;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class AppViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+
         // Only execute database queries if we can connect and tables exist
         try {
             // Check if we can access the database
@@ -53,12 +54,17 @@ class AppViewServiceProvider extends ServiceProvider
             $emcEvents = $events[false] ?? collect();
             $memberEvents = $events[true] ?? collect();
 
+            // Get the latest scheduled announcement (scheduled_at <= now, ordered by scheduled_at desc)
+            $latestAnnouncement = Announcement::latestScheduled()
+                ->first();
+
         } catch (\Exception $e) {
             // If database queries fail, set default values
             Log::error('Failed to load events: '.$e->getMessage());
             $latestEvent = null;
             $emcEvents = collect();
             $memberEvents = collect();
+            $latestAnnouncement = null;
         }
 
         try {
@@ -70,31 +76,30 @@ class AppViewServiceProvider extends ServiceProvider
         }
 
         View::share('latestEvent', $latestEvent);
+        View::share('latestAnnouncement', $latestAnnouncement);
         View::share('mainNav', $mainNav);
         View::share('emcEvents', $emcEvents);
         View::share('memberEvents', $memberEvents);
-        
-        
-        View::share('theme',  config('emc.theme'));
-         $this->app->singleton('theme', function () {
+
+        View::share('theme', config('emc.theme'));
+        $this->app->singleton('theme', function () {
             return config('emc.theme');
         });
 
         // Override Zeus Sky theme to use our EMC theme
-        View::share('skyTheme',  config('emc.theme'));
+        View::share('skyTheme', config('emc.theme'));
         $this->app->singleton('skyTheme', function () {
             return config('emc.theme');
         });
-       
-        //transform 'themes.emc' int themes/emc
+
+        // transform 'themes.emc' int themes/emc
         $themePath = Str::of(config('emc.theme'))->replace('.', '/')->__toString();
 
-         // Register theme namespace for cleaner component syntax
-        View::addNamespace('theme', resource_path("/views/".$themePath));
+        // Register theme namespace for cleaner component syntax
+        View::addNamespace('theme', resource_path('/views/'.$themePath));
         // Configure pagination to use Tailwind view
         Paginator::defaultView('theme::pagination.tailwind');
         Paginator::defaultSimpleView('theme::pagination.simple-tailwind');
-
 
     }
 }
