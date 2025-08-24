@@ -17,9 +17,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        return view(app('skyTheme').'private.profile', [
-            'user' => $user,
-            'skyTheme' => app('skyTheme'),
+        return view('theme::private.profile', [
+            'user' => $user
         ]);
     }
 
